@@ -1,986 +1,609 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Koseli Imports | Marketplace</title>
-    <meta
-      name="description"
-      content="Koseli Imports online marketplace for electronics, accessories, home essentials, lifestyle products, and more."
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koseli Imports | Global Products. Local Trust.</title>
+    <meta name="description" content="Browse electronics, home goods, and more. Sourced from China, delivered across Nepal. Order via WhatsApp.">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts: Inter for a clean marketplace feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              navy: '#142B3B',
-              gold: '#D6A85F',
-              cream: '#F8F8F6',
-              charcoal: '#20252B',
-              white: '#FFFFFF'
-            },
-            boxShadow: {
-              soft: '0 10px 30px rgba(20, 43, 59, 0.08)'
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#142B3B',
+                        gold: '#D6A85F',
+                        offwhite: '#F8F8F6',
+                        charcoal: '#20252B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
             }
-          }
         }
-      };
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-      html { scroll-behavior: smooth; }
-      body {
-        font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      }
-      .hide-scrollbar::-webkit-scrollbar { display: none; }
-      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border-radius: 9999px;
-        padding: 6px 10px;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-      }
-      .status-available { background: rgba(34,197,94,0.12); color: #166534; }
-      .status-coming { background: rgba(245,158,11,0.12); color: #92400e; }
-      .status-out { background: rgba(239,68,68,0.12); color: #991b1b; }
-      .status-limited { background: rgba(251,146,60,0.12); color: #9a4d00; }
-      .status-preorder { background: rgba(59,130,246,0.12); color: #1d4ed8; }
-      .product-card:hover { transform: translateY(-3px); transition: all 0.2s ease; }
-      .nav-link.active { color: #142B3B; font-weight: 700; }
-      .phone-frame {
-        background:
-          linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0)),
-          radial-gradient(circle at top right, rgba(214,168,95,0.25), transparent 35%);
-      }
-      .text-shadow-soft {
-        text-shadow: 0 10px 30px rgba(14, 23, 33, 0.15);
-      }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
-  </head>
-  <body class="bg-cream text-slate-800 antialiased">
-    <div class="bg-navy text-white text-xs sm:text-sm">
-      <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center sm:justify-between gap-3">
-        <span>Free delivery within Kathmandu Valley on orders above NPR 3,000</span>
-        <span class="hidden sm:inline">WhatsApp support: +977 9800000000</span>
-      </div>
+</head>
+<body class="text-charcoal antialiased">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-navy text-white text-xs font-medium py-2 text-center tracking-wide">
+        🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000 | Order 24/7 via WhatsApp
     </div>
 
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex items-center h-20 gap-4">
-          <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-md hover:bg-slate-100" aria-label="Open menu">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+    <!-- Main Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 gap-4">
+                <!-- Logo -->
+                <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center cursor-pointer">
+                    <img src="/logo.png" alt="Koseli Imports Logo" class="h-14 w-auto object-contain">
+                </a>
 
-          <div class="flex items-center gap-3 shrink-0">
-            <div class="w-10 h-10 rounded-xl bg-navy text-gold flex items-center justify-center font-black text-lg">K</div>
-            <div>
-              <div class="text-xl font-black tracking-tight text-navy">Koseli Imports</div>
-              <div class="text-[9px] uppercase tracking-[0.26em] text-slate-500">Nepal Marketplace</div>
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl hidden md:flex relative">
+                    <input type="text" id="searchInput" placeholder="Search products, categories, or SKU..." class="w-full border-2 border-navy rounded-l-md py-2 px-4 focus:outline-none focus:border-gold transition-colors">
+                    <button class="bg-navy text-white px-6 rounded-r-md hover:bg-[#0d1e29] transition-colors flex items-center justify-center">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hidden sm:flex flex-col items-center text-charcoal hover:text-navy transition-colors">
+                        <i data-lucide="user" class="w-5 h-5 mb-1"></i>
+                        <span class="text-xs font-medium">Account</span>
+                    </a>
+                    <button id="cartToggle" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors relative">
+                        <i data-lucide="shopping-cart" class="w-5 h-5 mb-1"></i>
+                        <span class="text-xs font-medium">Cart</span>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+                    <a href="https://wa.me/9779800000000" target="_blank" class="hidden md:flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
+                    </a>
+                </div>
             </div>
-          </div>
-
-          <nav class="hidden lg:flex items-center gap-8 ml-8">
-            <a href="#" class="nav-link active">Home</a>
-            <a href="#categories" class="nav-link text-slate-600 hover:text-navy">All Categories</a>
-            <a href="#products" class="nav-link text-slate-600 hover:text-navy">Shop</a>
-            <a href="#" class="nav-link text-slate-600 hover:text-navy">New Arrivals</a>
-            <a href="#" class="nav-link text-slate-600 hover:text-navy">Offers</a>
-            <a href="#" class="nav-link text-slate-600 hover:text-navy">About Us</a>
-            <a href="#" class="nav-link text-slate-600 hover:text-navy">Contact</a>
-          </nav>
-
-          <div class="flex-1 max-w-2xl mx-auto hidden md:block">
-            <label class="relative block">
-              <input
-                id="searchInput"
-                type="text"
-                placeholder="Search products, categories, or SKU"
-                class="w-full h-12 pl-12 pr-4 rounded-full border border-slate-200 bg-slate-50 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30"
-              />
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </label>
-          </div>
-
-          <div class="flex items-center gap-2 sm:gap-3 ml-auto">
-            <button class="hidden sm:flex p-2.5 rounded-full hover:bg-slate-100 relative" aria-label="Wishlist">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 10-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
-              </svg>
-            </button>
-
-            <button id="cartBtn" class="relative p-2.5 rounded-full hover:bg-slate-100" aria-label="Open cart">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l3-8H6.2M7 13L5.7 5M7 13l-1.2 6M17 13l1.2 6M9 19.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm8 0a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
-              </svg>
-              <span id="cartCount" class="absolute -top-1 -right-1 min-w-[20px] h-5 rounded-full bg-gold text-[10px] font-bold text-navy flex items-center justify-center">0</span>
-            </button>
-
-            <button class="hidden sm:flex items-center gap-2 bg-navy text-white px-4 py-2 rounded-full hover:bg-[#1a3248]">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm-8 9a4 4 0 014-4h.1a4 4 0 014 4v1H8v-1z" />
-              </svg>
-              Account
-            </button>
-          </div>
         </div>
-      </div>
 
-      <div id="mobileDrawer" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-slate-900/40" id="mobileBackdrop"></div>
-        <aside class="absolute left-0 top-0 h-full w-[82%] max-w-sm bg-white shadow-xl p-5">
-          <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 rounded-xl bg-navy text-gold flex items-center justify-center font-black">K</div>
-              <div class="font-black text-navy text-lg">Koseli Imports</div>
+        <!-- Navigation Menu -->
+        <nav class="border-t border-gray-200 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 gap-8 text-sm font-medium">
+                <div class="relative group h-full flex items-center cursor-pointer">
+                    <span class="flex items-center gap-1 text-navy font-bold">
+                        <i data-lucide="menu" class="w-4 h-4"></i> All Categories
+                    </span>
+                    <!-- Mega Menu Dropdown -->
+                    <div class="absolute top-12 left-0 w-64 bg-white border border-gray-200 shadow-xl rounded-b-md hidden group-hover:block z-50 max-h-[70vh] overflow-y-auto hide-scrollbar" id="megaMenuList">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+                <a href="#shop" onclick="resetFilters()" class="text-charcoal hover:text-navy transition-colors">Shop</a>
+                <a href="#shop" onclick="filterByCategory('cat1')" class="text-charcoal hover:text-navy transition-colors">New Arrivals</a>
+                <a href="#shop" class="text-charcoal hover:text-navy transition-colors text-red-600 font-bold">Offers</a>
+                <a href="#about" class="text-charcoal hover:text-navy transition-colors">About Us</a>
             </div>
-            <button id="mobileClose" class="p-2 rounded-full hover:bg-slate-100">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <div class="mb-6">
-            <label class="relative block">
-              <input
-                id="mobileSearchInput"
-                type="text"
-                placeholder="Search products"
-                class="w-full h-11 pl-11 pr-3 rounded-full border border-slate-200 bg-slate-50"
-              />
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </label>
-          </div>
-
-          <nav class="space-y-2 text-slate-700">
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-100">Home</a>
-            <a href="#categories" class="block px-3 py-2 rounded-lg hover:bg-slate-100">All Categories</a>
-            <a href="#products" class="block px-3 py-2 rounded-lg hover:bg-slate-100">Shop</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-100">New Arrivals</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-100">Offers</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-100">About Us</a>
-            <a href="#" class="block px-3 py-2 rounded-lg hover:bg-slate-100">Contact</a>
-          </nav>
-        </aside>
-      </div>
+        </nav>
     </header>
 
-    <main>
-      <section class="max-w-7xl mx-auto px-4 py-8 sm:py-10 lg:py-14">
-        <div class="grid lg:grid-cols-[1.2fr_0.8fr] gap-6 lg:gap-8 items-center">
-          <div>
-            <div class="inline-flex items-center rounded-full bg-gold/15 text-navy px-3 py-1 text-xs font-semibold tracking-wide">
-              Trusted by shoppers across Nepal
-            </div>
-            <h1 class="mt-5 text-4xl sm:text-5xl font-black tracking-tight text-navy leading-tight text-shadow-soft">
-              Smart essentials for everyday Nepal life.
-            </h1>
-            <p class="mt-4 max-w-xl text-lg text-slate-600">
-              Discover electronics, gadgets, home life upgrades, travel essentials, and daily-use products from one modern marketplace.
-            </p>
-            <div class="mt-7 flex flex-col sm:flex-row gap-3">
-              <a href="#products" class="inline-flex items-center justify-center rounded-full bg-navy text-white px-6 py-3 font-semibold hover:bg-[#1d3348]">
-                Shop Now
-              </a>
-              <a href="#categories" class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-6 py-3 font-semibold text-navy hover:bg-slate-50">
-                Browse Categories
-              </a>
-            </div>
-
-            <div class="mt-8 flex flex-wrap gap-5 text-sm text-slate-600">
-              <div>
-                <div class="text-2xl font-black text-navy">10k+</div>
-                <div>Happy customers</div>
-              </div>
-              <div>
-                <div class="text-2xl font-black text-navy">350+</div>
-                <div>Products</div>
-              </div>
-              <div>
-                <div class="text-2xl font-black text-navy">Same Day</div>
-                <div>Dispatch support</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="phone-frame relative rounded-[28px] border border-slate-200 bg-white shadow-soft p-4 sm:p-5">
-            <div class="absolute -top-4 -right-4 h-16 w-16 rounded-full bg-gold/20 blur-2xl"></div>
-            <div class="rounded-[22px] overflow-hidden border border-slate-200 bg-slate-100">
-              <img
-                src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80"
-                alt="Modern marketplace product display"
-                class="h-[420px] w-full object-cover"
-              />
-            </div>
-            <div class="mt-4 flex items-center justify-between gap-3 rounded-2xl bg-white p-3 border border-slate-200">
-              <div>
-                <div class="text-xs uppercase tracking-[0.2em] text-slate-500">Featured</div>
-                <div class="font-bold text-navy mt-1">Smart Home Bundle</div>
-              </div>
-              <div class="text-right">
-                <div class="text-xs text-slate-500">From</div>
-                <div class="font-black text-navy">NPR 8,900</div>
-              </div>
-            </div>
-          </div>
+    <!-- Mobile Search (Visible on mobile only) -->
+    <div class="md:hidden p-4 bg-white border-b border-gray-200">
+        <div class="flex relative">
+            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none focus:border-navy">
+            <button class="bg-navy text-white px-4 rounded-r-md">
+                <i data-lucide="search" class="w-4 h-4"></i>
+            </button>
         </div>
-      </section>
-
-      <section id="categories" class="bg-white py-14">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
-              <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Categories</div>
-              <h2 class="mt-2 text-3xl font-black text-navy">Explore by category</h2>
-            </div>
-            <a href="#products" class="inline-flex items-center gap-2 text-navy font-semibold hover:text-[#1d3348]">
-              View all products
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </a>
-          </div>
-
-          <div id="categoryGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5"></div>
-        </div>
-      </section>
-
-      <section id="products" class="max-w-7xl mx-auto px-4 py-14">
-        <div class="flex flex-col gap-4 md:flex-row md:items-end justify-between">
-          <div>
-            <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Marketplace</div>
-            <h2 class="mt-2 text-3xl font-black text-navy">Popular products</h2>
-          </div>
-
-          <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
-            <div class="relative w-full sm:w-64">
-              <select id="categoryFilter" class="w-full appearance-none h-11 rounded-full border border-slate-200 bg-white px-4 pr-10 text-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30">
-                <option value="all">All Categories</option>
-              </select>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            <div class="relative w-full sm:w-44">
-              <select id="statusFilter" class="w-full appearance-none h-11 rounded-full border border-slate-200 bg-white px-4 pr-10 text-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30">
-                <option value="all">All Status</option>
-                <option value="available">Available</option>
-                <option value="limited stock">Limited Stock</option>
-                <option value="out of stock">Out of Stock</option>
-                <option value="coming soon">Coming Soon</option>
-                <option value="pre-order">Pre-order</option>
-              </select>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-
-            <div class="relative w-full sm:w-44">
-              <select id="sortFilter" class="w-full appearance-none h-11 rounded-full border border-slate-200 bg-white px-4 pr-10 text-sm focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30">
-                <option value="featured">Featured</option>
-                <option value="newest">Newest</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-              </select>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <div id="productsGrid" class="mt-8 grid sm:grid-cols-2 xl:grid-cols-4 gap-6"></div>
-      </section>
-
-      <section class="bg-[#142B3B] py-14">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="bg-white/5 border border-white/10 rounded-[28px] p-6 sm:p-8">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div>
-                <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Why choose us</div>
-                <h2 class="mt-2 text-3xl font-black text-white">Built for reliable shopping in Nepal</h2>
-              </div>
-              <a href="#products" class="inline-flex items-center justify-center rounded-full bg-gold text-navy font-semibold px-6 py-3 hover:bg-[#e7b86d]">
-                Shop the collection
-              </a>
-            </div>
-
-            <div class="mt-8 grid md:grid-cols-3 gap-5">
-              <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 flex items-center justify-center text-gold text-xl">⚡</div>
-                <h3 class="mt-4 font-bold text-xl text-white">Fast ordering experience</h3>
-                <p class="mt-2 text-slate-300">Quick product discovery, direct buy options, and WhatsApp ordering for smooth support.</p>
-              </div>
-              <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 flex items-center justify-center text-gold text-xl">🚚</div>
-                <h3 class="mt-4 font-bold text-xl text-white">Flexible delivery</h3>
-                <p class="mt-2 text-slate-300">Configure delivery charges and fulfill orders across Nepal with easy planning.</p>
-              </div>
-              <div class="rounded-2xl bg-white/5 p-5 border border-white/10">
-                <div class="w-12 h-12 rounded-2xl bg-gold/15 flex items-center justify-center text-gold text-xl">🔒</div>
-                <h3 class="mt-4 font-bold text-xl text-white">Trusted checkout</h3>
-                <p class="mt-2 text-slate-300">Cash on delivery and online payment support with clear product status visibility.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="max-w-7xl mx-auto px-4 py-14">
-        <div class="rounded-[32px] bg-gradient-to-r from-[#142B3B] to-[#20394e] p-8 sm:p-10">
-          <div class="grid lg:grid-cols-[1fr_0.7fr] gap-8 items-center">
-            <div>
-              <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Newsletter</div>
-              <h2 class="mt-3 text-3xl font-black text-white">Get product alerts & new arrivals</h2>
-              <p class="mt-3 text-slate-300 max-w-lg">Stay updated with the latest gadgets, home essentials, and seasonal deals from Koseli Imports.</p>
-            </div>
-
-            <form class="flex flex-col sm:flex-row gap-3">
-              <input type="email" placeholder="Your email address" class="flex-1 h-12 px-4 rounded-full border border-white/15 bg-white/10 text-white placeholder:text-slate-300 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" />
-              <button type="button" class="h-12 px-6 rounded-full bg-gold text-navy font-semibold hover:bg-[#e7b86d]">Subscribe</button>
-            </form>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="bg-[#0d1e2d] text-slate-200">
-      <div class="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-2 lg:grid-cols-5 gap-8">
-        <div class="lg:col-span-2">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gold text-navy flex items-center justify-center font-black">K</div>
-            <div class="text-xl font-black text-white">Koseli Imports</div>
-          </div>
-          <p class="mt-4 max-w-md text-slate-300">Modern marketplace for dependable everyday essentials, gadgets, home products, and lifestyle needs across Nepal.</p>
-        </div>
-
-        <div>
-          <h3 class="text-white font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-sm text-slate-300">
-            <li><a href="#">Home</a></li>
-            <li><a href="#categories">Categories</a></li>
-            <li><a href="#products">Shop</a></li>
-            <li><a href="#">Offers</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="text-white font-bold mb-4">Categories</h3>
-          <ul class="space-y-2 text-sm text-slate-300">
-            <li><a href="#">Electronics</a></li>
-            <li><a href="#">Home & Kitchen</a></li>
-            <li><a href="#">Fashion</a></li>
-            <li><a href="#">Travel</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 class="text-white font-bold mb-4">Contact</h3>
-          <ul class="space-y-2 text-sm text-slate-300">
-            <li>Kathmandu, Nepal</li>
-            <li>+977 9800000000</li>
-            <li>hello@koseliimports.com</li>
-            <li>WhatsApp Orders</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-4 py-4 text-sm text-slate-400 flex flex-col sm:flex-row justify-between gap-2">
-          <span>© 2026 Koseli Imports. All rights reserved.</span>
-          <span>Cash on delivery • Secure payments • WhatsApp support</span>
-        </div>
-      </div>
-    </footer>
-
-    <a
-      href="https://wa.me/9779800000000?text=Hello%20Koseli%20Imports%2C%20I%20want%20to%20place%20an%20order."
-      target="_blank"
-      rel="noopener noreferrer"
-      class="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105 transition-transform"
-      aria-label="Contact on WhatsApp"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.52 3.48A11.7 11.7 0 0012.03 0C5.47 0 .12 5.35.12 11.92c0 2.1.55 4.15 1.6 5.97L0 24l6.26-1.64A11.92 11.92 0 0012.04 24c6.56 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.18-3.44-8.6zM12 3.48c-4.63 0-8.39 3.76-8.39 8.39 0 1.48.39 2.93 1.11 4.18l-.73 2.63 2.68-.7c1.18.67 2.54 1.03 3.98 1.03 4.63 0 8.39-3.76 8.39-8.39S16.63 3.48 12 3.48zm4.93 10.82c-.17.47-.98.91-1.35.96-.36.05-.81.08-1.46-.17-.34-.13-.77-.31-1.36-.62-.49-.26-1.04-.6-1.93-1.58-.64-.7-1.08-1.55-1.21-1.83-.13-.28-.13-.57.08-.84.09-.12.22-.3.34-.44.12-.15.27-.36.4-.56.13-.18.18-.34.27-.54.09-.2.04-.39-.02-.54-.07-.15-.5-1.22-.68-1.68-.18-.46-.35-.42-.5-.42h-.42c-.14 0-.38.03-.58.27-.2.24-.76.74-.76 1.81 0 1.08.78 2.1.89 2.26.1.16 1.52 2.36 3.72 3.2.52.22.93.35 1.25.45.52.17 1 .15 1.38.09.42-.06 1.31-.54 1.49-1.06.18-.52.18-.97.13-1.06z" />
-      </svg>
-    </a>
-
-    <aside id="cartDrawer" class="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300">
-      <div class="flex items-center justify-between p-5 border-b border-slate-200">
-        <div>
-          <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Cart</div>
-          <h3 class="mt-1 text-2xl font-black text-navy">Your order</h3>
-        </div>
-        <button id="closeCart" class="p-2 rounded-full hover:bg-slate-100" aria-label="Close cart">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="p-5 overflow-y-auto hide-scrollbar h-[calc(100%-170px)]">
-        <div id="cartItems" class="space-y-4"></div>
-      </div>
-
-      <div class="absolute bottom-0 left-0 right-0 p-5 border-t border-slate-200 bg-white">
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-slate-500">Subtotal</span>
-          <span id="cartSubtotal" class="text-xl font-black text-navy">NPR 0</span>
-        </div>
-        <button id="checkoutBtn" class="w-full h-12 rounded-full bg-navy text-white font-semibold hover:bg-[#1d3348]">
-          Checkout on WhatsApp
-        </button>
-      </div>
-    </aside>
-
-    <div id="cartOverlay" class="fixed inset-0 bg-slate-900/40 z-40 hidden"></div>
-
-    <div id="checkoutModal" class="fixed inset-0 z-[70] hidden">
-      <div class="absolute inset-0 bg-slate-900/60"></div>
-      <div class="relative max-w-xl mx-auto mt-16 bg-white rounded-[28px] shadow-2xl p-6">
-        <div class="flex items-start justify-between gap-4 mb-5">
-          <div>
-            <div class="text-xs uppercase tracking-[0.2em] text-gold font-semibold">Order</div>
-            <h3 class="mt-1 text-2xl font-black text-navy">WhatsApp checkout</h3>
-          </div>
-          <button id="closeModal" class="p-2 rounded-full hover:bg-slate-100">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="space-y-4">
-          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
-            <div class="flex justify-between text-sm text-slate-500">
-              <span>Order ID</span>
-              <span id="modalOrderId" class="font-semibold text-navy">KO-00000000</span>
-            </div>
-            <div class="mt-3 space-y-2" id="checkoutItems"></div>
-            <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center">
-              <span class="font-semibold text-slate-700">Total</span>
-              <span id="checkoutTotal" class="text-xl font-black text-navy">NPR 0</span>
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">Full name</label>
-              <input id="customerName" type="text" class="w-full h-11 rounded-xl border border-slate-200 px-3 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" placeholder="Your name" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">Phone number</label>
-              <input id="customerPhone" type="tel" class="w-full h-11 rounded-xl border border-slate-200 px-3 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" placeholder="+977 98..." />
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-3">
-            <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">City</label>
-              <input id="customerCity" type="text" class="w-full h-11 rounded-xl border border-slate-200 px-3 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" placeholder="Kathmandu" />
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-slate-700 mb-1">Address</label>
-              <input id="customerAddress" type="text" class="w-full h-11 rounded-xl border border-slate-200 px-3 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" placeholder="Street / Ward / Area" />
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-1">Notes (optional)</label>
-            <textarea id="customerNotes" rows="3" class="w-full rounded-xl border border-slate-200 px-3 py-2 focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/30" placeholder="Delivery instructions, preferred time, etc."></textarea>
-          </div>
-
-          <button id="sendWhatsApp" class="w-full h-12 rounded-full bg-[#25D366] text-white font-semibold hover:bg-[#22c55e]">
-            Send order to WhatsApp
-          </button>
-        </div>
-      </div>
     </div>
 
-    <script>
-      const categories = [
-        { id: 'electronics', name: 'Electronics & Gadgets', description: 'Smart living essentials and tech upgrades.', cover: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 18 },
-        { id: 'mobile', name: 'Mobile Accessories', description: 'Chargers, cases, cables, and audio gear.', cover: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 22 },
-        { id: 'computer', name: 'Computer & Laptop Accessories', description: 'Productivity and desk accessories.', cover: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 14 },
-        { id: 'home', name: 'Home & Kitchen', description: 'Useful living essentials and modern homeware.', cover: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 26 },
-        { id: 'fashion', name: 'Fashion & Lifestyle', description: 'Daily style essentials and lifestyle finds.', cover: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80', status: 'coming soon', availableProducts: 9 },
-        { id: 'beauty', name: 'Beauty & Personal Care', description: 'Personal care favorites and daily wellness items.', cover: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 11 },
-        { id: 'car', name: 'Car Accessories', description: 'Travel-friendly additions for cleaner drives.', cover: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80', status: 'coming soon', availableProducts: 13 },
-        { id: 'sports', name: 'Sports & Outdoor', description: 'Outdoor gear for active lifestyles.', cover: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 10 },
-        { id: 'travel', name: 'Travel Accessories', description: 'Compact travel tools and everyday carry.', cover: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 17 },
-        { id: 'office', name: 'Office & Stationery', description: 'Workday essentials for students and professionals.', cover: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 19 },
-        { id: 'smart-home', name: 'Smart Home Accessories', description: 'Intelligent upgrades for modern homes.', cover: 'https://images.unsplash.com/photo-1585518419759-7fe2e0fbf8a6?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 12 },
-        { id: 'daily', name: 'Daily Use Products', description: 'Useful household basics and everyday items.', cover: 'https://images.unsplash.com/photo-1600210492486-3c0d4f5d2d8b?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 16 },
-        { id: 'new-arrivals', name: 'New Arrivals', description: 'Fresh additions to the marketplace.', cover: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80', status: 'available', availableProducts: 8 }
-      ];
-
-      const products = [
-        { id: 1, name: 'Wireless Earbuds Pro', category: 'Electronics & Gadgets', categoryId: 'electronics', sku: 'KO-EL-001', price: 4200, comparePrice: 5200, status: 'available', stockQty: 14, description: 'Noise-cancelling audio with deep bass and long battery life.', image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=900&q=80', specs: ['12h Battery', 'Bluetooth 5.3'], createdAt: 2026 },
-        { id: 2, name: 'Magnetic Car Holder', category: 'Car Accessories', categoryId: 'car', sku: 'KO-CA-014', price: 1200, comparePrice: 1800, status: 'limited stock', stockQty: 5, description: '90° adjustable mount for safe hands-free driving.', image: 'https://images.unsplash.com/photo-1493238792000-8113da705763?auto=format&fit=crop&w=900&q=80', specs: ['Fast Mount', '360° Rotation'], createdAt: 2025 },
-        { id: 3, name: 'Smart LED Bulb Pack', category: 'Smart Home Accessories', categoryId: 'smart-home', sku: 'KO-SH-009', price: 1800, comparePrice: 2400, status: 'available', stockQty: 21, description: 'Warm ambient lighting with app and voice controls.', image: 'https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=900&q=80', specs: ['Voice Control', '8W Power'], createdAt: 2026 },
-        { id: 4, name: 'Laptop Cooling Pad', category: 'Computer & Laptop Accessories', categoryId: 'computer', sku: 'KO-CP-008', price: 3500, comparePrice: 4700, status: 'available', stockQty: 11, description: 'Quiet airflow design to keep your device cool during heavy work.', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80', specs: ['Dual Fans', 'USB Powered'], createdAt: 2024 },
-        { id: 5, name: 'Travel Organizer Set', category: 'Travel Accessories', categoryId: 'travel', sku: 'KO-TR-005', price: 2600, comparePrice: 3400, status: 'available', stockQty: 9, description: 'Perfect packing solution with breathable compartments and compact shape.', image: 'https://images.unsplash.com/photo-1527631746610-bca00a040d0a?auto=format&fit=crop&w=900&q=80', specs: ['Waterproof', 'Lightweight'], createdAt: 2026 },
-        { id: 6, name: 'Portable Blender', category: 'Home & Kitchen', categoryId: 'home', sku: 'KO-HK-022', price: 4800, comparePrice: 6200, status: 'limited stock', stockQty: 4, description: 'Blends smoothies and shakes anywhere with rechargeable power.', image: 'https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?auto=format&fit=crop&w=900&q=80', specs: ['USB Recharge', '500ml Jar'], createdAt: 2025 },
-        { id: 7, name: 'Premium Desk Lamp', category: 'Office & Stationery', categoryId: 'office', sku: 'KO-OF-011', price: 2900, comparePrice: 3600, status: 'available', stockQty: 15, description: 'Minimal desk lamp with warm light and touch dimming.', image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=900&q=80', specs: ['Touch Control', 'Adjustable Arm'], createdAt: 2024 },
-        { id: 8, name: 'Universal Power Bank', category: 'Mobile Accessories', categoryId: 'mobile', sku: 'KO-MA-019', price: 3300, comparePrice: 4200, status: 'available', stockQty: 10, description: 'Reliable backup power with fast-charging compatibility.', image: 'https://images.unsplash.com/photo-1609091839311-d5365f9c5d1c?auto=format&fit=crop&w=900&q=80', specs: ['20000mAh', 'Dual USB'], createdAt: 2026 },
-        { id: 9, name: 'Stainless Steel Bottle', category: 'Daily Use Products', categoryId: 'daily', sku: 'KO-DU-015', price: 1900, comparePrice: 2500, status: 'available', stockQty: 18, description: 'Leak-proof insulated bottle for work, gym, or travel.', image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=900&q=80', specs: ['Double Wall', 'BPA Free'], createdAt: 2025 },
-        { id: 10, name: 'Outdoor Fitness Band', category: 'Sports & Outdoor', categoryId: 'sports', sku: 'KO-SP-010', price: 6200, comparePrice: 7600, status: 'coming soon', stockQty: 0, description: 'Smart band for workouts, steps, and sleep tracking.', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80', specs: ['Heart Rate', 'IP68'], createdAt: 2024 },
-        { id: 11, name: 'Bluetooth Speaker Mini', category: 'Electronics & Gadgets', categoryId: 'electronics', sku: 'KO-EL-032', price: 2700, comparePrice: 3200, status: 'out of stock', stockQty: 0, description: 'Pocket-size speaker with rich sound and portable build.', image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80', specs: ['360° Sound', 'IPX5'], createdAt: 2026 },
-        { id: 12, name: 'Smart Watch Classic', category: 'New Arrivals', categoryId: 'new-arrivals', sku: 'KO-NA-011', price: 7900, comparePrice: 9800, status: 'pre-order', stockQty: 0, description: 'Modern design, fitness tracking, and everyday convenience.', image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80', specs: ['AMOLED', 'Health Tracking'], createdAt: 2025 },
-        { id: 13, name: 'Neck Fan Portable', category: 'Daily Use Products', categoryId: 'daily', sku: 'KO-DU-040', price: 2200, comparePrice: 3000, status: 'available', stockQty: 16, description: 'Comfortable cooling for summer commutes and daily use.', image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&w=900&q=80', specs: ['3-Speed', 'USB-C'], createdAt: 2026 },
-        { id: 14, name: 'Plastic Storage Organizer', category: 'Home & Kitchen', categoryId: 'home', sku: 'KO-HK-047', price: 1500, comparePrice: 2100, status: 'available', stockQty: 24, description: 'Neat storage for drawers, shelves, and kitchen essentials.', image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80', specs: ['Stackable', 'Space Saver'], createdAt: 2024 },
-        { id: 15, name: 'Travel Neck Pillow', category: 'Travel Accessories', categoryId: 'travel', sku: 'KO-TR-030', price: 2100, comparePrice: 2800, status: 'available', stockQty: 12, description: 'Comfortable pillow support for flights and long rides.', image: 'https://images.unsplash.com/photo-1527631746610-bca00a040d0a?auto=format&fit=crop&w=900&q=80', specs: ['Memory Foam', 'Washable'], createdAt: 2026 },
-        { id: 16, name: 'Mini Projector', category: 'Electronics & Gadgets', categoryId: 'electronics', sku: 'KO-EL-042', price: 14500, comparePrice: 17200, status: 'available', stockQty: 7, description: 'Portable projector for movies, work presentations, and gaming.', image: 'https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=900&q=80', specs: ['1080p', 'HDMI Input'], createdAt: 2026 }
-      ];
-
-      const cart = JSON.parse(localStorage.getItem('koseli_cart') || '[]');
-      const formatNPR = (amount) => `NPR ${Number(amount).toLocaleString('en-US')}`;
-      const productStatusMap = {
-        available: { text: 'Available', className: 'status-available' },
-        'limited stock': { text: 'Limited Stock', className: 'status-limited' },
-        'out of stock': { text: 'Out of Stock', className: 'status-out' },
-        'coming soon': { text: 'Coming Soon', className: 'status-coming' },
-        'pre-order': { text: 'Pre-order', className: 'status-preorder' }
-      };
-
-      const categoryGrid = document.getElementById('categoryGrid');
-      const productsGrid = document.getElementById('productsGrid');
-      const categoryFilter = document.getElementById('categoryFilter');
-      const statusFilter = document.getElementById('statusFilter');
-      const sortFilter = document.getElementById('sortFilter');
-      const searchInput = document.getElementById('searchInput');
-      const mobileSearchInput = document.getElementById('mobileSearchInput');
-
-      function renderCategoryOptions() {
-        categories.forEach((category) => {
-          const option = document.createElement('option');
-          option.value = category.id;
-          option.textContent = category.name;
-          categoryFilter.appendChild(option);
-        });
-      }
-
-      function renderCategories() {
-        categoryGrid.innerHTML = categories.map((category) => `
-          <article class="group rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-sm hover:shadow-soft">
-            <div class="relative h-40 overflow-hidden">
-              <img src="${category.cover}" alt="${category.name}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
-              ${category.status === 'coming soon' ? `
-                <div class="absolute inset-0 bg-slate-950/35"></div>
-                <span class="absolute top-3 left-3 status-badge status-coming">Coming Soon</span>
-              ` : `
-                <span class="absolute top-3 left-3 status-badge status-available">Available</span>
-              `}
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Hero Banner -->
+        <div class="bg-navy rounded-xl overflow-hidden relative mb-12 flex items-center">
+            <div class="absolute inset-0 opacity-20">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
             </div>
-            <div class="p-4">
-              <div class="flex justify-between items-start gap-3">
+            <div class="relative z-10 p-8 md:p-16 max-w-2xl">
+                <span class="bg-gold text-navy text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Welcome to Koseli Imports</span>
+                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">Global Products.<br>Local Trust.</h1>
+                <p class="text-gray-300 mb-8 text-lg">Discover premium imports from China. Delivered to your door in Nepal. Shop now and pay via Cash on Delivery or Online.</p>
+                <a href="#shop" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-6 py-3 rounded-md hover:bg-[#c4984c] transition-colors">
+                    Shop Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="mb-16">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-navy">Browse Categories</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="categoryGrid">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="shop">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4">
                 <div>
-                  <h3 class="text-lg font-bold text-navy">${category.name}</h3>
-                  <p class="mt-1 text-sm text-slate-600">${category.description}</p>
+                    <h2 class="text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
+                    <p class="text-gray-500 text-sm mt-1">Curated items for modern living.</p>
                 </div>
-                <span class="text-xs font-bold text-slate-500 rounded-full bg-slate-100 px-2 py-1">${category.availableProducts} items</span>
-              </div>
-
-              ${category.status === 'coming soon' ? `
-                <div class="mt-4 rounded-2xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-700">
-                  We’re bringing exciting products to this category.
+                <!-- Filters -->
+                <div class="flex items-center gap-2">
+                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-sm text-navy hover:text-gold font-medium mr-2 underline">Clear Filters</button>
+                    <select id="filterSelect" class="border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
+                        <option value="all">All Availability</option>
+                        <option value="AVAILABLE">Available</option>
+                        <option value="OUT_OF_STOCK">Out of Stock</option>
+                        <option value="PRE_ORDER">Pre-order</option>
+                    </select>
                 </div>
-              ` : `
-                <div class="mt-4 flex items-center justify-between">
-                  <span class="text-xs uppercase tracking-[0.16em] text-slate-500">Ready to shop</span>
-                  <span class="text-sm font-semibold text-gold">${category.availableProducts} available</span>
-                </div>
-              `}
-
-              <button
-                type="button"
-                data-category="${category.id}"
-                class="mt-4 w-full h-11 rounded-full border border-slate-200 text-navy font-semibold hover:bg-slate-50"
-              >
-                ${category.status === 'coming soon' ? 'View Category' : 'View Products'}
-              </button>
             </div>
-          </article>
-        `).join('');
-      }
-
-      function getFilteredProducts() {
-        const searchTerm = (searchInput.value || mobileSearchInput.value || '').trim().toLowerCase();
-        const selectedCategory = categoryFilter.value;
-        const selectedStatus = statusFilter.value;
-        let filtered = [...products];
-
-        if (searchTerm) {
-          filtered = filtered.filter(product =>
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.category.toLowerCase().includes(searchTerm) ||
-            product.sku.toLowerCase().includes(searchTerm)
-          );
-        }
-
-        if (selectedCategory !== 'all') {
-          filtered = filtered.filter(product => product.categoryId === selectedCategory);
-        }
-
-        if (selectedStatus !== 'all') {
-          filtered = filtered.filter(product => product.status.toLowerCase() === selectedStatus.toLowerCase());
-        }
-
-        const sortMode = sortFilter.value;
-        if (sortMode === 'newest') {
-          filtered.sort((a, b) => b.createdAt - a.createdAt);
-        } else if (sortMode === 'price-low') {
-          filtered.sort((a, b) => a.price - b.price);
-        } else if (sortMode === 'price-high') {
-          filtered.sort((a, b) => b.price - a.price);
-        } else {
-          filtered.sort((a, b) => b.createdAt - a.createdAt);
-        }
-
-        return filtered;
-      }
-
-      function renderProducts() {
-        const filtered = getFilteredProducts();
-
-        if (!filtered.length) {
-          productsGrid.innerHTML = `
-            <div class="col-span-full rounded-[28px] border border-dashed border-slate-300 bg-slate-50 p-10 text-center">
-              <div class="w-16 h-16 mx-auto rounded-full bg-slate-200 flex items-center justify-center text-2xl">🔎</div>
-              <h3 class="mt-4 text-2xl font-black text-navy">No products found</h3>
-              <p class="mt-2 text-slate-600">Try another search term or change the filters to see more items.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
+                <!-- Injected via JS -->
             </div>
-          `;
-          return;
-        }
-
-        productsGrid.innerHTML = filtered.map((product) => {
-          const status = productStatusMap[product.status] || { text: 'Available', className: 'status-available' };
-          const isUnavailable = ['out of stock', 'coming soon'].includes(product.status);
-
-          return `
-            <article class="product-card rounded-[28px] border border-slate-200 bg-white shadow-sm overflow-hidden">
-              <div class="relative">
-                <img src="${product.image}" alt="${product.name}" class="h-64 w-full object-cover" />
-                <div class="absolute right-3 top-3 flex gap-2">
-                  <button type="button" class="w-9 h-9 rounded-full bg-white/90 flex items-center justify-center shadow-sm hover:bg-white" aria-label="Wishlist">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 10-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z" />
-                    </svg>
-                  </button>
-                </div>
-                <div class="absolute left-3 top-3">
-                  <span class="status-badge ${status.className}">${status.text}</span>
-                </div>
-              </div>
-
-              <div class="p-4">
-                <div class="text-[11px] uppercase tracking-[0.14em] text-slate-500">${product.category}</div>
-                <h3 class="mt-2 text-xl font-bold text-navy leading-snug">${product.name}</h3>
-                <div class="mt-2 text-[11px] uppercase tracking-[0.12em] text-slate-400">SKU: ${product.sku}</div>
-
-                <div class="mt-4 flex items-end gap-2">
-                  <span class="text-2xl font-black text-navy">${formatNPR(product.price)}</span>
-                  ${product.comparePrice ? `<span class="text-sm text-slate-400 line-through">${formatNPR(product.comparePrice)}</span>` : ''}
-                </div>
-
-                <div class="mt-4 text-sm text-slate-600">
-                  ${product.description}
-                </div>
-
-                <div class="mt-4 flex flex-wrap gap-2">
-                  ${product.specs.slice(0, 2).map(spec => `
-                    <span class="bg-slate-100 text-slate-600 rounded-full px-2 py-1 text-[10px] font-semibold">${spec}</span>
-                  `).join('')}
-                </div>
-
-                <div class="mt-5 flex gap-2">
-                  <button type="button" data-add-to-cart="${product.id}" class="flex-1 h-11 rounded-full bg-navy text-white font-semibold hover:bg-[#1d3348]" ${isUnavailable ? 'disabled' : ''}>
-                    ${isUnavailable ? 'Unavailable' : 'Add to Cart'}
-                  </button>
-                  <button type="button" data-whatsapp-item="${product.id}" class="h-11 w-11 rounded-full border border-slate-200 hover:bg-slate-50" aria-label="Order on WhatsApp">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto text-[#25D366]" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M20.52 3.48A11.7 11.7 0 0012.03 0C5.47 0 .12 5.35.12 11.92c0 2.1.55 4.15 1.6 5.97L0 24l6.26-1.64A11.92 11.92 0 0012.04 24c6.56 0 11.92-5.35 11.92-11.92 0-3.18-1.24-6.18-3.44-8.6zM12 3.48c-4.63 0-8.39 3.76-8.39 8.39 0 1.48.39 2.93 1.11 4.18l-.73 2.63 2.68-.7c1.18.67 2.54 1.03 3.98 1.03 4.63 0 8.39-3.76 8.39-8.39S16.63 3.48 12 3.48zm4.93 10.82c-.17.47-.98.91-1.35.96-.36.05-.81.08-1.46-.17-.34-.13-.77-.31-1.36-.62-.49-.26-1.04-.6-1.93-1.58-.64-.7-1.08-1.55-1.21-1.83-.13-.28-.13-.57.08-.84.09-.12.22-.3.34-.44.12-.15.27-.36.4-.56.13-.18.18-.34.27-.54.09-.2.04-.39-.02-.54-.07-.15-.5-1.22-.68-1.68-.18-.46-.35-.42-.5-.42h-.42c-.14 0-.38.03-.58.27-.2.24-.76.74-.76 1.81 0 1.08.78 2.1.89 2.26.1.16 1.52 2.36 3.72 3.2.52.22.93.35 1.25.45.52.17 1 .15 1.38.09.42-.06 1.31-.54 1.49-1.06.18-.52.18-.97.13-1.06z" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </article>
-          `;
-        }).join('');
-      }
-
-      function saveCart() {
-        localStorage.setItem('koseli_cart', JSON.stringify(cart));
-      }
-
-      function renderCart() {
-        const cartItems = document.getElementById('cartItems');
-        if (!cart.length) {
-          cartItems.innerHTML = `
-            <div class="rounded-2xl bg-slate-50 border border-dashed border-slate-200 p-6 text-center">
-              <div class="text-3xl">🛒</div>
-              <p class="mt-3 text-slate-600">Your cart is empty.</p>
+            
+            <!-- Empty State (Hidden by default) -->
+            <div id="emptyState" class="hidden text-center py-20 bg-white rounded-xl border border-gray-200">
+                <i data-lucide="search-x" class="w-12 h-12 text-gray-400 mx-auto mb-4"></i>
+                <h3 class="text-lg font-bold text-navy mb-2">No products found</h3>
+                <p class="text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
             </div>
-          `;
-          document.getElementById('cartSubtotal').textContent = 'NPR 0';
-          return;
-        }
+        </div>
+    </main>
 
-        cartItems.innerHTML = cart.map(item => `
-          <div class="flex gap-3 rounded-2xl border border-slate-200 p-3">
-            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-xl object-cover" />
-            <div class="flex-1">
-              <div class="flex justify-between gap-3">
-                <div class="font-bold text-navy text-sm">${item.name}</div>
-                <button type="button" data-remove-item="${item.id}" class="text-slate-400 hover:text-red-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div class="mt-1 text-xs uppercase tracking-[0.12em] text-slate-500">${item.sku}</div>
-              <div class="mt-3 flex items-center justify-between">
-                <div class="inline-flex items-center border border-slate-200 rounded-full overflow-hidden">
-                  <button type="button" data-qty-change="${item.id}:decrease" class="w-8 h-8 text-lg">−</button>
-                  <span class="w-8 text-center text-sm font-semibold">${item.quantity}</span>
-                  <button type="button" data-qty-change="${item.id}:increase" class="w-8 h-8 text-lg">+</button>
+    <!-- Footer -->
+    <footer class="bg-navy text-white mt-20 pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center mb-4">
+                    <!-- Logo with white background so it shows up on navy -->
+                    <div class="bg-white p-2 rounded-lg inline-block">
+                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-12 w-auto object-contain">
+                    </div>
                 </div>
-                <div class="font-black text-navy">${formatNPR(item.price * item.quantity)}</div>
-              </div>
+                <p class="text-gray-400 text-sm max-w-sm mb-6 mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
             </div>
-          </div>
-        `).join('');
+            <div>
+                <h4 class="font-bold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#shop" class="hover:text-gold transition-colors">Shop All</a></li>
+                    <li><a href="#" class="hover:text-gold transition-colors">Track Order</a></li>
+                    <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
+                    <li><a href="#" class="hover:text-gold transition-colors">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Customer Service</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li>Kathmandu, Nepal</li>
+                    <li>support@koseliimports.com</li>
+                    <li>+977 98XXXXXXXX</li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
+            &copy; 2025 Koseli Imports. All rights reserved.
+        </div>
+    </footer>
 
-        const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        document.getElementById('cartSubtotal').textContent = formatNPR(subtotal);
-      }
+    <!-- Shopping Cart Drawer -->
+    <div class="fixed inset-0 bg-black/50 z-[100] hidden" id="cartOverlay"></div>
+    <div class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[101] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl" id="cartDrawer">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <h2 class="text-lg font-bold text-navy">Your Cart</h2>
+            <button id="cartClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4" id="cartItems">
+            <!-- Items injected via JS -->
+        </div>
+        <div class="p-4 border-t border-gray-200 bg-offwhite">
+            <div class="flex justify-between font-bold text-lg mb-4">
+                <span>Total</span>
+                <span id="cartTotal">Rs. 0</span>
+            </div>
+            <button id="checkoutBtn" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors" disabled>
+                <i data-lucide="message-circle" class="w-5 h-5"></i> Order on WhatsApp
+            </button>
+        </div>
+    </div>
 
-      function addToCart(productId) {
-        const product = products.find(item => item.id === Number(productId));
-        if (!product || product.status === 'out of stock' || product.status === 'coming soon') {
-          return;
+    <!-- Checkout Modal -->
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-4" id="checkoutModal">
+        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-navy" id="modalTitle">Delivery Details</h2>
+                <button id="modalClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <!-- Step 1: Form -->
+                <form id="orderForm">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Full Name</label>
+                            <input type="text" id="fullName" required class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Phone Number</label>
+                            <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy" placeholder="98XXXXXXXX">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Delivery Address</label>
+                            <textarea id="address" required rows="2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy" placeholder="Street, Ward, Municipality, District"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full mt-6 bg-navy text-white py-3 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Continue to Payment</button>
+                </form>
+
+                <!-- Step 2: Payment Info -->
+                <div id="paymentStep" class="hidden text-center">
+                    <p class="text-sm text-gray-500 mb-6">Please scan the QR code to pay via eSewa, Khalti, or Bank. After paying, click the button below.</p>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KoseliImportsPay" alt="QR Code" class="w-48 h-48 mx-auto border-2 border-dashed border-gray-300 rounded-lg p-2 mb-6">
+                    <button id="verifyBtn" class="w-full bg-gold text-navy py-3 rounded-md font-bold hover:bg-[#c4984c] transition-colors">I have paid</button>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div id="successStep" class="hidden text-center py-6">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
+                    <p class="text-gray-500 text-sm mb-6">Click below to send your order details to our team on WhatsApp for final confirmation.</p>
+                    <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // ==========================================
+        // 1. DATA CONFIGURATION (Edit this section)
+        // ==========================================
+        const WHATSAPP_NUMBER = '9779800000000'; // ⚠️ REPLACE WITH YOUR WHATSAPP NUMBER
+
+        const CATEGORIES = [
+            { id: 'cat1', name: 'Electronics & Gadgets', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat2', name: 'Mobile Accessories', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat3', name: 'Home & Kitchen', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat4', name: 'Fashion & Lifestyle', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat5', name: 'Beauty & Personal Care', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat6', name: 'Car Accessories', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1503376713092-461e48c70f4b?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat7', name: 'Sports & Outdoor', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat8', name: 'Office & Stationery', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat9', name: 'Smart Home', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat10', name: 'Daily Use Products', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop' }
+        ];
+
+        const PRODUCTS = [
+            { id: 'p1', name: 'Portable Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 2800, oldPrice: 3500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p2', name: 'Fast Charging USB Cable', sku: 'MOB-CAB-02', category: 'cat2', price: 350, oldPrice: null, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p3', name: 'Smart Watch Series 8', sku: 'ELE-WCH-03', category: 'cat1', price: 4500, oldPrice: 6000, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop', status: 'LIMITED_STOCK' },
+            { id: 'p4', name: 'Stainless Steel Water Bottle', sku: 'HOM-BTL-04', category: 'cat3', price: 1200, oldPrice: null, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p5', name: 'Wireless Mouse', sku: 'OFF-MSE-05', category: 'cat8', price: 1500, oldPrice: 1800, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p6', name: 'Ceramic Coffee Mug', sku: 'HOM-MUG-06', category: 'cat3', price: 650, oldPrice: null, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p7', name: 'LED Desk Lamp', sku: 'HOM-LMP-07', category: 'cat3', price: 1800, oldPrice: 2200, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=600&auto=format&fit=crop', status: 'PRE_ORDER' },
+            { id: 'p8', name: 'Facial Cleanser', sku: 'BEA-CLN-08', category: 'cat5', price: 850, oldPrice: null, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' }
+        ];
+
+        // ==========================================
+        // 2. STATE & INITIALIZATION
+        // ==========================================
+        let cart = JSON.parse(localStorage.getItem('koseli_cart')) || [];
+        let currentSearch = '';
+        let currentFilter = 'all';
+        let activeCategoryId = null;
+
+        function init() {
+            renderCategories();
+            renderProducts();
+            updateCartUI();
+            lucide.createIcons();
         }
 
-        const existing = cart.find(item => item.id === product.id);
-        if (existing) {
-          existing.quantity += 1;
-        } else {
-          cart.push({ ...product, quantity: 1 });
+        // ==========================================
+        // 3. UI RENDERING
+        // ==========================================
+        function renderCategories() {
+            const grid = document.getElementById('categoryGrid');
+            const menuList = document.getElementById('megaMenuList');
+            
+            grid.innerHTML = CATEGORIES.map(cat => `
+                <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative">
+                    <div class="aspect-[4/3] bg-gray-100 relative">
+                        <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-2 right-2 bg-navy text-gold text-[10px] font-bold px-2 py-1 rounded">COMING SOON</div>` : ''}
+                    </div>
+                    <div class="p-3 text-center">
+                        <h3 class="font-semibold text-sm text-navy group-hover:text-gold transition-colors">${cat.name}</h3>
+                    </div>
+                </div>
+            `).join('');
+
+            menuList.innerHTML = `
+                <div onclick="resetFilters()" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 font-bold text-navy">
+                    View All Products
+                </div>
+            ` + CATEGORIES.map(cat => `
+                <div onclick="filterByCategory('${cat.id}')" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 last:border-0">
+                    <span class="text-sm text-charcoal">${cat.name}</span>
+                    ${cat.status === 'COMING_SOON' ? `<span class="text-[10px] text-gold font-bold">SOON</span>` : ''}
+                </div>
+            `).join('');
         }
 
-        saveCart();
-        updateCartCount();
-        renderCart();
-      }
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+            const clearBtn = document.getElementById('clearFilterBtn');
+            
+            let filtered = PRODUCTS.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                                      p.sku.toLowerCase().includes(currentSearch.toLowerCase());
+                
+                let matchesFilter = true;
+                if (currentFilter !== 'all') {
+                    matchesFilter = p.status === currentFilter;
+                }
 
-      function updateCartCount() {
-        const total = cart.reduce((sum, item) => sum + item.quantity, 0);
-        document.getElementById('cartCount').textContent = total;
-      }
+                return matchesSearch && matchesFilter;
+            });
 
-      function toggleCart(open) {
-        const drawer = document.getElementById('cartDrawer');
-        const overlay = document.getElementById('cartOverlay');
-        drawer.classList.toggle('translate-x-full', !open);
-        overlay.classList.toggle('hidden', !open);
-      }
-
-      function buildWhatsAppMessage(customerName, customerPhone, city, address, notes) {
-        const orderId = `KO-${Date.now().toString().slice(-8)}`;
-        const itemsText = cart.map(item => `- ${item.name} x${item.quantity} (${formatNPR(item.price * item.quantity)})`).join('\n');
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-        const message =
-          'Hello Koseli Imports,%0A%0A' +
-          'I would like to place an order.%0A' +
-          'Order ID: ' + orderId + '%0A' +
-          'Customer Name: ' + encodeURIComponent(customerName) + '%0A' +
-          'Phone: ' + encodeURIComponent(customerPhone) + '%0A' +
-          'City: ' + encodeURIComponent(city) + '%0A' +
-          'Address: ' + encodeURIComponent(address) + '%0A' +
-          'Notes: ' + encodeURIComponent(notes || 'None') + '%0A%0A' +
-          'Items:%0A' +
-          encodeURIComponent(itemsText) + '%0A%0A' +
-          'Total: ' + encodeURIComponent(formatNPR(total)) + '%0A';
-
-        return { orderId, message };
-      }
-
-      function prepareCheckoutModal() {
-        const checkoutItems = document.getElementById('checkoutItems');
-        const checkoutTotal = document.getElementById('checkoutTotal');
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-        document.getElementById('modalOrderId').textContent = `KO-${Date.now().toString().slice(-8)}`;
-        checkoutItems.innerHTML = cart.map(item => `
-          <div class="flex justify-between text-sm">
-            <span class="text-slate-600">${item.name} x${item.quantity}</span>
-            <span class="font-semibold text-navy">${formatNPR(item.price * item.quantity)}</span>
-          </div>
-        `).join('');
-        checkoutTotal.textContent = formatNPR(total);
-      }
-
-      function openCheckoutModal() {
-        if (!cart.length) {
-          alert('Your cart is empty.');
-          return;
-        }
-        prepareCheckoutModal();
-        document.getElementById('checkoutModal').classList.remove('hidden');
-      }
-
-      function closeCheckoutModal() {
-        document.getElementById('checkoutModal').classList.add('hidden');
-      }
-
-      document.addEventListener('click', (event) => {
-        const addButton = event.target.closest('[data-add-to-cart]');
-        if (addButton) {
-          addToCart(addButton.dataset.addToCart);
-        }
-
-        const whatsappButton = event.target.closest('[data-whatsapp-item]');
-        if (whatsappButton) {
-          const product = products.find(item => item.id === Number(whatsappButton.dataset.whatsappItem));
-          if (product && product.status !== 'out of stock' && product.status !== 'coming soon') {
-            addToCart(product.id);
-            openCheckoutModal();
-          } else {
-            alert('This product is currently unavailable for purchase.');
-          }
-        }
-
-        const categoryButton = event.target.closest('[data-category]');
-        if (categoryButton) {
-          const categoryId = categoryButton.dataset.category;
-          categoryFilter.value = categoryId;
-          renderProducts();
-          window.scrollTo({ top: document.getElementById('products').offsetTop - 80, behavior: 'smooth' });
-        }
-
-        const removeButton = event.target.closest('[data-remove-item]');
-        if (removeButton) {
-          const id = Number(removeButton.dataset.removeItem);
-          const index = cart.findIndex(item => item.id === id);
-          if (index >= 0) cart.splice(index, 1);
-          saveCart();
-          updateCartCount();
-          renderCart();
-        }
-
-        const qtyButton = event.target.closest('[data-qty-change]');
-        if (qtyButton) {
-          const [id, action] = qtyButton.dataset.qtyChange.split(':');
-          const productId = Number(id);
-          const item = cart.find(entry => entry.id === productId);
-          if (!item) return;
-
-          if (action === 'increase') {
-            item.quantity += 1;
-          } else if (action === 'decrease') {
-            item.quantity -= 1;
-            if (item.quantity <= 0) {
-              const idx = cart.findIndex(entry => entry.id === productId);
-              if (idx >= 0) cart.splice(idx, 1);
+            if (activeCategoryId) {
+                filtered = filtered.filter(p => p.category === activeCategoryId);
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
             }
-          }
 
-          saveCart();
-          updateCartCount();
-          renderCart();
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(p => {
+                const isOutOfStock = p.status === 'OUT_OF_STOCK';
+                const isComingSoon = p.status === 'COMING_SOON';
+                const isPreOrder = p.status === 'PRE_ORDER';
+                const isLimited = p.status === 'LIMITED_STOCK';
+                
+                let badgeHtml = '';
+                if (isOutOfStock) badgeHtml = `<span class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">OUT OF STOCK</span>`;
+                if (isComingSoon) badgeHtml = `<span class="absolute top-2 left-2 bg-navy text-gold text-xs font-bold px-2 py-1 rounded">COMING SOON</span>`;
+                if (isPreOrder) badgeHtml = `<span class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">PRE-ORDER</span>`;
+                if (isLimited) badgeHtml = `<span class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">LIMITED STOCK</span>`;
+
+                return `
+                <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow group flex flex-col relative">
+                    ${badgeHtml}
+                    <div class="aspect-square bg-offwhite rounded-md mb-4 overflow-hidden relative">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col">
+                        <div class="text-xs text-gray-500 mb-1">SKU: ${p.sku}</div>
+                        <h3 class="font-semibold text-charcoal mb-2 line-clamp-2">${p.name}</h3>
+                        
+                        <div class="mt-auto pt-2">
+                            ${p.oldPrice ? `<div class="text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
+                            <div class="text-lg font-bold text-navy mb-3">Rs. ${p.price.toLocaleString()}</div>
+                            
+                            ${isOutOfStock ? `
+                                <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello, I am interested in ${p.name} (Out of stock). Please notify me when available." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                    Notify Me
+                                </a>
+                            ` : `
+                                <button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-2 rounded-md text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Cart
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+            
+            lucide.createIcons();
         }
 
-        if (event.target.id === 'cartOverlay' || event.target.closest('#closeCart')) {
-          toggleCart(false);
+        // ==========================================
+        // 4. INTERACTIVITY & LOGIC
+        // ==========================================
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderProducts();
+        });
+        document.getElementById('mobileSearchInput').addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            renderProducts();
+        });
+
+        document.getElementById('filterSelect').addEventListener('change', (e) => {
+            currentFilter = e.target.value;
+            renderProducts();
+        });
+
+        function filterByCategory(catId) {
+            activeCategoryId = catId;
+            const catName = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
+            document.getElementById('sectionTitle').innerText = catName;
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+            renderProducts();
         }
 
-        if (event.target.closest('#checkoutBtn')) {
-          openCheckoutModal();
-          toggleCart(false);
+        function resetFilters() {
+            activeCategoryId = null;
+            currentFilter = 'all';
+            currentSearch = '';
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('filterSelect').value = 'all';
+            document.getElementById('sectionTitle').innerText = 'Featured Products';
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+            renderProducts();
         }
 
-        if (event.target.closest('#closeModal')) {
-          closeCheckoutModal();
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+            
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            saveCart();
+            updateCartUI();
+            openCart();
         }
 
-        if (event.target.closest('#mobileMenuBtn')) {
-          document.getElementById('mobileDrawer').classList.remove('hidden');
+        function updateCartUI() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').innerText = count;
+            
+            const container = document.getElementById('cartItems');
+            const totalEl = document.getElementById('cartTotal');
+            const btn = document.getElementById('checkoutBtn');
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center text-gray-500 mt-10">Your cart is empty.</div>`;
+                totalEl.innerText = 'Rs. 0';
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 mb-4 border-b border-gray-100 pb-4">
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-md border border-gray-200">
+                        <div class="flex-1">
+                            <div class="font-semibold text-sm line-clamp-1">${item.name}</div>
+                            <div class="text-navy font-bold text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200">-</button>
+                                <span class="text-sm font-medium w-4 text-center">${item.qty}</span>
+                                <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                totalEl.innerText = `Rs. ${total.toLocaleString()}`;
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
         }
 
-        if (event.target.closest('#mobileClose') || event.target.id === 'mobileBackdrop') {
-          document.getElementById('mobileDrawer').classList.add('hidden');
+        function updateQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            saveCart();
+            updateCartUI();
         }
 
-        if (event.target.closest('#cartBtn')) {
-          toggleCart(true);
-        }
-      });
-
-      document.getElementById('sendWhatsApp').addEventListener('click', () => {
-        const name = document.getElementById('customerName').value.trim();
-        const phone = document.getElementById('customerPhone').value.trim();
-        const city = document.getElementById('customerCity').value.trim();
-        const address = document.getElementById('customerAddress').value.trim();
-        const notes = document.getElementById('customerNotes').value.trim();
-
-        if (!name || !phone || !city || !address) {
-          alert('Please complete your name, phone number, city, and address before sending the order.');
-          return;
+        function saveCart() {
+            localStorage.setItem('koseli_cart', JSON.stringify(cart));
         }
 
-        const { message } = buildWhatsAppMessage(name, phone, city, address, notes);
-        const whatsappUrl = 'https://wa.me/9779800000000?text=' + message;
-        window.open(whatsappUrl, '_blank');
+        // ==========================================
+        // 5. CART DRAWER & CHECKOUT FLOW
+        // ==========================================
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartOverlay = document.getElementById('cartOverlay');
+        
+        function openCart() {
+            cartDrawer.classList.remove('translate-x-full');
+            cartOverlay.classList.remove('hidden');
+        }
+        function closeCart() {
+            cartDrawer.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
+        }
+        
+        document.getElementById('cartToggle').addEventListener('click', openCart);
+        document.getElementById('cartClose').addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
 
-        closeCheckoutModal();
-        cart.length = 0;
-        saveCart();
-        updateCartCount();
-        renderCart();
-      });
+        // Checkout Modal
+        const checkoutModal = document.getElementById('checkoutModal');
+        const orderForm = document.getElementById('orderForm');
+        const paymentStep = document.getElementById('paymentStep');
+        const successStep = document.getElementById('successStep');
+        
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            closeCart();
+            checkoutModal.classList.remove('hidden');
+            checkoutModal.classList.add('flex');
+            orderForm.classList.remove('hidden');
+            paymentStep.classList.add('hidden');
+            successStep.classList.add('hidden');
+            document.getElementById('modalTitle').innerText = 'Delivery Details';
+        });
 
-      function syncSearchInputs() {
-        const value = searchInput.value;
-        mobileSearchInput.value = value;
-      }
+        document.getElementById('modalClose').addEventListener('click', () => {
+            checkoutModal.classList.add('hidden');
+            checkoutModal.classList.remove('flex');
+        });
 
-      searchInput.addEventListener('input', () => {
-        syncSearchInputs();
-        renderProducts();
-      });
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            orderForm.classList.add('hidden');
+            paymentStep.classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = 'Complete Payment';
+        });
 
-      mobileSearchInput.addEventListener('input', () => {
-        searchInput.value = mobileSearchInput.value;
-        renderProducts();
-      });
+        document.getElementById('verifyBtn').addEventListener('click', () => {
+            paymentStep.classList.add('hidden');
+            successStep.classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = 'Order Confirmed';
+            
+            // Generate WhatsApp Message
+            const name = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            
+            const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nI have completed the payment. Please confirm my order.`;
+            
+            document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
+            // Clear cart after checkout
+            cart = [];
+            saveCart();
+            updateCartUI();
+        });
 
-      [categoryFilter, statusFilter, sortFilter].forEach(el => {
-        el.addEventListener('change', renderProducts);
-      });
-
-      renderCategoryOptions();
-      renderCategories();
-      renderProducts();
-      renderCart();
-      updateCartCount();
+        // Start
+        init();
     </script>
-  </body>
+</body>
 </html>
