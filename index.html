@@ -251,17 +251,10 @@
                             <textarea id="address" required rows="2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy" placeholder="Street, Ward, Municipality, District"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="w-full mt-6 bg-navy text-white py-3 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Continue to Payment</button>
+                    <button type="submit" class="w-full mt-6 bg-navy text-white py-3 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Place Order</button>
                 </form>
 
-                <!-- Step 2: Payment Info -->
-                <div id="paymentStep" class="hidden text-center">
-                    <p class="text-sm text-gray-500 mb-6">Please scan the QR code to pay via eSewa, Khalti, or Bank. After paying, click the button below.</p>
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KoseliImportsPay" alt="QR Code" class="w-48 h-48 mx-auto border-2 border-dashed border-gray-300 rounded-lg p-2 mb-6">
-                    <button id="verifyBtn" class="w-full bg-gold text-navy py-3 rounded-md font-bold hover:bg-[#c4984c] transition-colors">I have paid</button>
-                </div>
-
-                <!-- Step 3: Success & Tracking Code -->
+                <!-- Step 2: Success & Tracking Code (QR Code Step Removed) -->
                 <div id="successStep" class="hidden text-center py-6">
                     <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="check" class="w-8 h-8"></i>
@@ -272,7 +265,7 @@
                     
                     <div class="flex flex-col gap-3">
                         <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors">
-                            <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp
+                            <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp to Pay
                         </a>
                         <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors">
                             <i data-lucide="receipt" class="w-5 h-5"></i> Get Image Bill
@@ -544,20 +537,12 @@
         document.getElementById('checkoutBtn').addEventListener('click', () => {
             closeCart(); checkoutModal.classList.remove('hidden'); checkoutModal.classList.add('flex');
             document.getElementById('orderForm').classList.remove('hidden');
-            document.getElementById('paymentStep').classList.add('hidden');
             document.getElementById('successStep').classList.add('hidden');
             document.getElementById('modalTitle').innerText = 'Delivery Details';
         });
 
         document.getElementById('modalClose').addEventListener('click', () => {
             checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex');
-        });
-
-        document.getElementById('orderForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('orderForm').classList.add('hidden');
-            document.getElementById('paymentStep').classList.remove('hidden');
-            document.getElementById('modalTitle').innerText = 'Complete Payment';
         });
 
         function generateOrderCode() {
@@ -567,7 +552,10 @@
             return code;
         }
 
-        document.getElementById('verifyBtn').addEventListener('click', () => {
+        // SUBMIT FORM = DIRECT TO SUCCESS (QR Removed)
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
             const orderCode = generateOrderCode();
             const name = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
@@ -582,15 +570,22 @@
             savedOrders.push(currentOrderData);
             localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
 
-            document.getElementById('paymentStep').classList.add('hidden');
+            // Switch UI to success
+            document.getElementById('orderForm').classList.add('hidden');
             document.getElementById('successStep').classList.remove('hidden');
-            document.getElementById('modalTitle').innerText = 'Order Confirmed';
+            document.getElementById('modalTitle').innerText = 'Order Placed';
             document.getElementById('displayOrderCode').innerText = orderCode;
             
+            // Generate WhatsApp Text asking for QR Code
             const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
-            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nI have completed the payment. Please confirm my order.`;
+            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
+            
             document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
             billImageDataUrl = null; // Reset image cache
+            
+            // Clear cart
+            cart = []; saveCart(); updateCartUI();
         });
 
         // --- IMAGE BILL GENERATION ---
