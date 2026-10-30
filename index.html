@@ -46,24 +46,31 @@
 <body class="text-charcoal antialiased">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-navy text-white text-xs font-medium py-2 text-center tracking-wide">
-        🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000 | Order 24/7 via WhatsApp
+    <div class="bg-navy text-white text-[10px] sm:text-xs font-medium py-1.5 sm:py-2 text-center tracking-wide px-2">
+        🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000
     </div>
 
     <!-- Main Header -->
-    <header class="bg-white border-b border-gray-200 relative z-50">
+    <header class="bg-white border-b border-gray-200 relative z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20 gap-4">
-                <!-- Logo -->
-                <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
-                    <img src="/logo.png" alt="Koseli Imports Logo" class="h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
-                    <div id="logo-fallback" class="hidden flex-col">
-                        <span class="font-bold text-xl text-navy tracking-tight leading-none">Koseli Imports</span>
-                        <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Nepal Marketplace</span>
-                    </div>
-                </a>
+            <div class="flex items-center justify-between h-16 md:h-20 gap-4">
+                
+                <!-- Mobile Menu Button & Logo -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 -ml-2 text-charcoal hover:text-navy">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-10 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                        <div id="logo-fallback" class="hidden flex-col">
+                            <span class="font-bold text-lg md:text-xl text-navy tracking-tight leading-none">Koseli Imports</span>
+                            <span class="text-[8px] md:text-[10px] text-gray-500 uppercase tracking-widest mt-1">Nepal Marketplace</span>
+                        </div>
+                    </a>
+                </div>
 
-                <!-- Search Bar -->
+                <!-- Desktop Search Bar -->
                 <div class="flex-1 max-w-2xl hidden md:flex relative">
                     <input type="text" id="searchInput" placeholder="Search products, categories, or SKU..." class="w-full border-2 border-navy rounded-l-md py-2 px-4 focus:outline-none focus:border-gold transition-colors">
                     <button class="bg-navy text-white px-6 rounded-r-md hover:bg-[#0d1e29] transition-colors flex items-center justify-center">
@@ -71,9 +78,9 @@
                     </button>
                 </div>
 
-                <!-- Actions -->
-                <div class="flex items-center gap-6">
-                    <button onclick="openTrackingModal()" class="hidden sm:flex flex-col items-center text-charcoal hover:text-navy transition-colors">
+                <!-- Desktop Actions -->
+                <div class="hidden md:flex items-center gap-6">
+                    <button onclick="openTrackingModal()" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors">
                         <i data-lucide="package-search" class="w-5 h-5 mb-1"></i>
                         <span class="text-xs font-medium">Track Order</span>
                     </button>
@@ -84,16 +91,24 @@
                         <span id="cartCount" class="absolute -top-1 -right-1 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
                     
-                    <a href="https://wa.me/9779863263690" target="_blank" class="hidden md:flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
+                    <a href="https://wa.me/9779863263690" target="_blank" class="flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
                         <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
                     </a>
+                </div>
+
+                <!-- Mobile Cart Icon -->
+                <div class="flex md:hidden items-center">
+                    <button onclick="openCart()" class="p-2 text-charcoal relative">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                        <span id="mobileCartCount" class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation Menu -->
-        <nav class="border-t border-gray-200 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 gap-8 text-sm font-medium overflow-x-auto hide-scrollbar">
+        <!-- Desktop Navigation Menu -->
+        <nav class="border-t border-gray-200 bg-white hidden md:block">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 gap-8 text-sm font-medium">
                 <a href="#" onclick="resetFilters()" class="text-charcoal hover:text-navy transition-colors">Home</a>
                 <div class="relative group h-full flex items-center cursor-pointer">
                     <span class="flex items-center gap-1 text-navy font-bold">
@@ -110,48 +125,72 @@
         </nav>
     </header>
 
-    <!-- Mobile Search -->
-    <div class="md:hidden p-4 bg-white border-b border-gray-200">
+    <!-- Mobile Search (Visible below header on mobile) -->
+    <div class="md:hidden p-3 bg-white border-b border-gray-200 shadow-sm relative z-30">
         <div class="flex relative">
-            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none focus:border-navy">
+            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-sm focus:outline-none focus:border-navy">
             <button class="bg-navy text-white px-4 rounded-r-md">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </button>
         </div>
     </div>
 
+    <!-- Mobile Menu Drawer -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/50 z-[100] hidden opacity-0 transition-opacity duration-300 md:hidden" onclick="toggleMobileMenu()"></div>
+    <div id="mobileMenuDrawer" class="fixed top-0 left-0 h-full w-[80%] max-w-sm bg-white z-[101] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl md:hidden">
+        <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
+            <span class="font-bold text-navy text-lg">Menu</span>
+            <button onclick="toggleMobileMenu()" class="p-2 text-gray-500 hover:text-navy"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div class="space-y-1">
+                <a href="#" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Home</a>
+                <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Shop All</a>
+                <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Track Order</a>
+                <a href="https://wa.me/9779863263690" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-[#25D366]">Contact on WhatsApp</a>
+            </div>
+            <div class="border-t border-gray-200 pt-4">
+                <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Categories</p>
+                <div id="mobileCategoryList" class="space-y-1"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="bg-navy rounded-xl overflow-hidden relative mb-12 flex items-center">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+        <!-- Hero Section -->
+        <div class="bg-navy rounded-xl overflow-hidden relative mb-8 md:mb-12 flex items-center">
             <div class="absolute inset-0 opacity-20">
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
             </div>
-            <div class="relative z-10 p-8 md:p-16 max-w-2xl">
-                <span class="bg-gold text-navy text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4 inline-block">Welcome to Koseli Imports</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-white leading-tight mb-4">Global Products.<br>Local Trust.</h1>
-                <p class="text-gray-300 mb-8 text-lg">Discover premium imports from China. Delivered to your door in Nepal. Shop now and pay via Cash on Delivery or Online.</p>
-                <a href="#shop" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-6 py-3 rounded-md hover:bg-[#c4984c] transition-colors">
-                    Shop Now <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            <div class="relative z-10 p-6 md:p-16 max-w-2xl">
+                <span class="bg-gold text-navy text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-3 md:mb-4 inline-block">Welcome to Koseli Imports</span>
+                <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-3 md:mb-4">Global Products.<br>Local Trust.</h1>
+                <p class="text-gray-300 text-sm md:text-lg mb-6 md:mb-8 max-w-sm md:max-w-none">Discover premium imports from China. Delivered to your door in Nepal.</p>
+                <a href="#shop" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-5 py-2.5 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-sm md:text-base">
+                    Shop Now <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5"></i>
                 </a>
             </div>
         </div>
 
-        <div class="mb-16">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-navy">Browse Categories</h2>
+        <!-- Categories Grid -->
+        <div class="mb-10 md:mb-16">
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+                <h2 class="text-xl md:text-2xl font-bold text-navy">Browse Categories</h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="categoryGrid"></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4" id="categoryGrid"></div>
         </div>
 
+        <!-- Products Grid -->
         <div id="shop">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 md:mb-6 gap-3 md:gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
-                    <p class="text-gray-500 text-sm mt-1">Curated items for modern living.</p>
+                    <h2 class="text-xl md:text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
+                    <p class="text-gray-500 text-xs md:text-sm mt-1">Curated items for modern living.</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-sm text-navy hover:text-gold font-medium mr-2 underline">Clear Filters</button>
-                    <select id="filterSelect" class="border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-xs text-navy hover:text-gold font-medium mr-auto underline">Clear Filters</button>
+                    <select id="filterSelect" class="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
                         <option value="all">All Availability</option>
                         <option value="AVAILABLE">Available</option>
                         <option value="OUT_OF_STOCK">Out of Stock</option>
@@ -160,31 +199,31 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid"></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6" id="productGrid"></div>
             
-            <div id="emptyState" class="hidden text-center py-20 bg-white rounded-xl border border-gray-200">
-                <i data-lucide="search-x" class="w-12 h-12 text-gray-400 mx-auto mb-4"></i>
-                <h3 class="text-lg font-bold text-navy mb-2">No products found</h3>
-                <p class="text-gray-500">Try adjusting your search or filter.</p>
+            <div id="emptyState" class="hidden text-center py-16 md:py-20 bg-white rounded-xl border border-gray-200">
+                <i data-lucide="search-x" class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4"></i>
+                <h3 class="text-base md:text-lg font-bold text-navy mb-1 md:mb-2">No products found</h3>
+                <p class="text-gray-500 text-sm">Try adjusting your search or filter.</p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-navy text-white mt-20 pt-12 pb-6" id="contact">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <footer class="bg-navy text-white mt-12 md:mt-20 pt-10 md:pt-12 pb-6" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 md:mb-12">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center mb-4">
                     <div class="bg-white p-2 rounded-lg inline-block">
-                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
-                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-xl px-2">Koseli Imports</span>
+                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
+                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-lg md:text-xl px-2">Koseli Imports</span>
                     </div>
                 </div>
-                <p class="text-gray-400 text-sm max-w-sm mb-6 mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
+                <p class="text-gray-400 text-xs md:text-sm max-w-sm mb-4 md:mb-6 mt-2 md:mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
             </div>
             <div>
-                <h4 class="font-bold mb-4">Quick Links</h4>
-                <ul class="space-y-2 text-sm text-gray-400">
+                <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Quick Links</h4>
+                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li><a href="#shop" class="hover:text-gold transition-colors">Shop All</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
                     <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
@@ -192,8 +231,8 @@
                 </ul>
             </div>
             <div>
-                <h4 class="font-bold mb-4">Customer Service</h4>
-                <ul class="space-y-2 text-sm text-gray-400">
+                <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Customer Service</h4>
+                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li>Kathmandu, Nepal</li>
                     <li>support@koseliimports.com</li>
                     <li>+977 9863263690</li>
@@ -201,9 +240,9 @@
             </div>
         </div>
         
-        <!-- Footer Bottom (Added Staff Login) -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col items-center justify-between text-sm text-gray-500 gap-4">
-            <div class="flex flex-col md:flex-row w-full justify-between items-center gap-4">
+        <!-- Footer Bottom -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col items-center justify-between text-xs md:text-sm text-gray-500 gap-4">
+            <div class="flex flex-col md:flex-row w-full justify-between items-center gap-2 md:gap-4 text-center md:text-left">
                 <p>&copy; 2025 Koseli Imports. All rights reserved.</p>
                 <p class="font-medium text-gold">
                     Made by <a href="https://prabhatbhattarai.info.np/#top" target="_blank" class="hover:underline hover:text-white transition-colors">Prabhat Bhattarai</a>
@@ -212,8 +251,8 @@
             
             <!-- Staff Login Button -->
             <div class="mt-2">
-                <a href="admin.html" class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-xs font-medium text-white/50 hover:text-gold hover:border-gold/30 hover:bg-white/10 transition">
-                    <i data-lucide="lock" class="w-3.5 h-3.5"></i><span>Staff Login</span>
+                <a href="admin.html" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] md:text-xs font-medium text-white/50 hover:text-gold hover:border-gold/30 hover:bg-white/10 transition">
+                    <i data-lucide="lock" class="w-3 h-3 md:w-3.5 md:h-3.5"></i><span>Staff Login</span>
                 </a>
             </div>
         </div>
@@ -239,13 +278,13 @@
     </div>
 
     <!-- Checkout Modal -->
-    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-4" id="checkoutModal">
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="checkoutModal">
         <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 class="text-lg font-bold text-navy" id="modalTitle">Delivery Details</h2>
                 <button id="modalClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-6 overflow-y-auto">
+            <div class="p-4 md:p-6 overflow-y-auto">
                 <!-- Form -->
                 <form id="orderForm">
                     <div class="space-y-4">
@@ -266,22 +305,22 @@
                 </form>
 
                 <!-- Success Screen -->
-                <div id="successStep" class="hidden text-center py-6">
+                <div id="successStep" class="hidden text-center py-4 md:py-6">
                     <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="check" class="w-8 h-8"></i>
                     </div>
                     <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
                     <p class="text-gray-500 text-sm mb-4">Save this Order Code to track your order later:</p>
-                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KI-XXXXX</div>
+                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KI-XXXXX</div>
                     
                     <div class="flex flex-col gap-3">
-                        <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors">
+                        <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm md:text-base">
                             <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp to Pay
                         </a>
-                        <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors">
+                        <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors text-sm md:text-base">
                             <i data-lucide="receipt" class="w-5 h-5"></i> Get Image Bill
                         </button>
-                        <button onclick="downloadExcel()" class="w-full bg-gray-100 text-charcoal border border-gray-300 py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors">
+                        <button onclick="downloadExcel()" class="w-full bg-gray-100 text-charcoal border border-gray-300 py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors text-sm md:text-base">
                             <i data-lucide="file-spreadsheet" class="w-5 h-5"></i> Download Excel Receipt
                         </button>
                     </div>
@@ -291,8 +330,8 @@
     </div>
 
     <!-- ⭐ BILL IMAGE MODAL -->
-    <div id="bill-modal" class="fixed inset-0 bg-black/70 z-[300] hidden items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[95vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0" id="bill-modal-content">
+    <div id="bill-modal" class="fixed inset-0 bg-black/70 z-[300] hidden items-center justify-center p-3 md:p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0" id="bill-modal-content">
             <div class="flex items-center justify-between p-4 border-b border-gray-100">
                 <div class="flex items-center gap-2">
                     <div class="bg-gold/20 p-2 rounded-full"><i data-lucide="receipt" class="w-5 h-5 text-navy"></i></div>
@@ -300,19 +339,16 @@
                 </div>
                 <button onclick="closeBillModal()" class="p-2 hover:bg-gray-100 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="flex-1 overflow-y-auto p-4 bg-gray-100">
+            <div class="flex-1 overflow-y-auto p-3 md:p-4 bg-gray-100">
                 <!-- Capture Area -->
-                <div id="bill-capture-area" style="background: #ffffff; padding: 24px; border-radius: 8px; max-width: 400px; margin: 0 auto; font-family: 'Inter', sans-serif; color: #20252B;">
+                <div id="bill-capture-area" style="background: #ffffff; padding: 20px; border-radius: 8px; max-width: 400px; margin: 0 auto; font-family: 'Inter', sans-serif; color: #20252B;">
                     <div style="text-align: center; border-bottom: 2px dashed #142B3B; padding-bottom: 12px; margin-bottom: 12px;">
-                        <div style="font-size: 22px; font-weight: bold; color: #142B3B; margin-bottom: 4px;">KOSELI IMPORTS</div>
+                        <div style="font-size: 20px; font-weight: bold; color: #142B3B; margin-bottom: 4px;">KOSELI IMPORTS</div>
                         <div style="font-size: 11px; color: #666;">Global Products. Local Trust.</div>
-                        <div style="font-size: 10px; color: #888; margin-top: 6px;">Kathmandu, Nepal</div>
-                        <div style="font-size: 10px; color: #888;">+977 9863263690</div>
                     </div>
                     
-                    <div style="font-size: 12px; margin-bottom: 12px; line-height: 1.6;">
-                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Order Code:</span><strong id="bill-code">-</strong></div>
-                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Date:</span><span id="bill-date">-</span></div>
+                    <div style="font-size: 11px; margin-bottom: 12px; line-height: 1.6;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Order:</span><strong id="bill-code">-</strong></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Customer:</span><strong id="bill-customer">-</strong></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Phone:</span><span id="bill-phone">-</span></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Address:</span><span id="bill-address" style="text-align: right; max-width: 60%;">-</span></div>
@@ -320,66 +356,57 @@
                     
                     <div style="border-top: 2px dashed #142B3B; border-bottom: 2px dashed #142B3B; padding: 10px 0; margin-bottom: 12px;">
                         <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px; color: #142B3B;">ITEMS:</div>
-                        <div id="bill-items" style="font-size: 12px; line-height: 1.8;"></div>
+                        <div id="bill-items" style="font-size: 11px; line-height: 1.8;"></div>
                     </div>
                     
-                    <div style="text-align: right; font-size: 16px; font-weight: bold; color: #142B3B; padding: 8px 0; border-bottom: 2px solid #142B3B; margin-bottom: 12px;">
+                    <div style="text-align: right; font-size: 16px; font-weight: bold; color: #142B3B; padding: 8px 0;">
                         TOTAL: Rs. <span id="bill-total">0</span>
-                    </div>
-                    
-                    <div style="text-align: center; font-size: 10px; color: #666; line-height: 1.6;">
-                        <div style="font-style: italic; margin-bottom: 4px;">Thank you for shopping with us!</div>
-                        <div style="font-weight: bold; color: #D6A85F;">Global Products. Local Trust.</div>
                     </div>
                 </div>
             </div>
-            <div class="p-4 border-t border-gray-100 bg-white space-y-2">
+            <div class="p-3 md:p-4 border-t border-gray-100 bg-white space-y-2">
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="downloadBillImage()" class="bg-navy text-white py-3 rounded-xl font-medium hover:bg-[#0d1e29] transition flex items-center justify-center gap-2 text-sm">
-                        <i data-lucide="download" class="w-4 h-4"></i> Download
+                    <button onclick="downloadBillImage()" class="bg-navy text-white py-2 md:py-3 rounded-xl font-medium hover:bg-[#0d1e29] transition flex items-center justify-center gap-1 text-xs md:text-sm">
+                        <i data-lucide="download" class="w-3 h-3 md:w-4 md:h-4"></i> Download
                     </button>
-                    <button onclick="shareBillImage()" class="bg-[#25D366] text-white py-3 rounded-xl font-medium hover:bg-[#128C7E] transition flex items-center justify-center gap-2 text-sm">
-                        <i data-lucide="share-2" class="w-4 h-4"></i> Share
+                    <button onclick="shareBillImage()" class="bg-[#25D366] text-white py-2 md:py-3 rounded-xl font-medium hover:bg-[#128C7E] transition flex items-center justify-center gap-1 text-xs md:text-sm">
+                        <i data-lucide="share-2" class="w-3 h-3 md:w-4 md:h-4"></i> Share
                     </button>
                 </div>
-                <button onclick="printBillImage()" class="w-full bg-gray-100 text-charcoal py-2.5 rounded-xl font-medium hover:bg-gray-200 transition flex items-center justify-center gap-2 text-sm">
-                    <i data-lucide="printer" class="w-4 h-4"></i> Print Instead
-                </button>
             </div>
         </div>
     </div>
 
     <!-- Track Order Modal -->
-    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-4" id="trackingModal">
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="trackingModal">
         <div class="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
             <div class="p-4 border-b border-gray-200 flex justify-between items-center">
                 <h2 class="text-lg font-bold text-navy">Track Your Order</h2>
                 <button onclick="closeTrackingModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-6">
-                <p class="text-sm text-gray-500 mb-4">Enter the Order Code you received during checkout to check your order status.</p>
+            <div class="p-4 md:p-6">
                 <div class="flex gap-2 mb-4">
                     <input type="text" id="trackingInput" placeholder="e.g. KI-7X9P2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy uppercase font-mono">
-                    <button onclick="checkTracking()" class="bg-navy text-white px-6 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Track</button>
+                    <button onclick="checkTracking()" class="bg-navy text-white px-4 md:px-6 rounded-md font-bold hover:bg-[#0d1e29] transition-colors text-sm">Track</button>
                 </div>
-                <div id="trackingResult" class="hidden mt-6 border-t border-gray-200 pt-4">
+                <div id="trackingResult" class="hidden mt-4 border-t border-gray-200 pt-4">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm text-gray-500">Order Code:</span>
-                        <span class="font-bold font-mono text-navy" id="trackOrderCode">-</span>
+                        <span class="text-xs md:text-sm text-gray-500">Order Code:</span>
+                        <span class="font-bold font-mono text-navy text-sm md:text-base" id="trackOrderCode">-</span>
                     </div>
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm text-gray-500">Customer Name:</span>
-                        <span class="font-medium" id="trackName">-</span>
+                        <span class="text-xs md:text-sm text-gray-500">Customer:</span>
+                        <span class="font-medium text-sm md:text-base" id="trackName">-</span>
                     </div>
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-sm text-gray-500">Total Amount:</span>
-                        <span class="font-bold text-navy" id="trackTotal">-</span>
+                        <span class="text-xs md:text-sm text-gray-500">Total:</span>
+                        <span class="font-bold text-navy text-sm md:text-base" id="trackTotal">-</span>
                     </div>
-                    <div class="bg-orange-100 text-orange-800 text-sm font-bold p-3 rounded-md text-center" id="trackStatus">
-                        Pending Confirmation on WhatsApp
+                    <div class="bg-orange-100 text-orange-800 text-xs md:text-sm font-bold p-3 rounded-md text-center" id="trackStatus">
+                        Pending Confirmation
                     </div>
                 </div>
-                <div id="trackingError" class="hidden mt-4 text-center text-red-500 font-medium text-sm">
+                <div id="trackingError" class="hidden mt-4 text-center text-red-500 font-medium text-xs md:text-sm">
                     Order code not found on this device.
                 </div>
             </div>
@@ -388,7 +415,6 @@
 
     <!-- JavaScript -->
     <script>
-        // ⚠️ YOUR GOOGLE APPS SCRIPT URL IS ALREADY INSERTED HERE
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzZmqrhmcUT1bCEVESUbHVrCGJaru8isRIKaYjlcD2O1MWPAP8Sjhjqrc4brqxz08_-/exec"; 
         const WHATSAPP_NUMBER = '9779863263690'; 
         
@@ -396,16 +422,16 @@
         let billImageDataUrl = null;
 
         const CATEGORIES = [
-            { id: 'cat1', name: 'Electronics & Gadgets', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat2', name: 'Mobile Accessories', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat1', name: 'Electronics', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat2', name: 'Mobile Access.', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=400&auto=format&fit=crop' },
             { id: 'cat3', name: 'Home & Kitchen', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat4', name: 'Fashion & Lifestyle', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat5', name: 'Beauty & Personal Care', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat6', name: 'Car Accessories', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1503376713092-461e48c70f4b?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat7', name: 'Sports & Outdoor', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat8', name: 'Office & Stationery', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat4', name: 'Fashion', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat5', name: 'Beauty', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat6', name: 'Car Access.', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1503376713092-461e48c70f4b?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat7', name: 'Sports', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=400&auto=format&fit=crop' },
+            { id: 'cat8', name: 'Office', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=400&auto=format&fit=crop' },
             { id: 'cat9', name: 'Smart Home', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=400&auto=format&fit=crop' },
-            { id: 'cat10', name: 'Daily Use Products', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop' }
+            { id: 'cat10', name: 'Daily Use', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop' }
         ];
 
         const PRODUCTS = [
@@ -424,27 +450,54 @@
 
         function init() {
             renderCategories();
+            renderMobileCategories();
             renderProducts();
             updateCartUI();
             lucide.createIcons();
         }
 
+        function toggleMobileMenu() {
+            const overlay = document.getElementById('mobileMenuOverlay');
+            const drawer = document.getElementById('mobileMenuDrawer');
+            if(drawer.classList.contains('-translate-x-full')) {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                drawer.classList.remove('-translate-x-full');
+            } else {
+                overlay.classList.add('opacity-0');
+                drawer.classList.add('-translate-x-full');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
         function renderCategories() {
             const grid = document.getElementById('categoryGrid');
             const menuList = document.getElementById('megaMenuList');
+            
             grid.innerHTML = CATEGORIES.map(cat => `
                 <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative">
-                    <div class="aspect-[4/3] bg-gray-100 relative">
+                    <div class="aspect-square md:aspect-[4/3] bg-gray-100 relative">
                         <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-2 right-2 bg-navy text-gold text-[10px] font-bold px-2 py-1 rounded">COMING SOON</div>` : ''}
+                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
                     </div>
-                    <div class="p-3 text-center">
-                        <h3 class="font-semibold text-sm text-navy group-hover:text-gold transition-colors">${cat.name}</h3>
+                    <div class="p-2 md:p-3 text-center">
+                        <h3 class="font-semibold text-xs md:text-sm text-navy group-hover:text-gold transition-colors truncate">${cat.name}</h3>
                     </div>
                 </div>
             `).join('');
+            
             menuList.innerHTML = `<div onclick="resetFilters()" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 font-bold text-navy">View All Products</div>` + 
             CATEGORIES.map(cat => `<div onclick="filterByCategory('${cat.id}')" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 last:border-0"><span class="text-sm text-charcoal">${cat.name}</span></div>`).join('');
+        }
+
+        function renderMobileCategories() {
+            const list = document.getElementById('mobileCategoryList');
+            list.innerHTML = CATEGORIES.map(cat => `
+                <div onclick="filterByCategory('${cat.id}'); toggleMobileMenu();" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700 cursor-pointer flex justify-between">
+                    <span>${cat.name}</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                </div>
+            `).join('');
         }
 
         function renderProducts() {
@@ -466,20 +519,21 @@
 
             grid.innerHTML = filtered.map(p => {
                 const isOutOfStock = p.status === 'OUT_OF_STOCK';
-                let badgeHtml = isOutOfStock ? `<span class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">OUT OF STOCK</span>` : '';
+                let badgeHtml = isOutOfStock ? `<span class="absolute top-1 left-1 md:top-2 md:left-2 bg-gray-800 text-white text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">OUT OF STOCK</span>` : '';
+                
                 return `
-                <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow group flex flex-col relative">
+                <div class="bg-white rounded-lg border border-gray-200 p-2 md:p-4 hover:shadow-lg transition-shadow group flex flex-col relative">
                     ${badgeHtml}
-                    <div class="aspect-square bg-offwhite rounded-md mb-4 overflow-hidden relative">
+                    <div class="aspect-square bg-offwhite rounded-md mb-2 md:mb-4 overflow-hidden relative">
                         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <div class="flex-1 flex flex-col">
-                        <div class="text-xs text-gray-500 mb-1">SKU: ${p.sku}</div>
-                        <h3 class="font-semibold text-charcoal mb-2 line-clamp-2">${p.name}</h3>
-                        <div class="mt-auto pt-2">
-                            ${p.oldPrice ? `<div class="text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
-                            <div class="text-lg font-bold text-navy mb-3">Rs. ${p.price.toLocaleString()}</div>
-                            ${isOutOfStock ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Koseli%20Imports,%20I%20am%20interested%20in%20${encodeURIComponent(p.name)}%20(Out%20of%20stock).%20Please%20notify%20me." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">Notify Me</a>` : `<button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-2 rounded-md text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-2"><i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Cart</button>`}
+                        <div class="text-[10px] md:text-xs text-gray-500 mb-0.5 md:mb-1 truncate">SKU: ${p.sku}</div>
+                        <h3 class="font-semibold text-xs md:text-base text-charcoal mb-1 md:mb-2 line-clamp-2">${p.name}</h3>
+                        <div class="mt-auto pt-1 md:pt-2">
+                            ${p.oldPrice ? `<div class="text-[10px] md:text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
+                            <div class="text-sm md:text-lg font-bold text-navy mb-2 md:mb-3">Rs. ${p.price.toLocaleString()}</div>
+                            ${isOutOfStock ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello,%20I%20want%20${encodeURIComponent(p.name)}." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-gray-200 transition-colors">Notify Me</a>` : `<button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-1 md:gap-2"><i data-lucide="shopping-cart" class="w-3 h-3 md:w-4 md:h-4"></i> Add</button>`}
                         </div>
                     </div>
                 </div>`;
@@ -497,24 +551,26 @@
         function updateCartUI() {
             const count = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById('cartCount').innerText = count;
+            document.getElementById('mobileCartCount').innerText = count;
+            
             const container = document.getElementById('cartItems');
             const btn = document.getElementById('checkoutBtn');
             const totalEl = document.getElementById('cartTotal');
 
             if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center text-gray-500 mt-10">Your cart is empty.</div>`;
+                container.innerHTML = `<div class="text-center text-gray-500 mt-10 text-sm">Your cart is empty.</div>`;
                 totalEl.innerText = 'Rs. 0'; btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
                 container.innerHTML = cart.map(item => `
-                    <div class="flex gap-4 mb-4 border-b border-gray-100 pb-4">
-                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-md border border-gray-200">
+                    <div class="flex gap-3 md:gap-4 mb-4 border-b border-gray-100 pb-4">
+                        <img src="${item.image}" class="w-14 h-14 md:w-16 md:h-16 object-cover rounded-md border border-gray-200">
                         <div class="flex-1">
-                            <div class="font-semibold text-sm line-clamp-1">${item.name}</div>
-                            <div class="text-navy font-bold text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
-                            <div class="flex items-center gap-3 mt-2">
-                                <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-100 rounded hover:bg-gray-200">-</button>
-                                <span class="text-sm font-medium w-4 text-center">${item.qty}</span>
-                                <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-100 rounded hover:bg-gray-200">+</button>
+                            <div class="font-semibold text-xs md:text-sm line-clamp-1">${item.name}</div>
+                            <div class="text-navy font-bold text-xs md:text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
+                            <div class="flex items-center gap-2 md:gap-3 mt-2">
+                                <button onclick="updateQty('${item.id}', -1)" class="w-5 h-5 md:w-6 md:h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-xs md:text-sm">-</button>
+                                <span class="text-xs md:text-sm font-medium w-4 text-center">${item.qty}</span>
+                                <button onclick="updateQty('${item.id}', 1)" class="w-5 h-5 md:w-6 md:h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-xs md:text-sm">+</button>
                             </div>
                         </div>
                     </div>
@@ -544,7 +600,6 @@
         function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('hidden'); }
         function closeCart() { cartDrawer.classList.add('translate-x-full'); cartOverlay.classList.add('hidden'); }
         
-        document.getElementById('cartToggle').addEventListener('click', openCart);
         document.getElementById('cartClose').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
@@ -580,12 +635,10 @@
                 code: orderCode, date: new Date().toLocaleString(), name: name, phone: phone, address: address, items: cart, total: total, status: 'Pending Confirmation'
             };
 
-            // 1. Save locally for tracking
             let savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
             savedOrders.push(currentOrderData);
             localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
 
-            // 2. Save to Google Sheets silently
             fetch(GAS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -601,35 +654,26 @@
                 })
             })
             .then(res => res.json())
-            .then(data => {
-                if (!data.success) console.error("Failed to save order to cloud:", data.error);
-            })
+            .then(data => { if (!data.success) console.error("Failed to save order to cloud:", data.error); })
             .catch(err => console.error("Network error saving order:", err));
 
-            // 3. Update UI
             document.getElementById('orderForm').classList.add('hidden');
             document.getElementById('successStep').classList.remove('hidden');
             document.getElementById('modalTitle').innerText = 'Order Placed';
             document.getElementById('displayOrderCode').innerText = orderCode;
             
-            // 4. Generate WhatsApp Message
             const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
             const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
             
             document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            
-            billImageDataUrl = null; // Reset image cache
-            
-            // 5. Clear cart
+            billImageDataUrl = null; 
             cart = []; saveCart(); updateCartUI();
         });
 
-        // --- IMAGE BILL GENERATION ---
         function generateBillModal() {
             if (!currentOrderData) return;
             
             document.getElementById('bill-code').innerText = currentOrderData.code;
-            document.getElementById('bill-date').innerText = currentOrderData.date;
             document.getElementById('bill-customer').innerText = currentOrderData.name;
             document.getElementById('bill-phone').innerText = currentOrderData.phone;
             document.getElementById('bill-address').innerText = currentOrderData.address;
@@ -663,7 +707,7 @@
             try {
                 const btn = event.target.closest('button');
                 const orig = btn.innerHTML;
-                btn.innerHTML = 'Generating...'; btn.disabled = true;
+                btn.innerHTML = '...'; btn.disabled = true;
                 const imageUrl = await getBillImage();
                 const link = document.createElement('a');
                 link.download = `Koseli-Bill-${currentOrderData.code}.png`;
@@ -677,13 +721,13 @@
             try {
                 const btn = event.target.closest('button');
                 const orig = btn.innerHTML;
-                btn.innerHTML = 'Sharing...'; btn.disabled = true;
+                btn.innerHTML = '...'; btn.disabled = true;
                 const imageUrl = await getBillImage();
                 const blob = await (await fetch(imageUrl)).blob();
                 const file = new File([blob], `Koseli-Bill-${currentOrderData.code}.png`, { type: 'image/png' });
                 
                 if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: `Koseli Bill`, text: `My order bill from Koseli Imports. Order: ${currentOrderData.code}` });
+                    await navigator.share({ files: [file], title: `Koseli Bill`, text: `My order bill. Order: ${currentOrderData.code}` });
                 } else {
                     const link = document.createElement('a');
                     link.download = `Koseli-Bill-${currentOrderData.code}.png`;
@@ -695,16 +739,6 @@
             } catch (e) { if(e.name !== 'AbortError') alert('Error sharing.'); }
         }
 
-        async function printBillImage() {
-            try {
-                const imageUrl = await getBillImage();
-                const printWindow = window.open('', '_blank');
-                printWindow.document.write(`<html><head><title>Print Bill</title><style>body{margin:0;padding:20px;text-align:center;}img{max-width:100%;height:auto;}@media print{body{padding:0;}}</style></head><body><img src="${imageUrl}" onload="window.print();window.onafterprint=()=>window.close();" /></body></html>`);
-                printWindow.document.close();
-            } catch (e) { alert('Error printing.'); }
-        }
-
-        // --- EXCEL EXPORT ---
         function downloadExcel() {
             if (!currentOrderData) return;
             const data = [
@@ -722,7 +756,6 @@
             XLSX.writeFile(wb, `Koseli_Order_${currentOrderData.code}.xlsx`);
         }
 
-        // --- TRACKING ---
         function openTrackingModal() { trackingModal.classList.remove('hidden'); trackingModal.classList.add('flex'); }
         function closeTrackingModal() { trackingModal.classList.add('hidden'); trackingModal.classList.remove('flex'); }
 
