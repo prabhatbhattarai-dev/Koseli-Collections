@@ -47,13 +47,18 @@
         🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000 | Order 24/7 via WhatsApp
     </div>
 
-    <!-- Main Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <!-- Main Header (Removed sticky so it scrolls away) -->
+    <header class="bg-white border-b border-gray-200 relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20 gap-4">
                 <!-- Logo -->
-                <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center cursor-pointer">
-                    <img src="/logo.png" alt="Koseli Imports Logo" class="h-14 w-auto object-contain">
+                <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+                    <!-- Fallback to text if logo.png is missing -->
+                    <img src="/logo.png" alt="Koseli Imports Logo" class="h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                    <div id="logo-fallback" class="hidden flex-col">
+                        <span class="font-bold text-xl text-navy tracking-tight leading-none">Koseli Imports</span>
+                        <span class="text-[10px] text-gray-500 uppercase tracking-widest mt-1">Nepal Marketplace</span>
+                    </div>
                 </a>
 
                 <!-- Search Bar -->
@@ -75,7 +80,7 @@
                         <span class="text-xs font-medium">Cart</span>
                         <span id="cartCount" class="absolute -top-1 -right-1 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
-                    <a href="https://wa.me/9779800000000" target="_blank" class="hidden md:flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
+                    <a href="https://wa.me/9779863263690" target="_blank" class="hidden md:flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
                         <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
                     </a>
                 </div>
@@ -84,7 +89,8 @@
 
         <!-- Navigation Menu -->
         <nav class="border-t border-gray-200 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 gap-8 text-sm font-medium">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-12 gap-8 text-sm font-medium overflow-x-auto hide-scrollbar">
+                <a href="#" onclick="resetFilters()" class="text-charcoal hover:text-navy transition-colors">Home</a>
                 <div class="relative group h-full flex items-center cursor-pointer">
                     <span class="flex items-center gap-1 text-navy font-bold">
                         <i data-lucide="menu" class="w-4 h-4"></i> All Categories
@@ -98,6 +104,7 @@
                 <a href="#shop" onclick="filterByCategory('cat1')" class="text-charcoal hover:text-navy transition-colors">New Arrivals</a>
                 <a href="#shop" class="text-charcoal hover:text-navy transition-colors text-red-600 font-bold">Offers</a>
                 <a href="#about" class="text-charcoal hover:text-navy transition-colors">About Us</a>
+                <a href="#contact" class="text-charcoal hover:text-navy transition-colors">Contact</a>
             </div>
         </nav>
     </header>
@@ -173,13 +180,14 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-navy text-white mt-20 pt-12 pb-6">
+    <footer class="bg-navy text-white mt-20 pt-12 pb-6" id="contact">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center mb-4">
                     <!-- Logo with white background so it shows up on navy -->
                     <div class="bg-white p-2 rounded-lg inline-block">
-                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-12 w-auto object-contain">
+                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
+                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-xl px-2">Koseli Imports</span>
                     </div>
                 </div>
                 <p class="text-gray-400 text-sm max-w-sm mb-6 mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
@@ -190,7 +198,7 @@
                     <li><a href="#shop" class="hover:text-gold transition-colors">Shop All</a></li>
                     <li><a href="#" class="hover:text-gold transition-colors">Track Order</a></li>
                     <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
-                    <li><a href="#" class="hover:text-gold transition-colors">Contact Us</a></li>
+                    <li><a href="https://wa.me/9779863263690" class="hover:text-gold transition-colors">Contact Us</a></li>
                 </ul>
             </div>
             <div>
@@ -198,12 +206,13 @@
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li>Kathmandu, Nepal</li>
                     <li>support@koseliimports.com</li>
-                    <li>+977 98XXXXXXXX</li>
+                    <li>+977 9863263690</li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
-            &copy; 2025 Koseli Imports. All rights reserved.
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
+            <p>&copy; 2025 Koseli Imports. All rights reserved.</p>
+            <p class="font-medium text-gold">Made by Prabhat Bhattarai</p>
         </div>
     </footer>
 
@@ -282,7 +291,7 @@
         // ==========================================
         // 1. DATA CONFIGURATION (Edit this section)
         // ==========================================
-        const WHATSAPP_NUMBER = '9779800000000'; // ⚠️ REPLACE WITH YOUR WHATSAPP NUMBER
+        const WHATSAPP_NUMBER = '9779863263690'; // Updated with your number
 
         const CATEGORIES = [
             { id: 'cat1', name: 'Electronics & Gadgets', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
@@ -297,15 +306,16 @@
             { id: 'cat10', name: 'Daily Use Products', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop' }
         ];
 
+        // All products set to OUT_OF_STOCK as requested
         const PRODUCTS = [
-            { id: 'p1', name: 'Portable Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 2800, oldPrice: 3500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
-            { id: 'p2', name: 'Fast Charging USB Cable', sku: 'MOB-CAB-02', category: 'cat2', price: 350, oldPrice: null, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
-            { id: 'p3', name: 'Smart Watch Series 8', sku: 'ELE-WCH-03', category: 'cat1', price: 4500, oldPrice: 6000, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop', status: 'LIMITED_STOCK' },
-            { id: 'p4', name: 'Stainless Steel Water Bottle', sku: 'HOM-BTL-04', category: 'cat3', price: 1200, oldPrice: null, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p1', name: 'Portable Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 2800, oldPrice: 3500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p2', name: 'Fast Charging USB Cable', sku: 'MOB-CAB-02', category: 'cat2', price: 350, oldPrice: null, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p3', name: 'Smart Watch Series 8', sku: 'ELE-WCH-03', category: 'cat1', price: 4500, oldPrice: 6000, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p4', name: 'Stainless Steel Water Bottle', sku: 'HOM-BTL-04', category: 'cat3', price: 1200, oldPrice: null, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
             { id: 'p5', name: 'Wireless Mouse', sku: 'OFF-MSE-05', category: 'cat8', price: 1500, oldPrice: 1800, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p6', name: 'Ceramic Coffee Mug', sku: 'HOM-MUG-06', category: 'cat3', price: 650, oldPrice: null, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
-            { id: 'p7', name: 'LED Desk Lamp', sku: 'HOM-LMP-07', category: 'cat3', price: 1800, oldPrice: 2200, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=600&auto=format&fit=crop', status: 'PRE_ORDER' },
-            { id: 'p8', name: 'Facial Cleanser', sku: 'BEA-CLN-08', category: 'cat5', price: 850, oldPrice: null, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' }
+            { id: 'p6', name: 'Ceramic Coffee Mug', sku: 'HOM-MUG-06', category: 'cat3', price: 650, oldPrice: null, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p7', name: 'LED Desk Lamp', sku: 'HOM-LMP-07', category: 'cat3', price: 1800, oldPrice: 2200, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p8', name: 'Facial Cleanser', sku: 'BEA-CLN-08', category: 'cat5', price: 850, oldPrice: null, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' }
         ];
 
         // ==========================================
@@ -413,7 +423,7 @@
                             <div class="text-lg font-bold text-navy mb-3">Rs. ${p.price.toLocaleString()}</div>
                             
                             ${isOutOfStock ? `
-                                <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello, I am interested in ${p.name} (Out of stock). Please notify me when available." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
+                                <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Koseli%20Imports,%20I%20am%20interested%20in%20${encodeURIComponent(p.name)}%20(Out%20of%20stock).%20Please%20notify%20me%20when%20it%20is%20available." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
                                     Notify Me
                                 </a>
                             ` : `
