@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koseli Imports | Global Products. Local Trust.</title>
-    <meta name="description" content="Browse electronics, home goods, and more. Sourced from China, delivered across Nepal. Order via WhatsApp.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts: Inter for a clean marketplace feel -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- SheetJS for Excel Export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <!-- html2canvas for Image Bill -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -27,9 +32,7 @@
                         offwhite: '#F8F8F6',
                         charcoal: '#20252B',
                     },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
@@ -47,13 +50,12 @@
         🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000 | Order 24/7 via WhatsApp
     </div>
 
-    <!-- Main Header (Removed sticky so it scrolls away) -->
+    <!-- Main Header -->
     <header class="bg-white border-b border-gray-200 relative z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20 gap-4">
                 <!-- Logo -->
                 <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
-                    <!-- Fallback to text if logo.png is missing -->
                     <img src="/logo.png" alt="Koseli Imports Logo" class="h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
                     <div id="logo-fallback" class="hidden flex-col">
                         <span class="font-bold text-xl text-navy tracking-tight leading-none">Koseli Imports</span>
@@ -71,15 +73,17 @@
 
                 <!-- Actions -->
                 <div class="flex items-center gap-6">
-                    <a href="#" class="hidden sm:flex flex-col items-center text-charcoal hover:text-navy transition-colors">
-                        <i data-lucide="user" class="w-5 h-5 mb-1"></i>
-                        <span class="text-xs font-medium">Account</span>
-                    </a>
+                    <button onclick="openTrackingModal()" class="hidden sm:flex flex-col items-center text-charcoal hover:text-navy transition-colors">
+                        <i data-lucide="package-search" class="w-5 h-5 mb-1"></i>
+                        <span class="text-xs font-medium">Track Order</span>
+                    </button>
+                    
                     <button id="cartToggle" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors relative">
                         <i data-lucide="shopping-cart" class="w-5 h-5 mb-1"></i>
                         <span class="text-xs font-medium">Cart</span>
                         <span id="cartCount" class="absolute -top-1 -right-1 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
+                    
                     <a href="https://wa.me/9779863263690" target="_blank" class="hidden md:flex items-center gap-2 bg-[#25D366] text-white px-4 py-2 rounded-md hover:bg-[#1da851] transition-colors font-medium text-sm">
                         <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
                     </a>
@@ -95,10 +99,7 @@
                     <span class="flex items-center gap-1 text-navy font-bold">
                         <i data-lucide="menu" class="w-4 h-4"></i> All Categories
                     </span>
-                    <!-- Mega Menu Dropdown -->
-                    <div class="absolute top-12 left-0 w-64 bg-white border border-gray-200 shadow-xl rounded-b-md hidden group-hover:block z-50 max-h-[70vh] overflow-y-auto hide-scrollbar" id="megaMenuList">
-                        <!-- Injected via JS -->
-                    </div>
+                    <div class="absolute top-12 left-0 w-64 bg-white border border-gray-200 shadow-xl rounded-b-md hidden group-hover:block z-50 max-h-[70vh] overflow-y-auto hide-scrollbar" id="megaMenuList"></div>
                 </div>
                 <a href="#shop" onclick="resetFilters()" class="text-charcoal hover:text-navy transition-colors">Shop</a>
                 <a href="#shop" onclick="filterByCategory('cat1')" class="text-charcoal hover:text-navy transition-colors">New Arrivals</a>
@@ -109,7 +110,7 @@
         </nav>
     </header>
 
-    <!-- Mobile Search (Visible on mobile only) -->
+    <!-- Mobile Search -->
     <div class="md:hidden p-4 bg-white border-b border-gray-200">
         <div class="flex relative">
             <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none focus:border-navy">
@@ -121,8 +122,6 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Hero Banner -->
         <div class="bg-navy rounded-xl overflow-hidden relative mb-12 flex items-center">
             <div class="absolute inset-0 opacity-20">
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
@@ -137,24 +136,19 @@
             </div>
         </div>
 
-        <!-- Categories Grid -->
         <div class="mb-16">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-navy">Browse Categories</h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="categoryGrid">
-                <!-- Injected via JS -->
-            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="categoryGrid"></div>
         </div>
 
-        <!-- Product Grid -->
         <div id="shop">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
                     <p class="text-gray-500 text-sm mt-1">Curated items for modern living.</p>
                 </div>
-                <!-- Filters -->
                 <div class="flex items-center gap-2">
                     <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-sm text-navy hover:text-gold font-medium mr-2 underline">Clear Filters</button>
                     <select id="filterSelect" class="border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
@@ -166,15 +160,12 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid">
-                <!-- Injected via JS -->
-            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="productGrid"></div>
             
-            <!-- Empty State (Hidden by default) -->
             <div id="emptyState" class="hidden text-center py-20 bg-white rounded-xl border border-gray-200">
                 <i data-lucide="search-x" class="w-12 h-12 text-gray-400 mx-auto mb-4"></i>
                 <h3 class="text-lg font-bold text-navy mb-2">No products found</h3>
-                <p class="text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
+                <p class="text-gray-500">Try adjusting your search or filter.</p>
             </div>
         </div>
     </main>
@@ -184,7 +175,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center mb-4">
-                    <!-- Logo with white background so it shows up on navy -->
                     <div class="bg-white p-2 rounded-lg inline-block">
                         <img src="/logo.png" alt="Koseli Imports Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
                         <span id="footer-logo-fallback" class="hidden text-navy font-bold text-xl px-2">Koseli Imports</span>
@@ -196,7 +186,7 @@
                 <h4 class="font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
                     <li><a href="#shop" class="hover:text-gold transition-colors">Shop All</a></li>
-                    <li><a href="#" class="hover:text-gold transition-colors">Track Order</a></li>
+                    <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
                     <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
                     <li><a href="https://wa.me/9779863263690" class="hover:text-gold transition-colors">Contact Us</a></li>
                 </ul>
@@ -212,7 +202,6 @@
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 gap-4">
             <p>&copy; 2025 Koseli Imports. All rights reserved.</p>
-            <!-- UPDATED CLICKABLE LINK HERE -->
             <p class="font-medium text-gold">
                 Made by <a href="https://prabhatbhattarai.info.np/#top" target="_blank" class="hover:underline hover:text-white transition-colors">Prabhat Bhattarai</a>
             </p>
@@ -226,9 +215,7 @@
             <h2 class="text-lg font-bold text-navy">Your Cart</h2>
             <button id="cartClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
-        <div class="flex-1 overflow-y-auto p-4" id="cartItems">
-            <!-- Items injected via JS -->
-        </div>
+        <div class="flex-1 overflow-y-auto p-4" id="cartItems"></div>
         <div class="p-4 border-t border-gray-200 bg-offwhite">
             <div class="flex justify-between font-bold text-lg mb-4">
                 <span>Total</span>
@@ -274,16 +261,122 @@
                     <button id="verifyBtn" class="w-full bg-gold text-navy py-3 rounded-md font-bold hover:bg-[#c4984c] transition-colors">I have paid</button>
                 </div>
 
-                <!-- Step 3: Success -->
+                <!-- Step 3: Success & Tracking Code -->
                 <div id="successStep" class="hidden text-center py-6">
                     <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="check" class="w-8 h-8"></i>
                     </div>
                     <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
-                    <p class="text-gray-500 text-sm mb-6">Click below to send your order details to our team on WhatsApp for final confirmation.</p>
-                    <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors">
-                        <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp
-                    </a>
+                    <p class="text-gray-500 text-sm mb-4">Save this Order Code to track your order later:</p>
+                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KI-XXXXX</div>
+                    
+                    <div class="flex flex-col gap-3">
+                        <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp
+                        </a>
+                        <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors">
+                            <i data-lucide="receipt" class="w-5 h-5"></i> Get Image Bill
+                        </button>
+                        <button onclick="downloadExcel()" class="w-full bg-gray-100 text-charcoal border border-gray-300 py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors">
+                            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i> Download Excel Receipt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ⭐ BILL IMAGE MODAL -->
+    <div id="bill-modal" class="fixed inset-0 bg-black/70 z-[300] hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[95vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0" id="bill-modal-content">
+            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gold/20 p-2 rounded-full"><i data-lucide="receipt" class="w-5 h-5 text-navy"></i></div>
+                    <h3 class="font-bold text-lg text-navy">Your Bill</h3>
+                </div>
+                <button onclick="closeBillModal()" class="p-2 hover:bg-gray-100 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-4 bg-gray-100">
+                <!-- Capture Area -->
+                <div id="bill-capture-area" style="background: #ffffff; padding: 24px; border-radius: 8px; max-width: 400px; margin: 0 auto; font-family: 'Inter', sans-serif; color: #20252B;">
+                    <div style="text-align: center; border-bottom: 2px dashed #142B3B; padding-bottom: 12px; margin-bottom: 12px;">
+                        <div style="font-size: 22px; font-weight: bold; color: #142B3B; margin-bottom: 4px;">KOSELI IMPORTS</div>
+                        <div style="font-size: 11px; color: #666;">Global Products. Local Trust.</div>
+                        <div style="font-size: 10px; color: #888; margin-top: 6px;">Kathmandu, Nepal</div>
+                        <div style="font-size: 10px; color: #888;">+977 9863263690</div>
+                    </div>
+                    
+                    <div style="font-size: 12px; margin-bottom: 12px; line-height: 1.6;">
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Order Code:</span><strong id="bill-code">-</strong></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Date:</span><span id="bill-date">-</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Customer:</span><strong id="bill-customer">-</strong></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Phone:</span><span id="bill-phone">-</span></div>
+                        <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Address:</span><span id="bill-address" style="text-align: right; max-width: 60%;">-</span></div>
+                    </div>
+                    
+                    <div style="border-top: 2px dashed #142B3B; border-bottom: 2px dashed #142B3B; padding: 10px 0; margin-bottom: 12px;">
+                        <div style="font-size: 11px; font-weight: bold; margin-bottom: 8px; color: #142B3B;">ITEMS:</div>
+                        <div id="bill-items" style="font-size: 12px; line-height: 1.8;"></div>
+                    </div>
+                    
+                    <div style="text-align: right; font-size: 16px; font-weight: bold; color: #142B3B; padding: 8px 0; border-bottom: 2px solid #142B3B; margin-bottom: 12px;">
+                        TOTAL: Rs. <span id="bill-total">0</span>
+                    </div>
+                    
+                    <div style="text-align: center; font-size: 10px; color: #666; line-height: 1.6;">
+                        <div style="font-style: italic; margin-bottom: 4px;">Thank you for shopping with us!</div>
+                        <div style="font-weight: bold; color: #D6A85F;">Global Products. Local Trust.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-100 bg-white space-y-2">
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="downloadBillImage()" class="bg-navy text-white py-3 rounded-xl font-medium hover:bg-[#0d1e29] transition flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download
+                    </button>
+                    <button onclick="shareBillImage()" class="bg-[#25D366] text-white py-3 rounded-xl font-medium hover:bg-[#128C7E] transition flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="share-2" class="w-4 h-4"></i> Share
+                    </button>
+                </div>
+                <button onclick="printBillImage()" class="w-full bg-gray-100 text-charcoal py-2.5 rounded-xl font-medium hover:bg-gray-200 transition flex items-center justify-center gap-2 text-sm">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Print Instead
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Track Order Modal -->
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-4" id="trackingModal">
+        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-navy">Track Your Order</h2>
+                <button onclick="closeTrackingModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-gray-500 mb-4">Enter the Order Code you received during checkout to check your order status.</p>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="trackingInput" placeholder="e.g. KI-7X9P2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy uppercase font-mono">
+                    <button onclick="checkTracking()" class="bg-navy text-white px-6 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Track</button>
+                </div>
+                <div id="trackingResult" class="hidden mt-6 border-t border-gray-200 pt-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-gray-500">Order Code:</span>
+                        <span class="font-bold font-mono text-navy" id="trackOrderCode">-</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm text-gray-500">Customer Name:</span>
+                        <span class="font-medium" id="trackName">-</span>
+                    </div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-sm text-gray-500">Total Amount:</span>
+                        <span class="font-bold text-navy" id="trackTotal">-</span>
+                    </div>
+                    <div class="bg-orange-100 text-orange-800 text-sm font-bold p-3 rounded-md text-center" id="trackStatus">
+                        Pending Confirmation on WhatsApp
+                    </div>
+                </div>
+                <div id="trackingError" class="hidden mt-4 text-center text-red-500 font-medium text-sm">
+                    Order code not found on this device.
                 </div>
             </div>
         </div>
@@ -291,10 +384,9 @@
 
     <!-- JavaScript -->
     <script>
-        // ==========================================
-        // 1. DATA CONFIGURATION (Edit this section)
-        // ==========================================
-        const WHATSAPP_NUMBER = '9779863263690'; // Updated with your number
+        const WHATSAPP_NUMBER = '9779863263690'; 
+        let currentOrderData = null; 
+        let billImageDataUrl = null;
 
         const CATEGORIES = [
             { id: 'cat1', name: 'Electronics & Gadgets', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
@@ -309,21 +401,15 @@
             { id: 'cat10', name: 'Daily Use Products', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=400&auto=format&fit=crop' }
         ];
 
-        // All products set to OUT_OF_STOCK as requested
         const PRODUCTS = [
-            { id: 'p1', name: 'Portable Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 2800, oldPrice: 3500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p2', name: 'Fast Charging USB Cable', sku: 'MOB-CAB-02', category: 'cat2', price: 350, oldPrice: null, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p3', name: 'Smart Watch Series 8', sku: 'ELE-WCH-03', category: 'cat1', price: 4500, oldPrice: 6000, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p4', name: 'Stainless Steel Water Bottle', sku: 'HOM-BTL-04', category: 'cat3', price: 1200, oldPrice: null, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
+            { id: 'p1', name: 'Portable Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 2800, oldPrice: 3500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p2', name: 'Fast Charging USB Cable', sku: 'MOB-CAB-02', category: 'cat2', price: 350, oldPrice: null, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
+            { id: 'p3', name: 'Smart Watch Series 8', sku: 'ELE-WCH-03', category: 'cat1', price: 4500, oldPrice: 6000, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop', status: 'LIMITED_STOCK' },
+            { id: 'p4', name: 'Stainless Steel Water Bottle', sku: 'HOM-BTL-04', category: 'cat3', price: 1200, oldPrice: null, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
             { id: 'p5', name: 'Wireless Mouse', sku: 'OFF-MSE-05', category: 'cat8', price: 1500, oldPrice: 1800, image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p6', name: 'Ceramic Coffee Mug', sku: 'HOM-MUG-06', category: 'cat3', price: 650, oldPrice: null, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p7', name: 'LED Desk Lamp', sku: 'HOM-LMP-07', category: 'cat3', price: 1800, oldPrice: 2200, image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' },
-            { id: 'p8', name: 'Facial Cleanser', sku: 'BEA-CLN-08', category: 'cat5', price: 850, oldPrice: null, image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=600&auto=format&fit=crop', status: 'OUT_OF_STOCK' }
+            { id: 'p6', name: 'Ceramic Coffee Mug', sku: 'HOM-MUG-06', category: 'cat3', price: 650, oldPrice: null, image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' }
         ];
 
-        // ==========================================
-        // 2. STATE & INITIALIZATION
-        // ==========================================
         let cart = JSON.parse(localStorage.getItem('koseli_cart')) || [];
         let currentSearch = '';
         let currentFilter = 'all';
@@ -336,13 +422,9 @@
             lucide.createIcons();
         }
 
-        // ==========================================
-        // 3. UI RENDERING
-        // ==========================================
         function renderCategories() {
             const grid = document.getElementById('categoryGrid');
             const menuList = document.getElementById('megaMenuList');
-            
             grid.innerHTML = CATEGORIES.map(cat => `
                 <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative">
                     <div class="aspect-[4/3] bg-gray-100 relative">
@@ -354,17 +436,8 @@
                     </div>
                 </div>
             `).join('');
-
-            menuList.innerHTML = `
-                <div onclick="resetFilters()" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 font-bold text-navy">
-                    View All Products
-                </div>
-            ` + CATEGORIES.map(cat => `
-                <div onclick="filterByCategory('${cat.id}')" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 last:border-0">
-                    <span class="text-sm text-charcoal">${cat.name}</span>
-                    ${cat.status === 'COMING_SOON' ? `<span class="text-[10px] text-gold font-bold">SOON</span>` : ''}
-                </div>
-            `).join('');
+            menuList.innerHTML = `<div onclick="resetFilters()" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 font-bold text-navy">View All Products</div>` + 
+            CATEGORIES.map(cat => `<div onclick="filterByCategory('${cat.id}')" class="px-4 py-3 hover:bg-offwhite cursor-pointer flex justify-between items-center border-b border-gray-100 last:border-0"><span class="text-sm text-charcoal">${cat.name}</span></div>`).join('');
         }
 
         function renderProducts() {
@@ -373,140 +446,57 @@
             const clearBtn = document.getElementById('clearFilterBtn');
             
             let filtered = PRODUCTS.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) || 
-                                      p.sku.toLowerCase().includes(currentSearch.toLowerCase());
-                
-                let matchesFilter = true;
-                if (currentFilter !== 'all') {
-                    matchesFilter = p.status === currentFilter;
-                }
-
+                const matchesSearch = p.name.toLowerCase().includes(currentSearch.toLowerCase()) || p.sku.toLowerCase().includes(currentSearch.toLowerCase());
+                let matchesFilter = currentFilter === 'all' || p.status === currentFilter;
                 return matchesSearch && matchesFilter;
             });
 
-            if (activeCategoryId) {
-                filtered = filtered.filter(p => p.category === activeCategoryId);
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
+            if (activeCategoryId) { filtered = filtered.filter(p => p.category === activeCategoryId); clearBtn.classList.remove('hidden'); } 
+            else { clearBtn.classList.add('hidden'); }
 
-            if (filtered.length === 0) {
-                grid.innerHTML = '';
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
+            if (filtered.length === 0) { grid.innerHTML = ''; emptyState.classList.remove('hidden'); return; }
             emptyState.classList.add('hidden');
+
             grid.innerHTML = filtered.map(p => {
                 const isOutOfStock = p.status === 'OUT_OF_STOCK';
-                const isComingSoon = p.status === 'COMING_SOON';
-                const isPreOrder = p.status === 'PRE_ORDER';
-                const isLimited = p.status === 'LIMITED_STOCK';
-                
-                let badgeHtml = '';
-                if (isOutOfStock) badgeHtml = `<span class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">OUT OF STOCK</span>`;
-                if (isComingSoon) badgeHtml = `<span class="absolute top-2 left-2 bg-navy text-gold text-xs font-bold px-2 py-1 rounded">COMING SOON</span>`;
-                if (isPreOrder) badgeHtml = `<span class="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">PRE-ORDER</span>`;
-                if (isLimited) badgeHtml = `<span class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">LIMITED STOCK</span>`;
-
+                let badgeHtml = isOutOfStock ? `<span class="absolute top-2 left-2 bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded">OUT OF STOCK</span>` : '';
                 return `
                 <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow group flex flex-col relative">
                     ${badgeHtml}
                     <div class="aspect-square bg-offwhite rounded-md mb-4 overflow-hidden relative">
                         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
-                    
                     <div class="flex-1 flex flex-col">
                         <div class="text-xs text-gray-500 mb-1">SKU: ${p.sku}</div>
                         <h3 class="font-semibold text-charcoal mb-2 line-clamp-2">${p.name}</h3>
-                        
                         <div class="mt-auto pt-2">
                             ${p.oldPrice ? `<div class="text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
                             <div class="text-lg font-bold text-navy mb-3">Rs. ${p.price.toLocaleString()}</div>
-                            
-                            ${isOutOfStock ? `
-                                <a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Koseli%20Imports,%20I%20am%20interested%20in%20${encodeURIComponent(p.name)}%20(Out%20of%20stock).%20Please%20notify%20me%20when%20it%20is%20available." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">
-                                    Notify Me
-                                </a>
-                            ` : `
-                                <button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-2 rounded-md text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-2">
-                                    <i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Cart
-                                </button>
-                            `}
+                            ${isOutOfStock ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Koseli%20Imports,%20I%20am%20interested%20in%20${encodeURIComponent(p.name)}%20(Out%20of%20stock).%20Please%20notify%20me." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">Notify Me</a>` : `<button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-2 rounded-md text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-2"><i data-lucide="shopping-cart" class="w-4 h-4"></i> Add to Cart</button>`}
                         </div>
                     </div>
-                </div>
-                `;
+                </div>`;
             }).join('');
-            
             lucide.createIcons();
-        }
-
-        // ==========================================
-        // 4. INTERACTIVITY & LOGIC
-        // ==========================================
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            currentSearch = e.target.value;
-            renderProducts();
-        });
-        document.getElementById('mobileSearchInput').addEventListener('input', (e) => {
-            currentSearch = e.target.value;
-            renderProducts();
-        });
-
-        document.getElementById('filterSelect').addEventListener('change', (e) => {
-            currentFilter = e.target.value;
-            renderProducts();
-        });
-
-        function filterByCategory(catId) {
-            activeCategoryId = catId;
-            const catName = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
-            document.getElementById('sectionTitle').innerText = catName;
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
-            renderProducts();
-        }
-
-        function resetFilters() {
-            activeCategoryId = null;
-            currentFilter = 'all';
-            currentSearch = '';
-            document.getElementById('searchInput').value = '';
-            document.getElementById('mobileSearchInput').value = '';
-            document.getElementById('filterSelect').value = 'all';
-            document.getElementById('sectionTitle').innerText = 'Featured Products';
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
-            renderProducts();
         }
 
         function addToCart(productId) {
             const product = PRODUCTS.find(p => p.id === productId);
             const existing = cart.find(item => item.id === productId);
-            
-            if (existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-            saveCart();
-            updateCartUI();
-            openCart();
+            if (existing) existing.qty += 1; else cart.push({ ...product, qty: 1 });
+            saveCart(); updateCartUI(); openCart();
         }
 
         function updateCartUI() {
             const count = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById('cartCount').innerText = count;
-            
             const container = document.getElementById('cartItems');
-            const totalEl = document.getElementById('cartTotal');
             const btn = document.getElementById('checkoutBtn');
+            const totalEl = document.getElementById('cartTotal');
 
             if (cart.length === 0) {
                 container.innerHTML = `<div class="text-center text-gray-500 mt-10">Your cart is empty.</div>`;
-                totalEl.innerText = 'Rs. 0';
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                totalEl.innerText = 'Rs. 0'; btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
                 container.innerHTML = cart.map(item => `
                     <div class="flex gap-4 mb-4 border-b border-gray-100 pb-4">
@@ -515,18 +505,15 @@
                             <div class="font-semibold text-sm line-clamp-1">${item.name}</div>
                             <div class="text-navy font-bold text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
                             <div class="flex items-center gap-3 mt-2">
-                                <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200">-</button>
+                                <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-100 rounded hover:bg-gray-200">-</button>
                                 <span class="text-sm font-medium w-4 text-center">${item.qty}</span>
-                                <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200">+</button>
+                                <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-100 rounded hover:bg-gray-200">+</button>
                             </div>
                         </div>
                     </div>
                 `).join('');
-                
                 const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-                totalEl.innerText = `Rs. ${total.toLocaleString()}`;
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                totalEl.innerText = `Rs. ${total.toLocaleString()}`; btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         }
 
@@ -534,88 +521,216 @@
             const item = cart.find(i => i.id === id);
             if (!item) return;
             item.qty += delta;
-            if (item.qty <= 0) {
-                cart = cart.filter(i => i.id !== id);
-            }
-            saveCart();
-            updateCartUI();
+            if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+            saveCart(); updateCartUI();
         }
 
-        function saveCart() {
-            localStorage.setItem('koseli_cart', JSON.stringify(cart));
-        }
+        function saveCart() { localStorage.setItem('koseli_cart', JSON.stringify(cart)); }
 
-        // ==========================================
-        // 5. CART DRAWER & CHECKOUT FLOW
-        // ==========================================
         const cartDrawer = document.getElementById('cartDrawer');
         const cartOverlay = document.getElementById('cartOverlay');
-        
-        function openCart() {
-            cartDrawer.classList.remove('translate-x-full');
-            cartOverlay.classList.remove('hidden');
-        }
-        function closeCart() {
-            cartDrawer.classList.add('translate-x-full');
-            cartOverlay.classList.add('hidden');
-        }
+        const checkoutModal = document.getElementById('checkoutModal');
+        const trackingModal = document.getElementById('trackingModal');
+        const billModal = document.getElementById('bill-modal');
+        const billModalContent = document.getElementById('bill-modal-content');
+
+        function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('hidden'); }
+        function closeCart() { cartDrawer.classList.add('translate-x-full'); cartOverlay.classList.add('hidden'); }
         
         document.getElementById('cartToggle').addEventListener('click', openCart);
         document.getElementById('cartClose').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
-        // Checkout Modal
-        const checkoutModal = document.getElementById('checkoutModal');
-        const orderForm = document.getElementById('orderForm');
-        const paymentStep = document.getElementById('paymentStep');
-        const successStep = document.getElementById('successStep');
-        
         document.getElementById('checkoutBtn').addEventListener('click', () => {
-            closeCart();
-            checkoutModal.classList.remove('hidden');
-            checkoutModal.classList.add('flex');
-            orderForm.classList.remove('hidden');
-            paymentStep.classList.add('hidden');
-            successStep.classList.add('hidden');
+            closeCart(); checkoutModal.classList.remove('hidden'); checkoutModal.classList.add('flex');
+            document.getElementById('orderForm').classList.remove('hidden');
+            document.getElementById('paymentStep').classList.add('hidden');
+            document.getElementById('successStep').classList.add('hidden');
             document.getElementById('modalTitle').innerText = 'Delivery Details';
         });
 
         document.getElementById('modalClose').addEventListener('click', () => {
-            checkoutModal.classList.add('hidden');
-            checkoutModal.classList.remove('flex');
+            checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex');
         });
 
-        orderForm.addEventListener('submit', (e) => {
+        document.getElementById('orderForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            orderForm.classList.add('hidden');
-            paymentStep.classList.remove('hidden');
+            document.getElementById('orderForm').classList.add('hidden');
+            document.getElementById('paymentStep').classList.remove('hidden');
             document.getElementById('modalTitle').innerText = 'Complete Payment';
         });
 
+        function generateOrderCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = 'KI-';
+            for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+            return code;
+        }
+
         document.getElementById('verifyBtn').addEventListener('click', () => {
-            paymentStep.classList.add('hidden');
-            successStep.classList.remove('hidden');
-            document.getElementById('modalTitle').innerText = 'Order Confirmed';
-            
-            // Generate WhatsApp Message
+            const orderCode = generateOrderCode();
             const name = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
             const address = document.getElementById('address').value;
-            
-            const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             
-            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nI have completed the payment. Please confirm my order.`;
+            currentOrderData = {
+                code: orderCode, date: new Date().toLocaleString(), name: name, phone: phone, address: address, items: cart, total: total, status: 'Pending Confirmation'
+            };
+
+            let savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
+            savedOrders.push(currentOrderData);
+            localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
+
+            document.getElementById('paymentStep').classList.add('hidden');
+            document.getElementById('successStep').classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = 'Order Confirmed';
+            document.getElementById('displayOrderCode').innerText = orderCode;
             
+            const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
+            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nI have completed the payment. Please confirm my order.`;
             document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            
-            // Clear cart after checkout
-            cart = [];
-            saveCart();
-            updateCartUI();
+            billImageDataUrl = null; // Reset image cache
         });
 
-        // Start
+        // --- IMAGE BILL GENERATION ---
+        function generateBillModal() {
+            if (!currentOrderData) return;
+            
+            document.getElementById('bill-code').innerText = currentOrderData.code;
+            document.getElementById('bill-date').innerText = currentOrderData.date;
+            document.getElementById('bill-customer').innerText = currentOrderData.name;
+            document.getElementById('bill-phone').innerText = currentOrderData.phone;
+            document.getElementById('bill-address').innerText = currentOrderData.address;
+            
+            let itemsHtml = '';
+            currentOrderData.items.forEach(item => {
+                itemsHtml += `<div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>${item.name} × ${item.qty}</span><span style="font-weight: 600;">Rs. ${item.price * item.qty}</span></div>`;
+            });
+            document.getElementById('bill-items').innerHTML = itemsHtml;
+            document.getElementById('bill-total').innerText = currentOrderData.total;
+
+            billModal.classList.remove('hidden'); billModal.classList.add('flex');
+            setTimeout(() => { billModalContent.classList.remove('scale-95', 'opacity-0'); billModalContent.classList.add('scale-100', 'opacity-100'); }, 10);
+        }
+
+        function closeBillModal() {
+            billModalContent.classList.add('scale-95', 'opacity-0');
+            billModalContent.classList.remove('scale-100', 'opacity-100');
+            setTimeout(() => { billModal.classList.add('hidden'); billModal.classList.remove('flex'); }, 300);
+        }
+
+        async function getBillImage() {
+            if (billImageDataUrl) return billImageDataUrl;
+            const element = document.getElementById('bill-capture-area');
+            const canvas = await html2canvas(element, { scale: 3, backgroundColor: '#ffffff', useCORS: true, logging: false });
+            billImageDataUrl = canvas.toDataURL('image/png');
+            return billImageDataUrl;
+        }
+
+        async function downloadBillImage() {
+            try {
+                const btn = event.target.closest('button');
+                const orig = btn.innerHTML;
+                btn.innerHTML = 'Generating...'; btn.disabled = true;
+                const imageUrl = await getBillImage();
+                const link = document.createElement('a');
+                link.download = `Koseli-Bill-${currentOrderData.code}.png`;
+                link.href = imageUrl;
+                link.click();
+                btn.innerHTML = orig; btn.disabled = false;
+            } catch (e) { alert('Error generating image.'); }
+        }
+
+        async function shareBillImage() {
+            try {
+                const btn = event.target.closest('button');
+                const orig = btn.innerHTML;
+                btn.innerHTML = 'Sharing...'; btn.disabled = true;
+                const imageUrl = await getBillImage();
+                const blob = await (await fetch(imageUrl)).blob();
+                const file = new File([blob], `Koseli-Bill-${currentOrderData.code}.png`, { type: 'image/png' });
+                
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: `Koseli Bill`, text: `My order bill from Koseli Imports. Order: ${currentOrderData.code}` });
+                } else {
+                    const link = document.createElement('a');
+                    link.download = `Koseli-Bill-${currentOrderData.code}.png`;
+                    link.href = imageUrl;
+                    link.click();
+                    alert('Sharing not supported. Image downloaded instead.');
+                }
+                btn.innerHTML = orig; btn.disabled = false;
+            } catch (e) { if(e.name !== 'AbortError') alert('Error sharing.'); }
+        }
+
+        async function printBillImage() {
+            try {
+                const imageUrl = await getBillImage();
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`<html><head><title>Print Bill</title><style>body{margin:0;padding:20px;text-align:center;}img{max-width:100%;height:auto;}@media print{body{padding:0;}}</style></head><body><img src="${imageUrl}" onload="window.print();window.onafterprint=()=>window.close();" /></body></html>`);
+                printWindow.document.close();
+            } catch (e) { alert('Error printing.'); }
+        }
+
+        // --- EXCEL EXPORT ---
+        function downloadExcel() {
+            if (!currentOrderData) return;
+            const data = [
+                ["Koseli Imports - Order Receipt"],
+                ["Order Code", currentOrderData.code], ["Date", currentOrderData.date],
+                ["Customer Name", currentOrderData.name], ["Phone", currentOrderData.phone], ["Address", currentOrderData.address], [],
+                ["Item Name", "Quantity", "Price (NPR)", "Total (NPR)"]
+            ];
+            currentOrderData.items.forEach(item => { data.push([item.name, item.qty, item.price, item.price * item.qty]); });
+            data.push([], ["", "", "Grand Total:", currentOrderData.total]);
+            
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Receipt");
+            XLSX.writeFile(wb, `Koseli_Order_${currentOrderData.code}.xlsx`);
+        }
+
+        // --- TRACKING ---
+        function openTrackingModal() { trackingModal.classList.remove('hidden'); trackingModal.classList.add('flex'); }
+        function closeTrackingModal() { trackingModal.classList.add('hidden'); trackingModal.classList.remove('flex'); }
+
+        function checkTracking() {
+            const code = document.getElementById('trackingInput').value.trim().toUpperCase();
+            const resultBox = document.getElementById('trackingResult');
+            const errorBox = document.getElementById('trackingError');
+            const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
+            const order = savedOrders.find(o => o.code === code);
+
+            if (order) {
+                resultBox.classList.remove('hidden'); errorBox.classList.add('hidden');
+                document.getElementById('trackOrderCode').innerText = order.code;
+                document.getElementById('trackName').innerText = order.name;
+                document.getElementById('trackTotal').innerText = `Rs. ${order.total.toLocaleString()}`;
+                document.getElementById('trackStatus').innerText = order.status;
+            } else { resultBox.classList.add('hidden'); errorBox.classList.remove('hidden'); }
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
+        document.getElementById('mobileSearchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
+        document.getElementById('filterSelect').addEventListener('change', (e) => { currentFilter = e.target.value; renderProducts(); });
+
+        function filterByCategory(catId) {
+            activeCategoryId = catId;
+            document.getElementById('sectionTitle').innerText = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+            renderProducts();
+        }
+
+        function resetFilters() {
+            activeCategoryId = null; currentFilter = 'all'; currentSearch = '';
+            document.getElementById('searchInput').value = ''; document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('filterSelect').value = 'all';
+            document.getElementById('sectionTitle').innerText = 'Featured Products';
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+            renderProducts();
+        }
+
         init();
     </script>
 </body>
