@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Koseli Imports</title>
+    <!-- Importing Inter Font for a premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- Brand Colors & CSS Variables --- */
+        :root {
+            --navy: #142B3B;
+            --gold: #D6A85F;
+            --bg: #F8F8F6;
+            --text: #20252B;
+            --success: #2F7D5B;
+            --border: #E5E7EB;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Main Card Container --- */
+        .payment-card {
+            background: var(--white);
+            width: 100%;
+            max-width: 480px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -10px rgba(20, 43, 59, 0.15);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #9CA3AF;
+            margin-top: 4px;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 12px;
+        }
+
+        /* --- Content Section --- */
+        .content {
+            padding: 24px;
+        }
+
+        .instruction {
+            font-size: 14px;
+            text-align: center;
+            color: #4B5563;
+            margin-bottom: 20px;
+        }
+
+        /* --- Payment Tabs --- */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: var(--bg);
+            padding: 6px;
+            border-radius: 12px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6B7280;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+        }
+
+        .tab.active {
+            background: var(--white);
+            color: var(--navy);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 600;
+        }
+
+        /* --- QR Code Display Area --- */
+        .qr-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            background: var(--bg);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .qr-label {
+            margin-top: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- Info Box --- */
+        .info-box {
+            background: rgba(214, 168, 95, 0.1);
+            border-left: 4px solid var(--gold);
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #4B5563;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        /* --- Action Button --- */
+        .btn-verify {
+            width: 100%;
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-verify:hover {
+            background: #246347;
+        }
+
+        .btn-verify:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 16px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .footer a {
+            color: var(--navy);
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-card">
+        <!-- Header -->
+        <div class="header">
+            <h1>Koseli Imports</h1>
+            <p>Order #KI-20231024-1234</p>
+            <div class="amount">Rs. 2,450.00</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <p class="instruction">Choose your preferred payment method and scan the QR code to complete your order.</p>
+
+            <!-- Payment Method Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('esewa', this)">eSewa</button>
+                <button class="tab" onclick="switchTab('khalti', this)">Khalti</button>
+                <button class="tab" onclick="switchTab('bank', this)">Bank</button>
+            </div>
+
+            <!-- QR Code Area -->
+            <div class="qr-container">
+                <!-- REPLACE THIS SRC WITH YOUR OWN QR CODE IMAGE PATH -->
+                <img id="qr-image" 
+                     src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KoseliImportsPlaceholder" 
+                     alt="Payment QR Code" 
+                     class="qr-image">
+                
+                <div class="qr-label">
+                    <i data-lucide="scan-line" style="width: 16px; height: 16px;"></i>
+                    <span id="qr-text">Scan with eSewa App</span>
+                </div>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <strong>Important:</strong> After scanning and paying, please click the button below. Your order will remain pending until we verify the transaction on our end.
+            </div>
+
+            <!-- Action Button -->
+            <button class="btn-verify" onclick="confirmPayment()" id="verify-btn">
+                <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+                I have completed the payment
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Need help? <a href="#">Chat on WhatsApp</a>
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Data for different payment methods
+        const paymentData = {
+            esewa: {
+                text: "Scan with eSewa App",
+                // You can set specific image URLs here later
+                img: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=eSewaQRCodePlaceholder"
+            },
+            khalti: {
+                text: "Scan with Khalti App",
+                img: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=KhaltiQRCodePlaceholder"
+            },
+            bank: {
+                text: "Scan with Mobile Banking App",
+                img: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=FonepayBankQRPlaceholder"
+            }
+        };
+
+        function switchTab(method, btnElement) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
+            btnElement.classList.add('active');
+
+            // Update QR Image and Text based on selection
+            const qrImage = document.getElementById('qr-image');
+            const qrText = document.getElementById('qr-text');
+            
+            qrImage.src = paymentData[method].img;
+            qrText.innerText = paymentData[method].text;
+        }
+
+        function confirmPayment() {
+            const btn = document.getElementById('verify-btn');
+            
+            // Simulate loading state
+            btn.innerHTML = '<i data-lucide="loader-2" class="spin" style="width: 18px; height: 18px;"></i> Verifying...';
+            lucide.createIcons();
+            btn.disabled = true;
+
+            // Simulate a server request delay
+            setTimeout(() => {
+                // Show Success State
+                btn.style.background = '#2F7D5B';
+                btn.innerHTML = '<i data-lucide="check" style="width: 18px; height: 18px;"></i> Payment Submitted!';
+                lucide.createIcons();
+                
+                // Add a message below
+                const infoBox = document.querySelector('.info-box');
+                infoBox.style.background = 'rgba(47, 125, 91, 0.1)';
+                infoBox.style.borderLeftColor = '#2F7D5B';
+                infoBox.innerHTML = '<strong>Success!</strong> We have received your payment notification. We will verify it and update your order status shortly.';
+                
+                // Redirect after 3 seconds (Optional)
+                // setTimeout(() => { window.location.href = '/order-confirmation'; }, 3000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
