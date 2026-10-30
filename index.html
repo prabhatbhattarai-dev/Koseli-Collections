@@ -235,7 +235,7 @@
                 <button id="modalClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="p-6 overflow-y-auto">
-                <!-- Step 1: Form -->
+                <!-- Form -->
                 <form id="orderForm">
                     <div class="space-y-4">
                         <div>
@@ -254,7 +254,7 @@
                     <button type="submit" class="w-full mt-6 bg-navy text-white py-3 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Place Order</button>
                 </form>
 
-                <!-- Step 2: Success & Tracking Code (QR Code Step Removed) -->
+                <!-- Success Screen -->
                 <div id="successStep" class="hidden text-center py-6">
                     <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="check" class="w-8 h-8"></i>
@@ -377,7 +377,10 @@
 
     <!-- JavaScript -->
     <script>
+        // ⚠️ PASTE YOUR GOOGLE APPS SCRIPT URL HERE
+        const GAS_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; 
         const WHATSAPP_NUMBER = '9779863263690'; 
+        
         let currentOrderData = null; 
         let billImageDataUrl = null;
 
@@ -552,7 +555,7 @@
             return code;
         }
 
-        // SUBMIT FORM = DIRECT TO SUCCESS (QR Removed)
+        // ⭐ UPDATED SUBMIT EVENT WITH GOOGLE SHEETS AUTO-SAVE
         document.getElementById('orderForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -566,17 +569,39 @@
                 code: orderCode, date: new Date().toLocaleString(), name: name, phone: phone, address: address, items: cart, total: total, status: 'Pending Confirmation'
             };
 
+            // 1. Save locally for tracking
             let savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
             savedOrders.push(currentOrderData);
             localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
 
-            // Switch UI to success
+            // 2. Save to Google Sheets silently
+            fetch(GAS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                    action: "saveOrder",
+                    code: currentOrderData.code,
+                    name: currentOrderData.name,
+                    phone: currentOrderData.phone,
+                    address: currentOrderData.address,
+                    items: currentOrderData.items.map(i => ({ name: i.name, qty: i.qty })),
+                    total: currentOrderData.total,
+                    status: "Pending Confirmation"
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) console.error("Failed to save order to cloud:", data.error);
+            })
+            .catch(err => console.error("Network error saving order:", err));
+
+            // 3. Update UI
             document.getElementById('orderForm').classList.add('hidden');
             document.getElementById('successStep').classList.remove('hidden');
             document.getElementById('modalTitle').innerText = 'Order Placed';
             document.getElementById('displayOrderCode').innerText = orderCode;
             
-            // Generate WhatsApp Text asking for QR Code
+            // 4. Generate WhatsApp Message
             const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
             const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
             
@@ -584,7 +609,7 @@
             
             billImageDataUrl = null; // Reset image cache
             
-            // Clear cart
+            // 5. Clear cart
             cart = []; saveCart(); updateCartUI();
         });
 
