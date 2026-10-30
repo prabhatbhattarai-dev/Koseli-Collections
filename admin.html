@@ -100,9 +100,9 @@
     </div>
 
     <script>
-        // ⚠️ YOUR GOOGLE APPS SCRIPT URL IS ALREADY INSERTED HERE
+        // ⚠️ YOUR GOOGLE APPS SCRIPT URL
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzZmqrhmcUT1bCEVESUbHVrCGJaru8isRIKaYjlcD2O1MWPAP8Sjhjqrc4brqxz08_-/exec"; 
-        let adminPassword = "Koseli@2025";
+        let adminPassword = "";
         let allOrders = [];
 
         function login() {
@@ -113,7 +113,7 @@
             
             fetch(GAS_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // text/plain avoids CORS issues
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
                 body: JSON.stringify({ action: "verifyAdmin", password: passwordInput })
             })
             .then(res => res.json())
