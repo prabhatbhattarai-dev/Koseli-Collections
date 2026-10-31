@@ -540,13 +540,15 @@
             lucide.createIcons();
         }
 
-        // Hide Preloader when window is fully loaded
+        // ⭐ Force the loading screen to stay for 3.5 seconds
         window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
             setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 800); // Matches the CSS transition duration
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 800); // Matches CSS transition
+            }, 3500); // 3500ms = 3.5 seconds
         });
 
         function toggleMobileMenu() {
