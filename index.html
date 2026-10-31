@@ -449,7 +449,7 @@
         let cart = JSON.parse(localStorage.getItem('koseli_cart')) || [];
         let currentSearch = '';
         let currentFilter = 'all';
-        let activeCategoryId = null; // Tracks the selected category
+        let activeCategoryId = null; 
 
         function init() {
             renderCategories();
@@ -507,17 +507,12 @@
             activeCategoryId = catId;
             const catName = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
             
-            // Update UI Headers
             document.getElementById('sectionTitle').innerText = catName;
             document.getElementById('sectionSubtitle').innerText = `Showing all products in ${catName}.`;
             
-            // Re-render categories to show the active ring
             renderCategories();
-            
-            // Filter and Render Products
             renderProducts();
             
-            // Scroll to the product section
             window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
         }
 
@@ -532,7 +527,7 @@
             document.getElementById('sectionTitle').innerText = 'Featured Products';
             document.getElementById('sectionSubtitle').innerText = 'Curated items for modern living.';
             
-            renderCategories(); // Remove active ring
+            renderCategories(); 
             renderProducts();
             
             window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
@@ -549,7 +544,6 @@
                 return matchesSearch && matchesFilter;
             });
 
-            // APPLY CATEGORY FILTER
             if (activeCategoryId) { 
                 filtered = filtered.filter(p => p.category === activeCategoryId); 
                 clearBtn.classList.remove('hidden'); 
