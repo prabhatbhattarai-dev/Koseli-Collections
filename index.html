@@ -48,37 +48,49 @@
             .modal-mobile-content { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; max-height: 92vh !important; width: 100% !important; max-width: 100% !important; }
         }
 
-        /* Premium Loading Screen Styles */
-        #preloader { transition: opacity 0.6s ease, visibility 0.6s ease; }
+        /* Premium Loading Screen Animations */
+        #preloader { transition: opacity 0.8s ease, visibility 0.8s ease; }
+        
+        .spinner-ring {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(214, 168, 95, 0.2);
+            border-top: 4px solid #D6A85F;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         @keyframes pulse-soft {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(0.97); }
+            50% { opacity: 0.8; transform: scale(0.96); }
         }
         .animate-pulse-soft { animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        
-        @keyframes loading-bar {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-        .animate-loading-bar { animation: loading-bar 1.5s ease-in-out infinite; }
     </style>
 </head>
 <body class="text-charcoal antialiased flex flex-col min-h-screen">
 
     <!-- ⭐ PREMIUM LOADING SCREEN -->
-    <div id="preloader" class="fixed inset-0 bg-offwhite z-[9999] flex flex-col items-center justify-center">
-        <div class="relative flex flex-col items-center animate-pulse-soft mb-6">
-            <img src="/logo.png" alt="Koseli Collections" class="h-16 md:h-28 w-auto object-contain drop-shadow-sm" onerror="this.style.display='none'; document.getElementById('loader-text-fallback').style.display='flex';">
+    <div id="preloader" class="fixed inset-0 bg-navy z-[9999] flex flex-col items-center justify-center">
+        <div class="relative flex flex-col items-center animate-pulse-soft mb-8">
+            <!-- Logo -->
+            <img src="/logo.png" alt="Koseli Collections" class="h-20 md:h-32 w-auto object-contain drop-shadow-lg mb-4" onerror="this.style.display='none'; document.getElementById('loader-text-fallback').style.display='flex';">
+            
             <!-- Fallback text if logo.png is missing -->
             <div id="loader-text-fallback" class="hidden flex-col items-center">
-                <div class="w-16 h-16 bg-navy rounded-xl flex items-center justify-center text-gold font-bold text-3xl shadow-lg mb-3">K</div>
-                <h1 class="text-xl md:text-2xl font-bold text-navy tracking-widest uppercase">Koseli Collections</h1>
+                <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-navy font-bold text-3xl shadow-lg mb-4">K</div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white tracking-widest uppercase">Koseli Collections</h1>
             </div>
         </div>
-        <div class="w-40 md:w-48 h-1 bg-gray-200 rounded-full overflow-hidden mb-4">
-            <div class="h-full bg-gold rounded-full animate-loading-bar w-1/2"></div>
-        </div>
-        <p class="text-[10px] md:text-xs text-gray-400 tracking-widest uppercase font-medium">Global Products. Local Trust.</p>
+        
+        <!-- Spinner -->
+        <div class="spinner-ring mb-4"></div>
+        
+        <p class="text-[10px] md:text-xs text-gray-400 tracking-widest uppercase font-medium mt-2">Global Products. Local Trust.</p>
     </div>
 
     <!-- Top Announcement Bar -->
@@ -240,7 +252,6 @@
                 </div>
             </div>
             
-            <!-- 2 column grid on mobile for perfect product display -->
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:gap-6" id="productGrid"></div>
             
             <div id="emptyState" class="hidden text-center py-16 md:py-20 bg-white rounded-xl border border-gray-200">
@@ -346,8 +357,11 @@
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm font-medium mb-1">Phone Number</label>
-                            <!-- Strict 10-digit validation -->
-                            <input type="tel" id="phone" required maxlength="10" minlength="10" pattern="\d{10}" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="98XXXXXXXX" title="Please enter a valid 10-digit phone number">
+                            <!-- Strict 10-digit numeric validation -->
+                            <input type="tel" id="phone" required minlength="10" maxlength="10" 
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                                   class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" 
+                                   placeholder="98XXXXXXXX" title="Please enter a valid 10-digit phone number">
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm font-medium mb-1">Delivery Address</label>
@@ -532,7 +546,7 @@
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.style.display = 'none';
-            }, 600); 
+            }, 800); // Matches the CSS transition duration
         });
 
         function toggleMobileMenu() {
@@ -702,6 +716,7 @@
                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
                 clearBtn.classList.remove('hidden'); 
             }
+            lucide.createIcons();
         }
 
         function updateQty(id, delta) {
