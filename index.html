@@ -80,9 +80,13 @@
 
                 <!-- Desktop Actions -->
                 <div class="hidden md:flex items-center gap-6">
+                    <button onclick="openOrderHistory()" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors">
+                        <i data-lucide="history" class="w-5 h-5 mb-1"></i>
+                        <span class="text-xs font-medium">My Orders</span>
+                    </button>
                     <button onclick="openTrackingModal()" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors">
                         <i data-lucide="package-search" class="w-5 h-5 mb-1"></i>
-                        <span class="text-xs font-medium">Track Order</span>
+                        <span class="text-xs font-medium">Track</span>
                     </button>
                     
                     <button id="cartToggle" class="flex flex-col items-center text-charcoal hover:text-navy transition-colors relative">
@@ -146,6 +150,7 @@
             <div class="space-y-1">
                 <a href="#" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Home</a>
                 <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Shop All</a>
+                <a href="#" onclick="openOrderHistory(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">My Orders</a>
                 <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Track Order</a>
                 <a href="https://wa.me/9779863263690" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-[#25D366]">Contact on WhatsApp</a>
             </div>
@@ -225,8 +230,8 @@
                 <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Quick Links</h4>
                 <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li><a href="#shop" onclick="resetFilters()" class="hover:text-gold transition-colors">Shop All</a></li>
+                    <li><a href="#" onclick="openOrderHistory()" class="hover:text-gold transition-colors">My Orders</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
-                    <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
                     <li><a href="https://wa.me/9779863263690" class="hover:text-gold transition-colors">Contact Us</a></li>
                 </ul>
             </div>
@@ -311,7 +316,14 @@
                     </div>
                     <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
                     <p class="text-gray-500 text-sm mb-4">Save this Order Code to track your order later:</p>
-                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KC-XXXXX</div>
+                    
+                    <!-- Added Copy Button -->
+                    <div class="flex items-center justify-center gap-2 mb-6">
+                        <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest" id="displayOrderCode">KC-XXXXX</div>
+                        <button onclick="copyOrderCode()" class="p-3 bg-gold text-navy rounded-md hover:bg-[#c4984c] transition-colors" title="Copy Order Code">
+                            <i data-lucide="copy" id="copyIcon" class="w-5 h-5"></i>
+                        </button>
+                    </div>
                     
                     <div class="flex flex-col gap-3">
                         <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm md:text-base">
@@ -406,6 +418,19 @@
                 <div id="trackingError" class="hidden mt-4 text-center text-red-500 font-medium text-xs md:text-sm">
                     Order code not found on this device.
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order History Modal -->
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="historyModal">
+        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
+                <h2 class="text-lg font-bold text-navy">My Orders</h2>
+                <button onclick="closeOrderHistory()" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-4 overflow-y-auto flex-1" id="historyList">
+                <!-- Orders injected via JS -->
             </div>
         </div>
     </div>
@@ -631,6 +656,7 @@
         const trackingModal = document.getElementById('trackingModal');
         const billModal = document.getElementById('bill-modal');
         const billModalContent = document.getElementById('bill-modal-content');
+        const historyModal = document.getElementById('historyModal');
 
         function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('hidden'); }
         function closeCart() { cartDrawer.classList.add('translate-x-full'); cartOverlay.classList.add('hidden'); }
@@ -655,6 +681,26 @@
             let code = 'KC-';
             for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
             return code;
+        }
+
+        // NEW: Copy Order Code Function
+        function copyOrderCode() {
+            const code = document.getElementById('displayOrderCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const icon = document.getElementById('copyIcon');
+                icon.setAttribute('data-lucide', 'check');
+                icon.classList.remove('text-navy');
+                icon.classList.add('text-green-700');
+                lucide.createIcons();
+                setTimeout(() => {
+                    icon.setAttribute('data-lucide', 'copy');
+                    icon.classList.remove('text-green-700');
+                    icon.classList.add('text-navy');
+                    lucide.createIcons();
+                }, 2000);
+            }).catch(err => {
+                alert("Failed to copy: " + err);
+            });
         }
 
         document.getElementById('orderForm').addEventListener('submit', (e) => {
@@ -704,6 +750,44 @@
             billImageDataUrl = null; 
             cart = []; saveCart(); updateCartUI();
         });
+
+        // Order History Functions
+        function openOrderHistory() {
+            const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
+            const listContainer = document.getElementById('historyList');
+            
+            if (savedOrders.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-10 text-gray-500">
+                        <i data-lucide="package" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
+                        <p>No order history found on this device.</p>
+                    </div>
+                `;
+            } else {
+                // Sort by newest first
+                savedOrders.reverse(); 
+                listContainer.innerHTML = savedOrders.map(order => `
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 mb-3 shadow-sm">
+                        <div class="flex justify-between items-center mb-2 border-b border-gray-100 pb-2">
+                            <span class="font-bold font-mono text-navy">${order.code}</span>
+                            <span class="text-xs font-bold bg-orange-100 text-orange-800 px-2 py-1 rounded">${order.status}</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-2">${order.date}</p>
+                        <div class="text-sm text-charcoal mb-2">
+                            ${order.items.map(i => `${i.name} (x${i.qty})`).join(', ')}
+                        </div>
+                        <div class="text-right font-bold text-gold">Rs. ${Number(order.total).toLocaleString()}</div>
+                    </div>
+                `).join('');
+            }
+            
+            historyModal.classList.remove('hidden'); historyModal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeOrderHistory() {
+            historyModal.classList.add('hidden'); historyModal.classList.remove('flex');
+        }
 
         function generateBillModal() {
             if (!currentOrderData) return;
