@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Koseli Collections | Global Products. Local Trust.</title>
     
     <!-- Google Search Console Verification -->
@@ -38,34 +38,49 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; -webkit-tap-highlight-color: transparent; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Mobile Bottom Sheet Modal style */
+        @media (max-width: 640px) {
+            .modal-mobile-sheet {
+                align-items: flex-end !important;
+                padding: 0 !important;
+            }
+            .modal-mobile-content {
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                max-height: 90vh !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body class="text-charcoal antialiased">
 
     <!-- Top Announcement Bar -->
-    <div class="bg-navy text-white text-[10px] sm:text-xs font-medium py-1.5 sm:py-2 text-center tracking-wide px-2">
+    <div class="bg-navy text-white text-[10px] sm:text-xs font-medium py-1.5 text-center tracking-wide px-2">
         🚚 Free delivery inside Kathmandu Valley on orders over Rs. 5,000
     </div>
 
     <!-- Main Header -->
-    <header class="bg-white border-b border-gray-200 relative z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 md:h-20 gap-4">
+    <header class="bg-white border-b border-gray-200 relative z-40 sticky top-0 shadow-sm">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-14 md:h-20 gap-2 sm:gap-4">
                 
                 <!-- Mobile Menu Button & Logo -->
                 <div class="flex items-center gap-2 sm:gap-4">
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 -ml-2 text-charcoal hover:text-navy">
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-1.5 -ml-1 text-charcoal hover:text-navy">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                     
                     <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-10 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-8 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
                         <div id="logo-fallback" class="hidden flex-col">
-                            <span class="font-bold text-lg md:text-xl text-navy tracking-tight leading-none">Koseli Collections</span>
-                            <span class="text-[8px] md:text-[10px] text-gray-500 uppercase tracking-widest mt-1">Nepal Marketplace</span>
+                            <span class="font-bold text-base md:text-xl text-navy tracking-tight leading-none">Koseli Collections</span>
+                            <span class="text-[7px] md:text-[10px] text-gray-500 uppercase tracking-widest mt-0.5">Nepal Marketplace</span>
                         </div>
                     </a>
                 </div>
@@ -102,9 +117,9 @@
 
                 <!-- Mobile Cart Icon -->
                 <div class="flex md:hidden items-center">
-                    <button onclick="openCart()" class="p-2 text-charcoal relative">
+                    <button onclick="openCart()" class="p-1.5 text-charcoal relative">
                         <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-                        <span id="mobileCartCount" class="absolute top-0 right-0 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                        <span id="mobileCartCount" class="absolute -top-1 -right-1 bg-gold text-navy text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
                 </div>
             </div>
@@ -132,7 +147,7 @@
     <!-- Mobile Search -->
     <div class="md:hidden p-3 bg-white border-b border-gray-200 shadow-sm relative z-30">
         <div class="flex relative">
-            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-sm focus:outline-none focus:border-navy">
+            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-base focus:outline-none focus:border-navy">
             <button class="bg-navy text-white px-4 rounded-r-md">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </button>
@@ -140,7 +155,7 @@
     </div>
 
     <!-- Mobile Menu Drawer -->
-    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/50 z-[100] hidden opacity-0 transition-opacity duration-300 md:hidden" onclick="toggleMobileMenu()"></div>
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/60 z-[100] hidden opacity-0 transition-opacity duration-300 md:hidden" onclick="toggleMobileMenu()"></div>
     <div id="mobileMenuDrawer" class="fixed top-0 left-0 h-full w-[80%] max-w-sm bg-white z-[101] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl md:hidden">
         <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
             <span class="font-bold text-navy text-lg">Menu</span>
@@ -162,40 +177,40 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+    <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 md:py-8">
         <!-- Hero Section -->
-        <div class="bg-navy rounded-xl overflow-hidden relative mb-8 md:mb-12 flex items-center">
+        <div class="bg-navy rounded-xl overflow-hidden relative mb-6 md:mb-12 flex items-center">
             <div class="absolute inset-0 opacity-20">
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
             </div>
-            <div class="relative z-10 p-6 md:p-16 max-w-2xl">
-                <span class="bg-gold text-navy text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-3 md:mb-4 inline-block">Welcome to Koseli Collections</span>
-                <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-3 md:mb-4">Global Products.<br>Local Trust.</h1>
-                <p class="text-gray-300 text-sm md:text-lg mb-6 md:mb-8 max-w-sm md:max-w-none">Discover premium imports from China. Delivered to your door in Nepal.</p>
-                <a href="#shop" onclick="resetFilters()" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-5 py-2.5 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-sm md:text-base">
-                    Shop Now <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5"></i>
+            <div class="relative z-10 p-5 md:p-16 max-w-2xl">
+                <span class="bg-gold text-navy text-[9px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-2 md:mb-4 inline-block">Welcome to Koseli Collections</span>
+                <h1 class="text-2xl md:text-5xl font-bold text-white leading-tight mb-2 md:mb-4">Global Products.<br>Local Trust.</h1>
+                <p class="text-gray-300 text-xs md:text-lg mb-4 md:mb-8 max-w-sm md:max-w-none">Discover premium imports from China. Delivered to your door in Nepal.</p>
+                <a href="#shop" onclick="resetFilters()" class="inline-flex items-center gap-1 md:gap-2 bg-gold text-navy font-bold px-4 py-2 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-xs md:text-base">
+                    Shop Now <i data-lucide="arrow-right" class="w-3 h-3 md:w-5 md:h-5"></i>
                 </a>
             </div>
         </div>
 
         <!-- Categories Grid -->
-        <div class="mb-10 md:mb-16" id="categorySection">
-            <div class="flex items-center justify-between mb-4 md:mb-6">
-                <h2 class="text-xl md:text-2xl font-bold text-navy">Browse Categories</h2>
+        <div class="mb-8 md:mb-16" id="categorySection">
+            <div class="flex items-center justify-between mb-3 md:mb-6 px-1">
+                <h2 class="text-lg md:text-2xl font-bold text-navy">Browse Categories</h2>
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4" id="categoryGrid"></div>
+            <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4" id="categoryGrid"></div>
         </div>
 
         <!-- Products Grid -->
         <div id="shop" class="scroll-mt-24">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 md:mb-6 gap-3 md:gap-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-3 md:mb-6 gap-2 md:gap-4 px-1">
                 <div>
-                    <h2 class="text-xl md:text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
-                    <p class="text-gray-500 text-xs md:text-sm mt-1" id="sectionSubtitle">Curated items for modern living.</p>
+                    <h2 class="text-lg md:text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
+                    <p class="text-gray-500 text-[10px] md:text-sm mt-0.5" id="sectionSubtitle">Curated items for modern living.</p>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-xs text-navy bg-navy/10 px-3 py-1.5 rounded-md hover:text-white hover:bg-navy transition-colors font-bold mr-auto">✕ Clear Category Filter</button>
-                    <select id="filterSelect" class="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
+                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-[10px] md:text-xs text-navy bg-navy/10 px-2 py-1 md:px-3 md:py-1.5 rounded-md hover:text-white hover:bg-navy transition-colors font-bold mr-auto">✕ Clear</button>
+                    <select id="filterSelect" class="w-full sm:w-auto border border-gray-300 rounded-md py-1.5 px-2 md:py-2 md:px-3 text-xs md:text-sm focus:outline-none focus:border-navy bg-white">
                         <option value="all">All Availability</option>
                         <option value="AVAILABLE">Available</option>
                         <option value="OUT_OF_STOCK">Out of Stock</option>
@@ -204,40 +219,40 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6" id="productGrid"></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6" id="productGrid"></div>
             
             <div id="emptyState" class="hidden text-center py-16 md:py-20 bg-white rounded-xl border border-gray-200">
                 <i data-lucide="search-x" class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4"></i>
                 <h3 class="text-base md:text-lg font-bold text-navy mb-1 md:mb-2">No products found</h3>
-                <p class="text-gray-500 text-sm">Try adjusting your search or selecting a different category.</p>
+                <p class="text-gray-500 text-xs md:text-sm">Try adjusting your search or selecting a different category.</p>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-navy text-white mt-12 md:mt-20 pt-10 md:pt-12 pb-6" id="contact">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8 md:mb-12">
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center mb-4">
+    <footer class="bg-navy text-white mt-10 md:mt-20 pt-8 md:pt-12 pb-6" id="contact">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
+            <div class="col-span-1 md:col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
+                <div class="flex items-center mb-3">
                     <div class="bg-white p-2 rounded-lg inline-block">
-                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
-                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-lg md:text-xl px-2">Koseli Collections</span>
+                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-8 md:h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
+                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-base md:text-xl px-2">Koseli Collections</span>
                     </div>
                 </div>
-                <p class="text-gray-400 text-xs md:text-sm max-w-sm mb-4 md:mb-6 mt-2 md:mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
+                <p class="text-gray-400 text-xs md:text-sm max-w-sm mb-3 mt-2">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
             </div>
-            <div>
-                <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Quick Links</h4>
-                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
+            <div class="text-center md:text-left">
+                <h4 class="font-bold mb-2 md:mb-4 text-sm md:text-base">Quick Links</h4>
+                <ul class="space-y-1.5 text-xs md:text-sm text-gray-400">
                     <li><a href="#shop" onclick="resetFilters()" class="hover:text-gold transition-colors">Shop All</a></li>
                     <li><a href="#" onclick="openOrderHistory()" class="hover:text-gold transition-colors">My Orders</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
                     <li><a href="https://wa.me/9779863263690" class="hover:text-gold transition-colors">Contact Us</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Customer Service</h4>
-                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
+            <div class="text-center md:text-left">
+                <h4 class="font-bold mb-2 md:mb-4 text-sm md:text-base">Customer Service</h4>
+                <ul class="space-y-1.5 text-xs md:text-sm text-gray-400">
                     <li>Kathmandu, Nepal</li>
                     <li>support@koselicollections.com</li>
                     <li>+977 9863263690</li>
@@ -246,7 +261,7 @@
         </div>
         
         <!-- Footer Bottom -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col items-center justify-between text-xs md:text-sm text-gray-500 gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-5 flex flex-col items-center justify-between text-[10px] md:text-sm text-gray-500 gap-3 md:gap-4">
             <div class="flex flex-col md:flex-row w-full justify-between items-center gap-2 md:gap-4 text-center md:text-left">
                 <p>&copy; 2025 Koseli Collections. All rights reserved.</p>
                 <p class="font-medium text-gold">
@@ -255,58 +270,58 @@
             </div>
             
             <!-- Staff Login Button -->
-            <div class="mt-2">
-                <a href="admin.html" class="inline-flex items-center gap-1.5 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-[10px] md:text-xs font-medium text-white/50 hover:text-gold hover:border-gold/30 hover:bg-white/10 transition">
-                    <i data-lucide="lock" class="w-3 h-3 md:w-3.5 md:h-3.5"></i><span>Staff Login</span>
+            <div class="mt-1">
+                <a href="admin.html" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full font-medium text-white/50 hover:text-gold hover:border-gold/30 hover:bg-white/10 transition">
+                    <i data-lucide="lock" class="w-3 h-3"></i><span>Staff Login</span>
                 </a>
             </div>
         </div>
     </footer>
 
-    <!-- Shopping Cart Drawer -->
-    <div class="fixed inset-0 bg-black/50 z-[100] hidden" id="cartOverlay"></div>
+    <!-- Shopping Cart Drawer (Slide from Right) -->
+    <div class="fixed inset-0 bg-black/60 z-[100] hidden" id="cartOverlay"></div>
     <div class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[101] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl" id="cartDrawer">
-        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-offwhite">
             <h2 class="text-lg font-bold text-navy">Your Cart</h2>
-            <button id="cartClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <button id="cartClose" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
         <div class="flex-1 overflow-y-auto p-4" id="cartItems"></div>
-        <div class="p-4 border-t border-gray-200 bg-offwhite">
-            <div class="flex justify-between font-bold text-lg mb-4">
+        <div class="p-4 border-t border-gray-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between font-bold text-lg mb-3">
                 <span>Total</span>
-                <span id="cartTotal">Rs. 0</span>
+                <span id="cartTotal" class="text-gold">Rs. 0</span>
             </div>
-            <button id="checkoutBtn" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors" disabled>
+            <button id="checkoutBtn" class="w-full bg-[#25D366] text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm shadow-lg shadow-green-500/30" disabled>
                 <i data-lucide="message-circle" class="w-5 h-5"></i> Order on WhatsApp
             </button>
         </div>
     </div>
 
-    <!-- Checkout Modal -->
-    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="checkoutModal">
-        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+    <!-- Checkout Modal (Bottom Sheet on Mobile) -->
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center modal-mobile-sheet p-3 md:p-4" id="checkoutModal">
+        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-mobile-content">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
                 <h2 class="text-lg font-bold text-navy" id="modalTitle">Delivery Details</h2>
-                <button id="modalClose" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button id="modalClose" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="p-4 md:p-6 overflow-y-auto">
                 <!-- Form -->
                 <form id="orderForm">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium mb-1">Full Name</label>
-                            <input type="text" id="fullName" required class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy">
+                            <label class="block text-xs md:text-sm font-medium mb-1">Full Name</label>
+                            <input type="text" id="fullName" required class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1">Phone Number</label>
-                            <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy" placeholder="98XXXXXXXX">
+                            <label class="block text-xs md:text-sm font-medium mb-1">Phone Number</label>
+                            <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="98XXXXXXXX">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1">Delivery Address</label>
-                            <textarea id="address" required rows="2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy" placeholder="Street, Ward, Municipality, District"></textarea>
+                            <label class="block text-xs md:text-sm font-medium mb-1">Delivery Address</label>
+                            <textarea id="address" required rows="2" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="Street, Ward, Municipality, District"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="w-full mt-6 bg-navy text-white py-3 rounded-md font-bold hover:bg-[#0d1e29] transition-colors">Place Order</button>
+                    <button type="submit" class="w-full mt-6 bg-navy text-white py-3.5 rounded-xl font-bold hover:bg-[#0d1e29] transition-colors text-sm shadow-lg shadow-navy/20">Place Order</button>
                 </form>
 
                 <!-- Success Screen -->
@@ -315,21 +330,21 @@
                         <i data-lucide="check" class="w-8 h-8"></i>
                     </div>
                     <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
-                    <p class="text-gray-500 text-sm mb-4">Save this Order Code to track your order later:</p>
+                    <p class="text-gray-500 text-xs md:text-sm mb-4">Save this Order Code to track your order later:</p>
                     
-                    <!-- Added Copy Button -->
+                    <!-- Copy Button -->
                     <div class="flex items-center justify-center gap-2 mb-6">
-                        <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest" id="displayOrderCode">KC-XXXXX</div>
-                        <button onclick="copyOrderCode()" class="p-3 bg-gold text-navy rounded-md hover:bg-[#c4984c] transition-colors" title="Copy Order Code">
+                        <div class="bg-gray-50 border border-gray-300 rounded-lg py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest" id="displayOrderCode">KC-XXXXX</div>
+                        <button onclick="copyOrderCode()" class="p-3 bg-gold text-navy rounded-lg hover:bg-[#c4984c] transition-colors shadow-sm" title="Copy Order Code">
                             <i data-lucide="copy" id="copyIcon" class="w-5 h-5"></i>
                         </button>
                     </div>
                     
                     <div class="flex flex-col gap-3">
-                        <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm md:text-base">
+                        <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm shadow-lg shadow-green-500/30">
                             <i data-lucide="message-circle" class="w-5 h-5"></i> Open WhatsApp to Pay
                         </a>
-                        <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors text-sm md:text-base">
+                        <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors text-sm shadow-lg shadow-navy/20">
                             <i data-lucide="receipt" class="w-5 h-5"></i> Get Image Bill
                         </button>
                     </div>
@@ -339,14 +354,14 @@
     </div>
 
     <!-- ⭐ BILL IMAGE MODAL -->
-    <div id="bill-modal" class="fixed inset-0 bg-black/70 z-[300] hidden items-center justify-center p-3 md:p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0" id="bill-modal-content">
-            <div class="flex items-center justify-between p-4 border-b border-gray-100">
+    <div id="bill-modal" class="fixed inset-0 bg-black/70 z-[300] hidden items-center justify-center p-3 md:p-4 backdrop-blur-sm modal-mobile-sheet">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0 modal-mobile-content" id="bill-modal-content">
+            <div class="flex items-center justify-between p-4 border-b border-gray-100 bg-offwhite">
                 <div class="flex items-center gap-2">
                     <div class="bg-gold/20 p-2 rounded-full"><i data-lucide="receipt" class="w-5 h-5 text-navy"></i></div>
                     <h3 class="font-bold text-lg text-navy">Your Bill</h3>
                 </div>
-                <button onclick="closeBillModal()" class="p-2 hover:bg-gray-100 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="closeBillModal()" class="p-2 hover:bg-gray-200 rounded-full transition"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-3 md:p-4 bg-gray-100">
                 <!-- Capture Area -->
@@ -375,11 +390,11 @@
             </div>
             <div class="p-3 md:p-4 border-t border-gray-100 bg-white space-y-2">
                 <div class="grid grid-cols-2 gap-2">
-                    <button onclick="downloadBillImage()" class="bg-navy text-white py-2 md:py-3 rounded-xl font-medium hover:bg-[#0d1e29] transition flex items-center justify-center gap-1 text-xs md:text-sm">
-                        <i data-lucide="download" class="w-3 h-3 md:w-4 md:h-4"></i> Download
+                    <button onclick="downloadBillImage()" class="bg-navy text-white py-3 rounded-xl font-medium hover:bg-[#0d1e29] transition flex items-center justify-center gap-1 text-xs md:text-sm shadow-sm">
+                        <i data-lucide="download" class="w-4 h-4"></i> Download
                     </button>
-                    <button onclick="shareBillImage()" class="bg-[#25D366] text-white py-2 md:py-3 rounded-xl font-medium hover:bg-[#128C7E] transition flex items-center justify-center gap-1 text-xs md:text-sm">
-                        <i data-lucide="share-2" class="w-3 h-3 md:w-4 md:h-4"></i> Share
+                    <button onclick="shareBillImage()" class="bg-[#25D366] text-white py-3 rounded-xl font-medium hover:bg-[#128C7E] transition flex items-center justify-center gap-1 text-xs md:text-sm shadow-sm">
+                        <i data-lucide="share-2" class="w-4 h-4"></i> Share
                     </button>
                 </div>
             </div>
@@ -387,16 +402,16 @@
     </div>
 
     <!-- Track Order Modal -->
-    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="trackingModal">
-        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
-            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4 modal-mobile-sheet" id="trackingModal">
+        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col modal-mobile-content">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
                 <h2 class="text-lg font-bold text-navy">Track Your Order</h2>
-                <button onclick="closeTrackingModal()" class="p-2 hover:bg-gray-100 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="closeTrackingModal()" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="p-4 md:p-6">
                 <div class="flex gap-2 mb-4">
-                    <input type="text" id="trackingInput" placeholder="e.g. KC-7X9P2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy uppercase font-mono">
-                    <button onclick="checkTracking()" class="bg-navy text-white px-4 md:px-6 rounded-md font-bold hover:bg-[#0d1e29] transition-colors text-sm">Track</button>
+                    <input type="text" id="trackingInput" placeholder="e.g. KC-7X9P2" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy uppercase font-mono text-base">
+                    <button onclick="checkTracking()" class="bg-navy text-white px-6 rounded-lg font-bold hover:bg-[#0d1e29] transition-colors text-sm">Track</button>
                 </div>
                 <div id="trackingResult" class="hidden mt-4 border-t border-gray-200 pt-4">
                     <div class="flex justify-between items-center mb-2">
@@ -411,7 +426,7 @@
                         <span class="text-xs md:text-sm text-gray-500">Total:</span>
                         <span class="font-bold text-navy text-sm md:text-base" id="trackTotal">-</span>
                     </div>
-                    <div class="bg-orange-100 text-orange-800 text-xs md:text-sm font-bold p-3 rounded-md text-center" id="trackStatus">
+                    <div class="bg-orange-100 text-orange-800 text-xs md:text-sm font-bold p-3 rounded-lg text-center" id="trackStatus">
                         Pending Confirmation
                     </div>
                 </div>
@@ -423,13 +438,13 @@
     </div>
 
     <!-- Order History Modal -->
-    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4" id="historyModal">
-        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+    <div class="fixed inset-0 bg-black/60 z-[200] hidden items-center justify-center p-3 md:p-4 modal-mobile-sheet" id="historyModal">
+        <div class="bg-white rounded-xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[85vh] modal-mobile-content">
             <div class="p-4 border-b border-gray-200 flex justify-between items-center bg-offwhite">
                 <h2 class="text-lg font-bold text-navy">My Orders</h2>
                 <button onclick="closeOrderHistory()" class="p-2 hover:bg-gray-200 rounded-full transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <div class="p-4 overflow-y-auto flex-1" id="historyList">
+            <div class="p-3 md:p-4 overflow-y-auto flex-1 bg-gray-50" id="historyList">
                 <!-- Orders injected via JS -->
             </div>
         </div>
@@ -500,10 +515,10 @@
                 <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative ${activeCategoryId === cat.id ? 'ring-2 ring-navy' : ''}">
                     <div class="aspect-square md:aspect-[4/3] bg-gray-100 relative">
                         <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
+                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[7px] md:text-[10px] font-bold px-1 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
                     </div>
-                    <div class="p-2 md:p-3 text-center">
-                        <h3 class="font-semibold text-xs md:text-sm text-navy group-hover:text-gold transition-colors truncate">${cat.name}</h3>
+                    <div class="p-1.5 md:p-3 text-center">
+                        <h3 class="font-semibold text-[10px] md:text-sm text-navy group-hover:text-gold transition-colors truncate">${cat.name}</h3>
                     </div>
                 </div>
             `).join('');
@@ -579,20 +594,20 @@
 
             grid.innerHTML = filtered.map(p => {
                 const isOutOfStock = p.status === 'OUT_OF_STOCK';
-                let badgeHtml = isOutOfStock ? `<span class="absolute top-1 left-1 md:top-2 md:left-2 bg-gray-800 text-white text-[10px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">OUT OF STOCK</span>` : '';
+                let badgeHtml = isOutOfStock ? `<span class="absolute top-1 left-1 md:top-2 md:left-2 bg-gray-800 text-white text-[8px] md:text-xs font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">OUT OF STOCK</span>` : '';
                 
                 return `
-                <div class="bg-white rounded-lg border border-gray-200 p-2 md:p-4 hover:shadow-lg transition-shadow group flex flex-col relative">
+                <div class="bg-white rounded-lg border border-gray-200 p-1.5 md:p-4 hover:shadow-lg transition-shadow group flex flex-col relative h-full">
                     ${badgeHtml}
-                    <div class="aspect-square bg-offwhite rounded-md mb-2 md:mb-4 overflow-hidden relative">
+                    <div class="aspect-square bg-offwhite rounded-md mb-1.5 md:mb-4 overflow-hidden relative">
                         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <div class="flex-1 flex flex-col">
-                        <div class="text-[10px] md:text-xs text-gray-500 mb-0.5 md:mb-1 truncate">SKU: ${p.sku}</div>
-                        <h3 class="font-semibold text-xs md:text-base text-charcoal mb-1 md:mb-2 line-clamp-2">${p.name}</h3>
+                        <div class="text-[9px] md:text-xs text-gray-500 mb-0.5 md:mb-1 truncate">SKU: ${p.sku}</div>
+                        <h3 class="font-semibold text-[11px] md:text-base text-charcoal mb-1 md:mb-2 line-clamp-2 leading-tight">${p.name}</h3>
                         <div class="mt-auto pt-1 md:pt-2">
-                            ${p.oldPrice ? `<div class="text-[10px] md:text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
-                            <div class="text-sm md:text-lg font-bold text-navy mb-2 md:mb-3">Rs. ${p.price.toLocaleString()}</div>
+                            ${p.oldPrice ? `<div class="text-[9px] md:text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
+                            <div class="text-xs md:text-lg font-bold text-navy mb-1.5 md:mb-3">Rs. ${p.price.toLocaleString()}</div>
                             ${isOutOfStock ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello,%20I%20want%20${encodeURIComponent(p.name)}." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-gray-200 transition-colors">Notify Me</a>` : `<button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-1 md:gap-2"><i data-lucide="shopping-cart" class="w-3 h-3 md:w-4 md:h-4"></i> Add</button>`}
                         </div>
                     </div>
@@ -623,14 +638,14 @@
             } else {
                 container.innerHTML = cart.map(item => `
                     <div class="flex gap-3 md:gap-4 mb-4 border-b border-gray-100 pb-4">
-                        <img src="${item.image}" class="w-14 h-14 md:w-16 md:h-16 object-cover rounded-md border border-gray-200">
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-md border border-gray-200">
                         <div class="flex-1">
-                            <div class="font-semibold text-xs md:text-sm line-clamp-1">${item.name}</div>
-                            <div class="text-navy font-bold text-xs md:text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
-                            <div class="flex items-center gap-2 md:gap-3 mt-2">
-                                <button onclick="updateQty('${item.id}', -1)" class="w-5 h-5 md:w-6 md:h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-xs md:text-sm">-</button>
-                                <span class="text-xs md:text-sm font-medium w-4 text-center">${item.qty}</span>
-                                <button onclick="updateQty('${item.id}', 1)" class="w-5 h-5 md:w-6 md:h-6 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-xs md:text-sm">+</button>
+                            <div class="font-semibold text-sm line-clamp-1">${item.name}</div>
+                            <div class="text-navy font-bold text-sm mt-1">Rs. ${item.price.toLocaleString()}</div>
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="updateQty('${item.id}', -1)" class="w-7 h-7 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-sm font-bold">-</button>
+                                <span class="text-sm font-medium w-4 text-center">${item.qty}</span>
+                                <button onclick="updateQty('${item.id}', 1)" class="w-7 h-7 bg-gray-100 rounded flex items-center justify-center hover:bg-gray-200 text-sm font-bold">+</button>
                             </div>
                         </div>
                     </div>
@@ -683,7 +698,6 @@
             return code;
         }
 
-        // NEW: Copy Order Code Function
         function copyOrderCode() {
             const code = document.getElementById('displayOrderCode').innerText;
             navigator.clipboard.writeText(code).then(() => {
@@ -751,34 +765,63 @@
             cart = []; saveCart(); updateCartUI();
         });
 
-        // Order History Functions
         function openOrderHistory() {
             const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
             const listContainer = document.getElementById('historyList');
             
             if (savedOrders.length === 0) {
                 listContainer.innerHTML = `
-                    <div class="text-center py-10 text-gray-500">
+                    <div class="text-center py-12 text-gray-500">
                         <i data-lucide="package" class="w-12 h-12 text-gray-300 mx-auto mb-3"></i>
-                        <p>No order history found on this device.</p>
+                        <p class="font-medium text-navy">No order history found</p>
+                        <p class="text-sm">Your past orders will appear here.</p>
                     </div>
                 `;
             } else {
-                // Sort by newest first
-                savedOrders.reverse(); 
-                listContainer.innerHTML = savedOrders.map(order => `
-                    <div class="bg-white border border-gray-200 rounded-lg p-4 mb-3 shadow-sm">
-                        <div class="flex justify-between items-center mb-2 border-b border-gray-100 pb-2">
-                            <span class="font-bold font-mono text-navy">${order.code}</span>
-                            <span class="text-xs font-bold bg-orange-100 text-orange-800 px-2 py-1 rounded">${order.status}</span>
+                // Use spread operator to copy the array before reversing, so we don't mutate the original data
+                const sortedOrders = [...savedOrders].reverse();
+                
+                listContainer.innerHTML = sortedOrders.map(order => {
+                    const itemsHtml = order.items.map(i => `
+                        <div class="flex justify-between text-xs md:text-sm mb-1 text-charcoal">
+                            <span>${i.name}</span>
+                            <span class="text-gray-500">x${i.qty}</span>
                         </div>
-                        <p class="text-xs text-gray-500 mb-2">${order.date}</p>
-                        <div class="text-sm text-charcoal mb-2">
-                            ${order.items.map(i => `${i.name} (x${i.qty})`).join(', ')}
+                    `).join('');
+
+                    let badgeColor = 'bg-yellow-100 text-yellow-800';
+                    if (order.status === 'Delivered') badgeColor = 'bg-green-100 text-green-800';
+                    if (order.status === 'Shipped') badgeColor = 'bg-blue-100 text-blue-800';
+                    if (order.status === 'Cancelled') badgeColor = 'bg-red-100 text-red-800';
+
+                    return `
+                    <div class="bg-white border border-gray-200 rounded-xl p-3 md:p-4 mb-3 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <span class="font-bold font-mono text-navy text-base md:text-lg">${order.code}</span>
+                                <p class="text-[10px] md:text-[11px] text-gray-500 mt-0.5">${order.date}</p>
+                            </div>
+                            <span class="text-[9px] md:text-xs font-bold px-2 py-1 rounded-md ${badgeColor}">${order.status}</span>
                         </div>
-                        <div class="text-right font-bold text-gold">Rs. ${Number(order.total).toLocaleString()}</div>
+                        
+                        <div class="bg-offwhite rounded-lg p-2.5 mb-2 border border-gray-100">
+                            <div class="text-[9px] font-bold text-gray-400 uppercase tracking-wider mb-1">Items</div>
+                            <div class="space-y-0.5">
+                                ${itemsHtml}
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+                            <span class="text-[10px] md:text-xs font-bold text-gray-500">Total</span>
+                            <span class="font-bold text-gold text-sm md:text-base">Rs. ${Number(order.total).toLocaleString()}</span>
+                        </div>
+
+                        <button onclick="trackFromHistory('${order.code}')" class="mt-2.5 w-full bg-navy/5 text-navy hover:bg-navy/10 py-1.5 md:py-2 rounded-lg text-[10px] md:text-xs font-bold transition-colors flex items-center justify-center gap-1">
+                            <i data-lucide="package-search" class="w-3 h-3 md:w-3.5 md:h-3.5"></i> Track This Order
+                        </button>
                     </div>
-                `).join('');
+                    `;
+                }).join('');
             }
             
             historyModal.classList.remove('hidden'); historyModal.classList.add('flex');
@@ -787,6 +830,13 @@
 
         function closeOrderHistory() {
             historyModal.classList.add('hidden'); historyModal.classList.remove('flex');
+        }
+
+        function trackFromHistory(code) {
+            closeOrderHistory();
+            openTrackingModal();
+            document.getElementById('trackingInput').value = code;
+            checkTracking();
         }
 
         function generateBillModal() {
