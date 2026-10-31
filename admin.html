@@ -102,7 +102,7 @@
     <script>
         // YOUR GOOGLE APPS SCRIPT URL
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzZmqrhmcUT1bCEVESUbHVrCGJaru8isRIKaYjlcD2O1MWPAP8Sjhjqrc4brqxz08_-/exec"; 
-        let adminPassword = "admin123";
+        let adminPassword = "";
         let allOrders = [];
 
         function login() {
@@ -165,16 +165,24 @@
 
             fetch(`${GAS_URL}?action=getOrders&password=${encodeURIComponent(adminPassword)}`)
                 .then(res => res.json())
-                .then(orders => {
+                .then(data => {
+                    // If Google sends an error message, show it!
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
                     document.getElementById('loading').classList.add('hidden');
-                    allOrders = orders;
+                    allOrders = data;
                     updateStats();
                     renderOrders();
                 })
-                .catch(() => {
+                .catch((err) => {
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('emptyState').classList.remove('hidden');
-                    document.getElementById('emptyState').innerHTML = '<p class="text-red-500">Failed to load orders.</p>';
+                    document.getElementById('emptyState').innerHTML = `
+                        <p class="text-red-500 font-bold mb-2">Failed to load orders.</p>
+                        <p class="text-gray-600 text-sm bg-gray-100 p-2 rounded">Error details: ${err.message}</p>
+                    `;
                 });
         }
 
