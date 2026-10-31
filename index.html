@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Koseli Imports | Global Products. Local Trust.</title>
+    <title>Koseli Collections | Global Products. Local Trust.</title>
     
     <!-- Google Search Console Verification -->
     <meta name="google-site-verification" content="GaczJQJ9aZ4mcUQNQeY0aATG7L6HngiZkwjnnq45OnI" />
@@ -65,9 +65,9 @@
                     </button>
                     
                     <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-10 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-10 md:h-14 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
                         <div id="logo-fallback" class="hidden flex-col">
-                            <span class="font-bold text-lg md:text-xl text-navy tracking-tight leading-none">Koseli Imports</span>
+                            <span class="font-bold text-lg md:text-xl text-navy tracking-tight leading-none">Koseli Collections</span>
                             <span class="text-[8px] md:text-[10px] text-gray-500 uppercase tracking-widest mt-1">Nepal Marketplace</span>
                         </div>
                     </a>
@@ -128,7 +128,7 @@
         </nav>
     </header>
 
-    <!-- Mobile Search (Visible below header on mobile) -->
+    <!-- Mobile Search -->
     <div class="md:hidden p-3 bg-white border-b border-gray-200 shadow-sm relative z-30">
         <div class="flex relative">
             <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-sm focus:outline-none focus:border-navy">
@@ -167,17 +167,17 @@
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
             </div>
             <div class="relative z-10 p-6 md:p-16 max-w-2xl">
-                <span class="bg-gold text-navy text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-3 md:mb-4 inline-block">Welcome to Koseli Imports</span>
+                <span class="bg-gold text-navy text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-3 md:mb-4 inline-block">Welcome to Koseli Collections</span>
                 <h1 class="text-3xl md:text-5xl font-bold text-white leading-tight mb-3 md:mb-4">Global Products.<br>Local Trust.</h1>
                 <p class="text-gray-300 text-sm md:text-lg mb-6 md:mb-8 max-w-sm md:max-w-none">Discover premium imports from China. Delivered to your door in Nepal.</p>
-                <a href="#shop" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-5 py-2.5 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-sm md:text-base">
+                <a href="#shop" onclick="resetFilters()" class="inline-flex items-center gap-2 bg-gold text-navy font-bold px-5 py-2.5 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-sm md:text-base">
                     Shop Now <i data-lucide="arrow-right" class="w-4 h-4 md:w-5 md:h-5"></i>
                 </a>
             </div>
         </div>
 
         <!-- Categories Grid -->
-        <div class="mb-10 md:mb-16">
+        <div class="mb-10 md:mb-16" id="categorySection">
             <div class="flex items-center justify-between mb-4 md:mb-6">
                 <h2 class="text-xl md:text-2xl font-bold text-navy">Browse Categories</h2>
             </div>
@@ -185,14 +185,14 @@
         </div>
 
         <!-- Products Grid -->
-        <div id="shop">
+        <div id="shop" class="scroll-mt-24">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 md:mb-6 gap-3 md:gap-4">
                 <div>
                     <h2 class="text-xl md:text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
-                    <p class="text-gray-500 text-xs md:text-sm mt-1">Curated items for modern living.</p>
+                    <p class="text-gray-500 text-xs md:text-sm mt-1" id="sectionSubtitle">Curated items for modern living.</p>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
-                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-xs text-navy hover:text-gold font-medium mr-auto underline">Clear Filters</button>
+                    <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-xs text-navy bg-navy/10 px-3 py-1.5 rounded-md hover:text-white hover:bg-navy transition-colors font-bold mr-auto">✕ Clear Category Filter</button>
                     <select id="filterSelect" class="w-full sm:w-auto border border-gray-300 rounded-md py-2 px-3 text-sm focus:outline-none focus:border-navy bg-white">
                         <option value="all">All Availability</option>
                         <option value="AVAILABLE">Available</option>
@@ -207,7 +207,7 @@
             <div id="emptyState" class="hidden text-center py-16 md:py-20 bg-white rounded-xl border border-gray-200">
                 <i data-lucide="search-x" class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4"></i>
                 <h3 class="text-base md:text-lg font-bold text-navy mb-1 md:mb-2">No products found</h3>
-                <p class="text-gray-500 text-sm">Try adjusting your search or filter.</p>
+                <p class="text-gray-500 text-sm">Try adjusting your search or selecting a different category.</p>
             </div>
         </div>
     </main>
@@ -218,8 +218,8 @@
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center mb-4">
                     <div class="bg-white p-2 rounded-lg inline-block">
-                        <img src="/logo.png" alt="Koseli Imports Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
-                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-lg md:text-xl px-2">Koseli Imports</span>
+                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('footer-logo-fallback').style.display='block';">
+                        <span id="footer-logo-fallback" class="hidden text-navy font-bold text-lg md:text-xl px-2">Koseli Collections</span>
                     </div>
                 </div>
                 <p class="text-gray-400 text-xs md:text-sm max-w-sm mb-4 md:mb-6 mt-2 md:mt-4">Your trusted partner for global imports in Nepal. We source high-quality products directly from verified suppliers and deliver them to your doorstep.</p>
@@ -227,7 +227,7 @@
             <div>
                 <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Quick Links</h4>
                 <ul class="space-y-2 text-xs md:text-sm text-gray-400">
-                    <li><a href="#shop" class="hover:text-gold transition-colors">Shop All</a></li>
+                    <li><a href="#shop" onclick="resetFilters()" class="hover:text-gold transition-colors">Shop All</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
                     <li><a href="#" class="hover:text-gold transition-colors">Return Policy</a></li>
                     <li><a href="https://wa.me/9779863263690" class="hover:text-gold transition-colors">Contact Us</a></li>
@@ -237,7 +237,7 @@
                 <h4 class="font-bold mb-3 md:mb-4 text-sm md:text-base">Customer Service</h4>
                 <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li>Kathmandu, Nepal</li>
-                    <li>support@koseliimports.com</li>
+                    <li>support@koselicollections.com</li>
                     <li>+977 9863263690</li>
                 </ul>
             </div>
@@ -246,7 +246,7 @@
         <!-- Footer Bottom -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-gray-700 pt-6 flex flex-col items-center justify-between text-xs md:text-sm text-gray-500 gap-4">
             <div class="flex flex-col md:flex-row w-full justify-between items-center gap-2 md:gap-4 text-center md:text-left">
-                <p>&copy; 2025 Koseli Imports. All rights reserved.</p>
+                <p>&copy; 2025 Koseli Collections. All rights reserved.</p>
                 <p class="font-medium text-gold">
                     Made by <a href="https://prabhatbhattarai.info.np/#top" target="_blank" class="hover:underline hover:text-white transition-colors">Prabhat Bhattarai</a>
                 </p>
@@ -314,7 +314,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-navy mb-2">Order Prepared!</h3>
                     <p class="text-gray-500 text-sm mb-4">Save this Order Code to track your order later:</p>
-                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KI-XXXXX</div>
+                    <div class="bg-gray-100 border border-gray-300 rounded-md py-3 px-4 font-mono text-lg md:text-xl font-bold text-navy tracking-widest mb-6" id="displayOrderCode">KC-XXXXX</div>
                     
                     <div class="flex flex-col gap-3">
                         <a href="#" id="whatsappLink" target="_blank" class="w-full bg-[#25D366] text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm md:text-base">
@@ -346,7 +346,7 @@
                 <!-- Capture Area -->
                 <div id="bill-capture-area" style="background: #ffffff; padding: 20px; border-radius: 8px; max-width: 400px; margin: 0 auto; font-family: 'Inter', sans-serif; color: #20252B;">
                     <div style="text-align: center; border-bottom: 2px dashed #142B3B; padding-bottom: 12px; margin-bottom: 12px;">
-                        <div style="font-size: 20px; font-weight: bold; color: #142B3B; margin-bottom: 4px;">KOSELI IMPORTS</div>
+                        <div style="font-size: 20px; font-weight: bold; color: #142B3B; margin-bottom: 4px;">KOSELI COLLECTIONS</div>
                         <div style="font-size: 11px; color: #666;">Global Products. Local Trust.</div>
                     </div>
                     
@@ -389,7 +389,7 @@
             </div>
             <div class="p-4 md:p-6">
                 <div class="flex gap-2 mb-4">
-                    <input type="text" id="trackingInput" placeholder="e.g. KI-7X9P2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy uppercase font-mono">
+                    <input type="text" id="trackingInput" placeholder="e.g. KC-7X9P2" class="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-navy uppercase font-mono">
                     <button onclick="checkTracking()" class="bg-navy text-white px-4 md:px-6 rounded-md font-bold hover:bg-[#0d1e29] transition-colors text-sm">Track</button>
                 </div>
                 <div id="trackingResult" class="hidden mt-4 border-t border-gray-200 pt-4">
@@ -449,7 +449,7 @@
         let cart = JSON.parse(localStorage.getItem('koseli_cart')) || [];
         let currentSearch = '';
         let currentFilter = 'all';
-        let activeCategoryId = null;
+        let activeCategoryId = null; // Tracks the selected category
 
         function init() {
             renderCategories();
@@ -478,7 +478,7 @@
             const menuList = document.getElementById('megaMenuList');
             
             grid.innerHTML = CATEGORIES.map(cat => `
-                <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative">
+                <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative ${activeCategoryId === cat.id ? 'ring-2 ring-navy' : ''}">
                     <div class="aspect-square md:aspect-[4/3] bg-gray-100 relative">
                         <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                         ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
@@ -503,6 +503,41 @@
             `).join('');
         }
 
+        function filterByCategory(catId) {
+            activeCategoryId = catId;
+            const catName = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
+            
+            // Update UI Headers
+            document.getElementById('sectionTitle').innerText = catName;
+            document.getElementById('sectionSubtitle').innerText = `Showing all products in ${catName}.`;
+            
+            // Re-render categories to show the active ring
+            renderCategories();
+            
+            // Filter and Render Products
+            renderProducts();
+            
+            // Scroll to the product section
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function resetFilters() {
+            activeCategoryId = null; 
+            currentFilter = 'all'; 
+            currentSearch = '';
+            
+            document.getElementById('searchInput').value = ''; 
+            document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('filterSelect').value = 'all';
+            document.getElementById('sectionTitle').innerText = 'Featured Products';
+            document.getElementById('sectionSubtitle').innerText = 'Curated items for modern living.';
+            
+            renderCategories(); // Remove active ring
+            renderProducts();
+            
+            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
+        }
+
         function renderProducts() {
             const grid = document.getElementById('productGrid');
             const emptyState = document.getElementById('emptyState');
@@ -514,10 +549,19 @@
                 return matchesSearch && matchesFilter;
             });
 
-            if (activeCategoryId) { filtered = filtered.filter(p => p.category === activeCategoryId); clearBtn.classList.remove('hidden'); } 
-            else { clearBtn.classList.add('hidden'); }
+            // APPLY CATEGORY FILTER
+            if (activeCategoryId) { 
+                filtered = filtered.filter(p => p.category === activeCategoryId); 
+                clearBtn.classList.remove('hidden'); 
+            } else { 
+                clearBtn.classList.add('hidden'); 
+            }
 
-            if (filtered.length === 0) { grid.innerHTML = ''; emptyState.classList.remove('hidden'); return; }
+            if (filtered.length === 0) { 
+                grid.innerHTML = ''; 
+                emptyState.classList.remove('hidden'); 
+                return; 
+            }
             emptyState.classList.add('hidden');
 
             grid.innerHTML = filtered.map(p => {
@@ -603,6 +647,7 @@
         function openCart() { cartDrawer.classList.remove('translate-x-full'); cartOverlay.classList.remove('hidden'); }
         function closeCart() { cartDrawer.classList.add('translate-x-full'); cartOverlay.classList.add('hidden'); }
         
+        document.getElementById('cartToggle').addEventListener('click', openCart);
         document.getElementById('cartClose').addEventListener('click', closeCart);
         cartOverlay.addEventListener('click', closeCart);
 
@@ -619,7 +664,7 @@
 
         function generateOrderCode() {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = 'KI-';
+            let code = 'KC-';
             for (let i = 0; i < 5; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
             return code;
         }
@@ -665,7 +710,7 @@
             document.getElementById('displayOrderCode').innerText = orderCode;
             
             const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
-            const message = `Hello Koseli Imports! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
+            const message = `Hello Koseli Collections! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
             
             document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
             billImageDataUrl = null; 
@@ -744,7 +789,7 @@
         function downloadExcel() {
             if (!currentOrderData) return;
             const data = [
-                ["Koseli Imports - Order Receipt"],
+                ["Koseli Collections - Order Receipt"],
                 ["Order Code", currentOrderData.code], ["Date", currentOrderData.date],
                 ["Customer Name", currentOrderData.name], ["Phone", currentOrderData.phone], ["Address", currentOrderData.address], [],
                 ["Item Name", "Quantity", "Price (NPR)", "Total (NPR)"]
@@ -780,22 +825,6 @@
         document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
         document.getElementById('mobileSearchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
         document.getElementById('filterSelect').addEventListener('change', (e) => { currentFilter = e.target.value; renderProducts(); });
-
-        function filterByCategory(catId) {
-            activeCategoryId = catId;
-            document.getElementById('sectionTitle').innerText = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
-            renderProducts();
-        }
-
-        function resetFilters() {
-            activeCategoryId = null; currentFilter = 'all'; currentSearch = '';
-            document.getElementById('searchInput').value = ''; document.getElementById('mobileSearchInput').value = '';
-            document.getElementById('filterSelect').value = 'all';
-            document.getElementById('sectionTitle').innerText = 'Featured Products';
-            window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
-            renderProducts();
-        }
 
         init();
     </script>
