@@ -38,27 +38,48 @@
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Mobile Bottom Sheet Modal style */
+        /* Mobile App-Like Bottom Sheet Modals */
         @media (max-width: 640px) {
-            .modal-mobile-sheet {
-                align-items: flex-end !important;
-                padding: 0 !important;
-            }
-            .modal-mobile-content {
-                border-bottom-left-radius: 0 !important;
-                border-bottom-right-radius: 0 !important;
-                max-height: 90vh !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
+            .modal-mobile-sheet { align-items: flex-end !important; padding: 0 !important; }
+            .modal-mobile-content { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; max-height: 92vh !important; width: 100% !important; max-width: 100% !important; }
         }
+
+        /* Premium Loading Screen Styles */
+        #preloader { transition: opacity 0.6s ease, visibility 0.6s ease; }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.97); }
+        }
+        .animate-pulse-soft { animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
+        @keyframes loading-bar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+        .animate-loading-bar { animation: loading-bar 1.5s ease-in-out infinite; }
     </style>
 </head>
-<body class="text-charcoal antialiased">
+<body class="text-charcoal antialiased flex flex-col min-h-screen">
+
+    <!-- ⭐ PREMIUM LOADING SCREEN -->
+    <div id="preloader" class="fixed inset-0 bg-offwhite z-[9999] flex flex-col items-center justify-center">
+        <div class="relative flex flex-col items-center animate-pulse-soft mb-6">
+            <img src="/logo.png" alt="Koseli Collections" class="h-16 md:h-28 w-auto object-contain drop-shadow-sm" onerror="this.style.display='none'; document.getElementById('loader-text-fallback').style.display='flex';">
+            <!-- Fallback text if logo.png is missing -->
+            <div id="loader-text-fallback" class="hidden flex-col items-center">
+                <div class="w-16 h-16 bg-navy rounded-xl flex items-center justify-center text-gold font-bold text-3xl shadow-lg mb-3">K</div>
+                <h1 class="text-xl md:text-2xl font-bold text-navy tracking-widest uppercase">Koseli Collections</h1>
+            </div>
+        </div>
+        <div class="w-40 md:w-48 h-1 bg-gray-200 rounded-full overflow-hidden mb-4">
+            <div class="h-full bg-gold rounded-full animate-loading-bar w-1/2"></div>
+        </div>
+        <p class="text-[10px] md:text-xs text-gray-400 tracking-widest uppercase font-medium">Global Products. Local Trust.</p>
+    </div>
 
     <!-- Top Announcement Bar -->
     <div class="bg-navy text-white text-[10px] sm:text-xs font-medium py-1.5 text-center tracking-wide px-2">
@@ -71,7 +92,7 @@
             <div class="flex items-center justify-between h-14 md:h-20 gap-2 sm:gap-4">
                 
                 <!-- Mobile Menu Button & Logo -->
-                <div class="flex items-center gap-2 sm:gap-4">
+                <div class="flex items-center gap-1 sm:gap-4">
                     <button onclick="toggleMobileMenu()" class="md:hidden p-1.5 -ml-1 text-charcoal hover:text-navy">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
@@ -147,7 +168,7 @@
     <!-- Mobile Search -->
     <div class="md:hidden p-3 bg-white border-b border-gray-200 shadow-sm relative z-30">
         <div class="flex relative">
-            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-base focus:outline-none focus:border-navy">
+            <input type="text" id="mobileSearchInput" placeholder="Search products..." class="w-full border border-gray-300 rounded-l-md py-2 px-3 text-[16px] focus:outline-none focus:border-navy">
             <button class="bg-navy text-white px-4 rounded-r-md">
                 <i data-lucide="search" class="w-4 h-4"></i>
             </button>
@@ -163,11 +184,11 @@
         </div>
         <div class="flex-1 overflow-y-auto p-4 space-y-4">
             <div class="space-y-1">
-                <a href="#" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Home</a>
-                <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Shop All</a>
-                <a href="#" onclick="openOrderHistory(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">My Orders</a>
-                <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Track Order</a>
-                <a href="https://wa.me/9779863263690" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-[#25D366]">Contact on WhatsApp</a>
+                <a href="#" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Home</a>
+                <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Shop All</a>
+                <a href="#" onclick="openOrderHistory(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">My Orders</a>
+                <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Track Order</a>
+                <a href="https://wa.me/9779863263690" target="_blank" class="block px-3 py-2.5 rounded-md text-base font-medium text-[#25D366]">Contact on WhatsApp</a>
             </div>
             <div class="border-t border-gray-200 pt-4">
                 <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Categories</p>
@@ -177,17 +198,17 @@
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 md:py-8">
+    <main class="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 lg:px-8 py-4 md:py-8">
         <!-- Hero Section -->
         <div class="bg-navy rounded-xl overflow-hidden relative mb-6 md:mb-12 flex items-center">
             <div class="absolute inset-0 opacity-20">
                 <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2000&auto=format&fit=crop" alt="Shopping" class="w-full h-full object-cover">
             </div>
-            <div class="relative z-10 p-5 md:p-16 max-w-2xl">
+            <div class="relative z-10 p-5 md:p-16 w-full">
                 <span class="bg-gold text-navy text-[9px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full uppercase tracking-wider mb-2 md:mb-4 inline-block">Welcome to Koseli Collections</span>
                 <h1 class="text-2xl md:text-5xl font-bold text-white leading-tight mb-2 md:mb-4">Global Products.<br>Local Trust.</h1>
                 <p class="text-gray-300 text-xs md:text-lg mb-4 md:mb-8 max-w-sm md:max-w-none">Discover premium imports from China. Delivered to your door in Nepal.</p>
-                <a href="#shop" onclick="resetFilters()" class="inline-flex items-center gap-1 md:gap-2 bg-gold text-navy font-bold px-4 py-2 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-xs md:text-base">
+                <a href="#shop" onclick="resetFilters()" class="inline-flex items-center gap-1 md:gap-2 bg-gold text-navy font-bold px-4 py-2.5 md:px-6 md:py-3 rounded-md hover:bg-[#c4984c] transition-colors text-xs md:text-base">
                     Shop Now <i data-lucide="arrow-right" class="w-3 h-3 md:w-5 md:h-5"></i>
                 </a>
             </div>
@@ -198,7 +219,7 @@
             <div class="flex items-center justify-between mb-3 md:mb-6 px-1">
                 <h2 class="text-lg md:text-2xl font-bold text-navy">Browse Categories</h2>
             </div>
-            <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 md:gap-4" id="categoryGrid"></div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 md:gap-4" id="categoryGrid"></div>
         </div>
 
         <!-- Products Grid -->
@@ -206,7 +227,7 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-3 md:mb-6 gap-2 md:gap-4 px-1">
                 <div>
                     <h2 class="text-lg md:text-2xl font-bold text-navy" id="sectionTitle">Featured Products</h2>
-                    <p class="text-gray-500 text-[10px] md:text-sm mt-0.5" id="sectionSubtitle">Curated items for modern living.</p>
+                    <p class="text-gray-500 text-[11px] md:text-sm mt-0.5" id="sectionSubtitle">Curated items for modern living.</p>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
                     <button onclick="resetFilters()" id="clearFilterBtn" class="hidden text-[10px] md:text-xs text-navy bg-navy/10 px-2 py-1 md:px-3 md:py-1.5 rounded-md hover:text-white hover:bg-navy transition-colors font-bold mr-auto">✕ Clear</button>
@@ -219,7 +240,8 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6" id="productGrid"></div>
+            <!-- 2 column grid on mobile for perfect product display -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:gap-6" id="productGrid"></div>
             
             <div id="emptyState" class="hidden text-center py-16 md:py-20 bg-white rounded-xl border border-gray-200">
                 <i data-lucide="search-x" class="w-10 h-10 md:w-12 md:h-12 text-gray-400 mx-auto mb-3 md:mb-4"></i>
@@ -243,7 +265,7 @@
             </div>
             <div class="text-center md:text-left">
                 <h4 class="font-bold mb-2 md:mb-4 text-sm md:text-base">Quick Links</h4>
-                <ul class="space-y-1.5 text-xs md:text-sm text-gray-400">
+                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li><a href="#shop" onclick="resetFilters()" class="hover:text-gold transition-colors">Shop All</a></li>
                     <li><a href="#" onclick="openOrderHistory()" class="hover:text-gold transition-colors">My Orders</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-gold transition-colors">Track Order</a></li>
@@ -252,7 +274,7 @@
             </div>
             <div class="text-center md:text-left">
                 <h4 class="font-bold mb-2 md:mb-4 text-sm md:text-base">Customer Service</h4>
-                <ul class="space-y-1.5 text-xs md:text-sm text-gray-400">
+                <ul class="space-y-2 text-xs md:text-sm text-gray-400">
                     <li>Kathmandu, Nepal</li>
                     <li>support@koselicollections.com</li>
                     <li>+977 9863263690</li>
@@ -290,7 +312,7 @@
         <!-- Cart Footer -->
         <div class="p-4 border-t border-gray-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
             <div class="flex justify-between items-end mb-3">
-                <!-- NEW: Clear Cart Button -->
+                <!-- Clear Cart Button -->
                 <button onclick="clearCart()" id="clearCartBtn" class="text-xs text-red-500 font-medium hover:text-red-700 transition-colors hidden flex items-center gap-1 pb-1">
                     <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Clear Cart
                 </button>
@@ -324,6 +346,7 @@
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm font-medium mb-1">Phone Number</label>
+                            <!-- Strict 10-digit validation -->
                             <input type="tel" id="phone" required maxlength="10" minlength="10" pattern="\d{10}" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="98XXXXXXXX" title="Please enter a valid 10-digit phone number">
                         </div>
                         <div>
@@ -503,6 +526,15 @@
             lucide.createIcons();
         }
 
+        // Hide Preloader when window is fully loaded
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 600); 
+        });
+
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobileMenuOverlay');
             const drawer = document.getElementById('mobileMenuDrawer');
@@ -525,9 +557,9 @@
                 <div onclick="filterByCategory('${cat.id}')" class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer group relative ${activeCategoryId === cat.id ? 'ring-2 ring-navy' : ''}">
                     <div class="aspect-square md:aspect-[4/3] bg-gray-100 relative">
                         <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[7px] md:text-[10px] font-bold px-1 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
+                        ${cat.status === 'COMING_SOON' ? `<div class="absolute top-1 right-1 md:top-2 md:right-2 bg-navy text-gold text-[7px] md:text-[10px] font-bold px-1.5 py-0.5 md:px-2 md:py-1 rounded">SOON</div>` : ''}
                     </div>
-                    <div class="p-1.5 md:p-3 text-center">
+                    <div class="p-2 md:p-3 text-center">
                         <h3 class="font-semibold text-[10px] md:text-sm text-navy group-hover:text-gold transition-colors truncate">${cat.name}</h3>
                     </div>
                 </div>
@@ -540,7 +572,7 @@
         function renderMobileCategories() {
             const list = document.getElementById('mobileCategoryList');
             list.innerHTML = CATEGORIES.map(cat => `
-                <div onclick="filterByCategory('${cat.id}'); toggleMobileMenu();" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700 cursor-pointer flex justify-between">
+                <div onclick="filterByCategory('${cat.id}'); toggleMobileMenu();" class="px-3 py-2.5 rounded-md text-sm font-medium hover:bg-gray-50 text-gray-700 cursor-pointer flex justify-between">
                     <span>${cat.name}</span>
                     <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
                 </div>
@@ -609,7 +641,7 @@
                 return `
                 <div class="bg-white rounded-lg border border-gray-200 p-1.5 md:p-4 hover:shadow-lg transition-shadow group flex flex-col relative h-full">
                     ${badgeHtml}
-                    <div class="aspect-square bg-offwhite rounded-md mb-1.5 md:mb-4 overflow-hidden relative">
+                    <div class="aspect-square bg-offwhite rounded-md mb-2 md:mb-4 overflow-hidden relative">
                         <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
                     <div class="flex-1 flex flex-col">
@@ -617,7 +649,7 @@
                         <h3 class="font-semibold text-[11px] md:text-base text-charcoal mb-1 md:mb-2 line-clamp-2 leading-tight">${p.name}</h3>
                         <div class="mt-auto pt-1 md:pt-2">
                             ${p.oldPrice ? `<div class="text-[9px] md:text-xs text-gray-400 line-through">Rs. ${p.oldPrice.toLocaleString()}</div>` : ''}
-                            <div class="text-xs md:text-lg font-bold text-navy mb-1.5 md:mb-3">Rs. ${p.price.toLocaleString()}</div>
+                            <div class="text-xs md:text-lg font-bold text-navy mb-2 md:mb-3">Rs. ${p.price.toLocaleString()}</div>
                             ${isOutOfStock ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=Hello,%20I%20want%20${encodeURIComponent(p.name)}." target="_blank" class="w-full block text-center bg-gray-100 text-charcoal py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-gray-200 transition-colors">Notify Me</a>` : `<button onclick="addToCart('${p.id}')" class="w-full bg-navy text-white py-1.5 md:py-2 rounded-md text-[10px] md:text-sm font-medium hover:bg-[#0d1e29] transition-colors flex items-center justify-center gap-1 md:gap-2"><i data-lucide="shopping-cart" class="w-3 h-3 md:w-4 md:h-4"></i> Add</button>`}
                         </div>
                     </div>
@@ -648,7 +680,7 @@
                 totalEl.innerText = 'Rs. 0'; 
                 btn.disabled = true; 
                 btn.classList.add('opacity-50', 'cursor-not-allowed');
-                clearBtn.classList.add('hidden'); // Hide clear button if cart is empty
+                clearBtn.classList.add('hidden'); 
             } else {
                 container.innerHTML = cart.map(item => `
                     <div class="flex gap-3 md:gap-4 mb-4 border-b border-gray-100 pb-4">
@@ -668,7 +700,7 @@
                 totalEl.innerText = `Rs. ${total.toLocaleString()}`; 
                 btn.disabled = false; 
                 btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                clearBtn.classList.remove('hidden'); // Show clear button if cart has items
+                clearBtn.classList.remove('hidden'); 
             }
         }
 
@@ -680,7 +712,7 @@
             saveCart(); updateCartUI();
         }
 
-        // NEW: Clear Cart Function
+        // CLEAR CART FUNCTION
         function clearCart() {
             if (cart.length === 0) return;
             if (confirm("Are you sure you want to remove all items from your cart?")) {
