@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Koseli Imports</title>
+    <title>Admin Dashboard | Koseli Collections</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -25,15 +25,15 @@
                     <i data-lucide="lock" class="w-8 h-8 text-navy"></i>
                 </div>
                 <h1 class="text-2xl font-bold text-navy">Admin Login</h1>
-                <p class="text-gray-500 text-sm mt-2">Koseli Imports Management</p>
+                <p class="text-gray-500 text-sm mt-2">Koseli Collections Management</p>
             </div>
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium mb-1">Password</label>
                     <input type="password" id="adminPassword" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy" placeholder="Enter admin password" onkeypress="if(event.key==='Enter') login()">
                 </div>
-                <div id="loginError" class="hidden text-red-500 text-sm text-center font-medium"></div>
-                <button onclick="login()" class="w-full bg-navy text-white py-3 rounded-lg font-bold hover:bg-[#0d1e29] transition-colors">Login</button>
+                <div id="loginError" class="hidden text-red-500 text-sm text-center font-medium bg-red-50 p-2 rounded-md"></div>
+                <button onclick="login()" id="loginBtn" class="w-full bg-navy text-white py-3 rounded-lg font-bold hover:bg-[#0d1e29] transition-colors">Login</button>
                 <div class="text-center mt-4">
                     <a href="/" class="text-sm text-gray-500 hover:text-navy underline">Back to Store</a>
                 </div>
@@ -100,17 +100,26 @@
     </div>
 
     <script>
-        // ⚠️ YOUR GOOGLE APPS SCRIPT URL
+        // YOUR GOOGLE APPS SCRIPT URL
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzZmqrhmcUT1bCEVESUbHVrCGJaru8isRIKaYjlcD2O1MWPAP8Sjhjqrc4brqxz08_-/exec"; 
-        let adminPassword = "Koseli@2025";
+        let adminPassword = "";
         let allOrders = [];
 
         function login() {
             const passwordInput = document.getElementById('adminPassword').value;
             const errorDiv = document.getElementById('loginError');
+            const loginBtn = document.getElementById('loginBtn');
             
-            if (!passwordInput) { errorDiv.textContent = "Please enter password"; errorDiv.classList.remove('hidden'); return; }
+            if (!passwordInput) { 
+                errorDiv.textContent = "Please enter password"; 
+                errorDiv.classList.remove('hidden'); 
+                return; 
+            }
             
+            loginBtn.textContent = "Verifying...";
+            loginBtn.disabled = true;
+            errorDiv.classList.add('hidden');
+
             fetch(GAS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
@@ -125,13 +134,18 @@
                     fetchOrders();
                     lucide.createIcons();
                 } else {
-                    errorDiv.textContent = "Incorrect password";
+                    errorDiv.textContent = "Incorrect password. Please try again.";
                     errorDiv.classList.remove('hidden');
                 }
             })
-            .catch(() => {
-                errorDiv.textContent = "Connection error. Please try again.";
+            .catch((err) => {
+                console.error(err);
+                errorDiv.textContent = "Connection error. Check your internet or Google Script deployment.";
                 errorDiv.classList.remove('hidden');
+            })
+            .finally(() => {
+                loginBtn.textContent = "Login";
+                loginBtn.disabled = false;
             });
         }
 
@@ -220,7 +234,7 @@
                         <span class="text-lg font-bold text-gold">Rs. ${Number(order['Total']).toLocaleString()}</span>
                     </div>
                     <div class="px-4 pb-4 flex gap-2">
-                        <a href="https://wa.me/977${order['Phone']}?text=Hello%20${order['Customer Name']},%20this%20is%20Koseli%20Imports.%20Your%20order%20${order['Order Code']}%20is%20being%20processed." target="_blank" class="flex-1 bg-[#25D366] text-white py-2 rounded-md text-sm font-bold text-center hover:bg-[#1da851] transition flex items-center justify-center gap-1">
+                        <a href="https://wa.me/977${order['Phone']}?text=Hello%20${order['Customer Name']},%20this%20is%20Koseli%20Collections.%20Your%20order%20${order['Order Code']}%20is%20being%20processed." target="_blank" class="flex-1 bg-[#25D366] text-white py-2 rounded-md text-sm font-bold text-center hover:bg-[#1da851] transition flex items-center justify-center gap-1">
                             <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
                         </a>
                     </div>
