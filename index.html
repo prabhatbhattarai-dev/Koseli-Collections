@@ -19,9 +19,6 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- SheetJS for Excel Export -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-
     <!-- html2canvas for Image Bill -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -322,9 +319,6 @@
                         </a>
                         <button onclick="generateBillModal()" class="w-full bg-navy text-white py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-[#0d1e29] transition-colors text-sm md:text-base">
                             <i data-lucide="receipt" class="w-5 h-5"></i> Get Image Bill
-                        </button>
-                        <button onclick="downloadExcel()" class="w-full bg-gray-100 text-charcoal border border-gray-300 py-3 rounded-md font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors text-sm md:text-base">
-                            <i data-lucide="file-spreadsheet" class="w-5 h-5"></i> Download Excel Receipt
                         </button>
                     </div>
                 </div>
@@ -778,23 +772,6 @@
                 }
                 btn.innerHTML = orig; btn.disabled = false;
             } catch (e) { if(e.name !== 'AbortError') alert('Error sharing.'); }
-        }
-
-        function downloadExcel() {
-            if (!currentOrderData) return;
-            const data = [
-                ["Koseli Collections - Order Receipt"],
-                ["Order Code", currentOrderData.code], ["Date", currentOrderData.date],
-                ["Customer Name", currentOrderData.name], ["Phone", currentOrderData.phone], ["Address", currentOrderData.address], [],
-                ["Item Name", "Quantity", "Price (NPR)", "Total (NPR)"]
-            ];
-            currentOrderData.items.forEach(item => { data.push([item.name, item.qty, item.price, item.price * item.qty]); });
-            data.push([], ["", "", "Grand Total:", currentOrderData.total]);
-            
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Receipt");
-            XLSX.writeFile(wb, `Koseli_Order_${currentOrderData.code}.xlsx`);
         }
 
         function openTrackingModal() { trackingModal.classList.remove('hidden'); trackingModal.classList.add('flex'); }
