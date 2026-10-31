@@ -289,8 +289,8 @@
                     dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' · ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
                 } catch(e) {}
 
-                // Format Phone
-                const phone = order['Phone'] || '';
+                // FIXED: Force phone to be a string before replacing characters
+                const phone = order['Phone'] ? String(order['Phone']) : '';
                 const cleanPhone = phone.replace(/\D/g, '');
 
                 // Action Buttons based on current status
