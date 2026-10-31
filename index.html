@@ -540,16 +540,16 @@
             lucide.createIcons();
         }
 
-        // ⭐ Force the loading screen to stay for 3.5 seconds
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
+        // ⭐ Force the loading screen to stay for 3.5 seconds regardless of page load speed
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
                 }, 800); // Matches CSS transition
-            }, 3500); // 3500ms = 3.5 seconds
-        });
+            }
+        }, 3500); // 3500ms = 3.5 seconds
 
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobileMenuOverlay');
