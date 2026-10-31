@@ -13,7 +13,13 @@
             theme: { extend: { colors: { navy: '#142B3B', gold: '#D6A85F', offwhite: '#F8F8F6', charcoal: '#20252B' }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
         }
     </script>
-    <style> body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; } .hidden { display: none !important; } </style>
+    <style> 
+        body { font-family: 'Inter', sans-serif; background-color: #F8F8F6; } 
+        .hidden { display: none !important; } 
+        /* Hide scrollbar for filter tabs */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
 <body class="text-charcoal antialiased min-h-screen">
 
@@ -43,67 +49,90 @@
 
     <!-- Dashboard -->
     <div id="dashboardView" class="hidden pb-20">
+        
+        <!-- Top Header -->
         <header class="bg-navy text-white sticky top-0 z-40 shadow-md">
             <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-gold rounded-sm flex items-center justify-center text-navy font-bold text-xl">K</div>
                     <span class="font-bold text-xl text-gold">Koseli Admin</span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="fetchOrders()" class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition">
-                        <i data-lucide="refresh-cw" class="w-4 h-4"></i> Refresh
+                <div class="flex items-center gap-2 md:gap-3">
+                    <button onclick="fetchOrders()" class="flex items-center gap-2 bg-white/10 px-3 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition">
+                        <i data-lucide="refresh-cw" class="w-4 h-4"></i> <span class="hidden sm:inline">Refresh</span>
                     </button>
-                    <button onclick="exportToExcel()" class="flex items-center gap-2 bg-gold text-navy px-4 py-2 rounded-lg text-sm font-bold hover:bg-[#c4984c] transition">
-                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> Export to Excel
+                    <button onclick="exportToExcel()" class="flex items-center gap-2 bg-gold text-navy px-3 py-2 rounded-lg text-sm font-bold hover:bg-[#c4984c] transition">
+                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i> <span class="hidden sm:inline">Export</span>
                     </button>
-                    <button onclick="logout()" class="flex items-center gap-2 bg-red-500/80 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">
-                        <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                    <button onclick="logout()" class="flex items-center gap-2 bg-red-500/80 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">
+                        <i data-lucide="log-out" class="w-4 h-4"></i> <span class="hidden sm:inline">Logout</span>
                     </button>
                 </div>
             </div>
         </header>
 
-        <main class="max-w-7xl mx-auto px-4 py-8">
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <main class="max-w-7xl mx-auto px-3 md:px-6 py-6">
+            
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center">
-                    <p class="text-sm text-gray-500 font-medium mb-1">Total Orders</p>
+                    <p class="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">Total Orders</p>
                     <p class="text-2xl font-bold text-navy" id="statTotal">0</p>
                 </div>
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center border-b-4 border-b-yellow-400">
-                    <p class="text-sm text-gray-500 font-medium mb-1">Pending</p>
+                    <p class="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">Pending</p>
                     <p class="text-2xl font-bold text-yellow-600" id="statPending">0</p>
                 </div>
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center border-b-4 border-b-green-500">
-                    <p class="text-sm text-gray-500 font-medium mb-1">Delivered</p>
-                    <p class="text-2xl font-bold text-green-600" id="statDelivered">0</p>
-                </div>
                 <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center border-b-4 border-b-blue-400">
-                    <p class="text-sm text-gray-500 font-medium mb-1">Revenue</p>
-                    <p class="text-2xl font-bold text-navy" id="statRevenue">Rs. 0</p>
+                    <p class="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">Processing</p>
+                    <p class="text-2xl font-bold text-blue-600" id="statProcessing">0</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200 text-center border-b-4 border-b-green-500">
+                    <p class="text-xs text-gray-500 font-medium mb-1 uppercase tracking-wider">Delivered</p>
+                    <p class="text-2xl font-bold text-green-600" id="statDelivered">0</p>
                 </div>
             </div>
 
+            <!-- Filter Tabs -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-2 mb-6 overflow-x-auto no-scrollbar flex gap-2">
+                <button onclick="filterOrders('All', this)" class="filter-tab active flex-1 text-center px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap bg-navy text-white transition">
+                    All <span class="bg-white/20 px-2 py-0.5 rounded-full ml-1 text-xs" id="count-all">0</span>
+                </button>
+                <button onclick="filterOrders('Pending Confirmation', this)" class="filter-tab flex-1 text-center px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap text-gray-600 hover:bg-gray-50 transition">
+                    Pending <span class="bg-gray-100 px-2 py-0.5 rounded-full ml-1 text-xs" id="count-pending">0</span>
+                </button>
+                <button onclick="filterOrders('Processing', this)" class="filter-tab flex-1 text-center px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap text-gray-600 hover:bg-gray-50 transition">
+                    Processing <span class="bg-gray-100 px-2 py-0.5 rounded-full ml-1 text-xs" id="count-processing">0</span>
+                </button>
+                <button onclick="filterOrders('Shipped', this)" class="filter-tab flex-1 text-center px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap text-gray-600 hover:bg-gray-50 transition">
+                    Shipped <span class="bg-gray-100 px-2 py-0.5 rounded-full ml-1 text-xs" id="count-shipped">0</span>
+                </button>
+                <button onclick="filterOrders('Delivered', this)" class="filter-tab flex-1 text-center px-4 py-2.5 rounded-lg text-sm font-bold whitespace-nowrap text-gray-600 hover:bg-gray-50 transition">
+                    Delivered <span class="bg-gray-100 px-2 py-0.5 rounded-full ml-1 text-xs" id="count-delivered">0</span>
+                </button>
+            </div>
+
             <!-- Orders Grid -->
-            <h2 class="text-xl font-bold text-navy mb-4">Live Orders</h2>
             <div id="loading" class="text-center py-10 hidden">
                 <div class="inline-block w-8 h-8 border-4 border-gray-200 border-t-navy rounded-full animate-spin"></div>
                 <p class="mt-2 text-gray-500 text-sm">Loading orders...</p>
             </div>
+            
             <div id="emptyState" class="hidden text-center py-16 bg-white rounded-xl border border-gray-200">
                 <i data-lucide="inbox" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
-                <p class="text-gray-500 font-medium">No orders yet</p>
-                <p class="text-gray-400 text-sm">New orders will appear here automatically.</p>
+                <p class="text-gray-500 font-medium">No orders found</p>
+                <p class="text-gray-400 text-sm">There are no orders with this status.</p>
             </div>
-            <div id="ordersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            
+            <div id="ordersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"></div>
         </main>
     </div>
 
     <script>
-        // YOUR GOOGLE APPS SCRIPT URL
         const GAS_URL = "https://script.google.com/macros/s/AKfycbzZmqrhmcUT1bCEVESUbHVrCGJaru8isRIKaYjlcD2O1MWPAP8Sjhjqrc4brqxz08_-/exec"; 
         let adminPassword = "";
         let allOrders = [];
+        let currentFilter = "All";
 
         function login() {
             const passwordInput = document.getElementById('adminPassword').value;
@@ -139,8 +168,7 @@
                 }
             })
             .catch((err) => {
-                console.error(err);
-                errorDiv.textContent = "Connection error. Check your internet or Google Script deployment.";
+                errorDiv.textContent = "Connection error. Check your internet.";
                 errorDiv.classList.remove('hidden');
             })
             .finally(() => {
@@ -166,90 +194,196 @@
             fetch(`${GAS_URL}?action=getOrders&password=${encodeURIComponent(adminPassword)}`)
                 .then(res => res.json())
                 .then(data => {
-                    // If Google sends an error message, show it!
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
+                    if (data.error) throw new Error(data.error);
                     
                     document.getElementById('loading').classList.add('hidden');
-                    allOrders = data;
+                    // The API returns newest at the bottom, so we reverse it to show newest at top
+                    allOrders = data.reverse(); 
                     updateStats();
                     renderOrders();
                 })
                 .catch((err) => {
                     document.getElementById('loading').classList.add('hidden');
                     document.getElementById('emptyState').classList.remove('hidden');
-                    document.getElementById('emptyState').innerHTML = `
-                        <p class="text-red-500 font-bold mb-2">Failed to load orders.</p>
-                        <p class="text-gray-600 text-sm bg-gray-100 p-2 rounded">Error details: ${err.message}</p>
-                    `;
+                    document.getElementById('emptyState').innerHTML = `<p class="text-red-500 font-bold">Error: ${err.message}</p>`;
                 });
         }
 
         function updateStats() {
             const total = allOrders.length;
-            const pending = allOrders.filter(o => o['Status'] === 'Pending Confirmation').length;
+            const pending = allOrders.filter(o => o['Status'] === 'Pending Confirmation' || o['Status'] === 'Pending').length;
+            const processing = allOrders.filter(o => o['Status'] === 'Processing').length;
             const delivered = allOrders.filter(o => o['Status'] === 'Delivered').length;
-            const revenue = allOrders.reduce((sum, o) => sum + (Number(o['Total']) || 0), 0);
             
             document.getElementById('statTotal').textContent = total;
             document.getElementById('statPending').textContent = pending;
+            document.getElementById('statProcessing').textContent = processing;
             document.getElementById('statDelivered').textContent = delivered;
-            document.getElementById('statRevenue').textContent = `Rs. ${revenue.toLocaleString()}`;
+
+            // Update Tab Counts
+            document.getElementById('count-all').textContent = total;
+            document.getElementById('count-pending').textContent = pending;
+            document.getElementById('count-processing').textContent = processing;
+            document.getElementById('count-shipped').textContent = allOrders.filter(o => o['Status'] === 'Shipped').length;
+            document.getElementById('count-delivered').textContent = delivered;
+        }
+
+        function filterOrders(status, btn) {
+            currentFilter = status;
+            
+            // Update active tab styling
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('bg-navy', 'text-white');
+                tab.classList.add('text-gray-600', 'hover:bg-gray-50');
+                tab.querySelector('span').classList.remove('bg-white/20');
+                tab.querySelector('span').classList.add('bg-gray-100');
+            });
+            
+            btn.classList.remove('text-gray-600', 'hover:bg-gray-50');
+            btn.classList.add('bg-navy', 'text-white');
+            btn.querySelector('span').classList.remove('bg-gray-100');
+            btn.querySelector('span').classList.add('bg-white/20');
+
+            renderOrders();
         }
 
         function renderOrders() {
             const grid = document.getElementById('ordersGrid');
             const emptyState = document.getElementById('emptyState');
             
-            if (allOrders.length === 0) {
+            let filtered = allOrders;
+            if (currentFilter !== "All") {
+                filtered = allOrders.filter(o => o['Status'] === currentFilter);
+            }
+
+            if (filtered.length === 0) {
                 grid.innerHTML = '';
                 emptyState.classList.remove('hidden');
                 return;
             }
             
             emptyState.classList.add('hidden');
-            grid.innerHTML = allOrders.reverse().map(order => {
+            
+            grid.innerHTML = filtered.map(order => {
                 const status = order['Status'] || 'Pending Confirmation';
-                let badgeColor = 'bg-yellow-100 text-yellow-800';
-                if (status === 'Delivered') badgeColor = 'bg-green-100 text-green-800';
-                if (status === 'Shipped') badgeColor = 'bg-blue-100 text-blue-800';
-                if (status === 'Cancelled') badgeColor = 'bg-red-100 text-red-800';
+                
+                // Styling based on status
+                let badgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-200';
+                let barColor = 'bg-yellow-400';
+                if (status === 'Processing') { badgeColor = 'bg-blue-100 text-blue-800 border-blue-200'; barColor = 'bg-blue-400'; }
+                if (status === 'Shipped') { badgeColor = 'bg-orange-100 text-orange-800 border-orange-200'; barColor = 'bg-orange-400'; }
+                if (status === 'Delivered') { badgeColor = 'bg-green-100 text-green-800 border-green-200'; barColor = 'bg-green-500'; }
+                if (status === 'Cancelled') { badgeColor = 'bg-red-100 text-red-800 border-red-200'; barColor = 'bg-red-500'; }
+
+                // Format items
+                let itemsHtml = '';
+                if (order['Items']) {
+                    const itemArray = order['Items'].split(' | ');
+                    itemsHtml = itemArray.map(i => `<div class="text-sm text-gray-700 font-medium mb-1">• ${i}</div>`).join('');
+                }
+
+                // Format Date
+                let dateStr = 'Unknown Date';
+                try {
+                    const d = new Date(order['Date']);
+                    dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' · ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                } catch(e) {}
+
+                // Format Phone
+                const phone = order['Phone'] || '';
+                const cleanPhone = phone.replace(/\D/g, '');
+
+                // Action Buttons based on current status
+                let actionBtn = '';
+                if (status === 'Pending Confirmation' || status === 'Pending') {
+                    actionBtn = `<button onclick="updateStatus('${order['Order Code']}', 'Processing')" class="w-full bg-navy text-white py-2 rounded-lg text-sm font-bold hover:bg-[#0d1e29] transition">Mark as Processing</button>`;
+                } else if (status === 'Processing') {
+                    actionBtn = `<button onclick="updateStatus('${order['Order Code']}', 'Shipped')" class="w-full bg-orange-500 text-white py-2 rounded-lg text-sm font-bold hover:bg-orange-600 transition">Mark as Shipped</button>`;
+                } else if (status === 'Shipped') {
+                    actionBtn = `<button onclick="updateStatus('${order['Order Code']}', 'Delivered')" class="w-full bg-green-600 text-white py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition">Mark as Delivered</button>`;
+                } else {
+                    actionBtn = `<div class="w-full bg-gray-100 text-gray-500 py-2 rounded-lg text-sm font-bold text-center border border-gray-200">✓ Order Completed</div>`;
+                }
 
                 return `
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col">
-                    <div class="p-4 border-b border-gray-100 flex justify-between items-start">
-                        <div>
-                            <span class="font-mono font-bold text-navy text-lg">${order['Order Code']}</span>
-                            <span class="ml-2 text-[10px] font-bold px-2 py-1 rounded ${badgeColor}">${status}</span>
-                            <p class="text-xs text-gray-400 mt-1">${new Date(order['Date']).toLocaleString()}</p>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 ${barColor}"></div>
+                    
+                    <div class="p-4 md:p-5 flex-1 flex flex-col">
+                        <!-- Header -->
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="inline-block bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded mb-1 font-mono tracking-wider">${order['Order Code']}</span>
+                                <h3 class="font-bold text-navy text-lg leading-tight">${order['Customer Name']}</h3>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="inline-flex items-center gap-1 text-[10px] font-bold text-gray-500 bg-gray-50 px-2 py-0.5 rounded border border-gray-200">
+                                        <i data-lucide="phone" class="w-3 h-3"></i> ${phone}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[11px] font-medium text-gray-400 mb-1">${dateStr}</div>
+                                <span class="inline-block border ${badgeColor} text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-bold">${status}</span>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <p class="font-bold text-navy text-sm">${order['Customer Name']}</p>
-                            <p class="text-xs text-gray-500">${order['Phone']}</p>
+
+                        <!-- Items Box -->
+                        <div class="bg-offwhite rounded-lg p-3 mb-4 flex-1 border border-gray-100">
+                            <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Items Ordered</div>
+                            ${itemsHtml}
+                            <div class="mt-3 pt-2 border-t border-gray-200 text-xs text-gray-500 flex items-start gap-1">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5 mt-0.5 flex-shrink-0"></i>
+                                <span>${order['Address']}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-4 bg-offwhite flex-1">
-                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Delivery Address</p>
-                        <p class="text-sm text-charcoal mb-3">${order['Address']}</p>
-                        <div class="border-t border-gray-200 pt-3">
-                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Items</p>
-                            <p class="text-sm text-charcoal">${order['Items']}</p>
+
+                        <!-- Total & Actions -->
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="text-sm font-bold text-gray-500">Total Amount</span>
+                            <span class="font-bold text-gold text-lg">Rs. ${Number(order['Total']).toLocaleString()}</span>
                         </div>
-                    </div>
-                    <div class="p-4 border-t border-gray-200 bg-white flex justify-between items-center">
-                        <span class="text-sm font-bold text-gray-500">Total</span>
-                        <span class="text-lg font-bold text-gold">Rs. ${Number(order['Total']).toLocaleString()}</span>
-                    </div>
-                    <div class="px-4 pb-4 flex gap-2">
-                        <a href="https://wa.me/977${order['Phone']}?text=Hello%20${order['Customer Name']},%20this%20is%20Koseli%20Collections.%20Your%20order%20${order['Order Code']}%20is%20being%20processed." target="_blank" class="flex-1 bg-[#25D366] text-white py-2 rounded-md text-sm font-bold text-center hover:bg-[#1da851] transition flex items-center justify-center gap-1">
-                            <i data-lucide="message-circle" class="w-4 h-4"></i> WhatsApp
-                        </a>
+                        
+                        <div class="flex gap-2">
+                            <a href="https://wa.me/977${cleanPhone}?text=Hello%20${order['Customer Name']},%20this%20is%20Koseli%20Collections.%20Your%20order%20${order['Order Code']}%20is%20now%20${status}." target="_blank" class="flex-1 bg-[#25D366]/10 text-[#25D366] border border-[#25D366]/30 py-2 rounded-lg text-sm font-bold text-center hover:bg-[#25D366] hover:text-white transition flex items-center justify-center gap-1">
+                                <i data-lucide="message-circle" class="w-4 h-4"></i> Greet
+                            </a>
+                            <div class="flex-[2]">
+                                ${actionBtn}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 `;
             }).join('');
             lucide.createIcons();
+        }
+
+        function updateStatus(orderCode, newStatus) {
+            // Visually update immediately for speed
+            const orderIndex = allOrders.findIndex(o => o['Order Code'] === orderCode);
+            if (orderIndex > -1) {
+                allOrders[orderIndex]['Status'] = newStatus;
+                updateStats();
+                renderOrders();
+            }
+
+            // Send to Google Sheets
+            fetch(GAS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ 
+                    action: "updateStatus", 
+                    code: orderCode, 
+                    status: newStatus 
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) {
+                    alert("Failed to save status to Google Sheets. Please refresh.");
+                }
+            })
+            .catch(err => console.error("Error updating status:", err));
         }
 
         function exportToExcel() {
