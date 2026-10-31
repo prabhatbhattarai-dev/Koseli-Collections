@@ -314,7 +314,8 @@
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm font-medium mb-1">Phone Number</label>
-                            <input type="tel" id="phone" required class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="98XXXXXXXX">
+                            <!-- Added maxlength, pattern, and minlength for strict 10-digit validation -->
+                            <input type="tel" id="phone" required maxlength="10" minlength="10" pattern="\d{10}" class="w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:border-navy text-base" placeholder="98XXXXXXXX" title="Please enter a valid 10-digit phone number">
                         </div>
                         <div>
                             <label class="block text-xs md:text-sm font-medium mb-1">Delivery Address</label>
@@ -717,12 +718,26 @@
             });
         }
 
+        // UPDATED: Form submit with strict phone validation
         document.getElementById('orderForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
+            // Validate phone number
+            const phoneInput = document.getElementById('phone');
+            const phoneValue = phoneInput.value.trim();
+            
+            // Remove any non-numeric characters just in case
+            const cleanPhone = phoneValue.replace(/\D/g, '');
+
+            if (cleanPhone.length !== 10) {
+                alert("Please enter a valid 10-digit phone number. You entered " + cleanPhone.length + " digits.");
+                phoneInput.focus();
+                return; // Stop the form from submitting
+            }
+
             const orderCode = generateOrderCode();
             const name = document.getElementById('fullName').value;
-            const phone = document.getElementById('phone').value;
+            const phone = cleanPhone; // Use the cleaned 10-digit number
             const address = document.getElementById('address').value;
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             
