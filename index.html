@@ -52,25 +52,19 @@
         }
 
         #preloader { transition: opacity 0.8s ease, visibility 0.8s ease; }
-        @keyframes logoReveal {
-            0% { opacity: 0; transform: scale(0.9) translateY(10px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes loadProgress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-        .animate-logo-reveal { animation: logoReveal 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .animate-load-progress { animation: loadProgress 2.5s ease-in-out forwards; }
+        @keyframes logoReveal { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        @keyframes loadProgress { 0% { width: 0%; } 100% { width: 100%; } }
+        .animate-logo-reveal { animation: logoReveal 1s ease forwards; }
+        .animate-load-progress { animation: loadProgress 2s ease-in-out forwards; }
     </style>
 </head>
 <body class="text-charcoal antialiased flex flex-col min-h-screen relative">
 
-    <!-- PREMIUM LOADING SCREEN -->
+    <!-- PRELOADER -->
     <div id="preloader" class="fixed inset-0 bg-ivory z-[9999] flex flex-col items-center justify-center">
-        <div class="relative flex flex-col items-center opacity-0 animate-logo-reveal mb-8">
-            <img src="/logo.png" alt="Koseli Collections" class="h-16 md:h-24 w-auto object-contain mb-6" onerror="this.style.display='none'; document.getElementById('loader-text-fallback').style.display='flex';">
-            <div id="loader-text-fallback" class="hidden flex-col items-center">
+        <div class="flex flex-col items-center opacity-0 animate-logo-reveal mb-8">
+            <img src="/logo.png" alt="Koseli Collections" class="h-20 md:h-28 w-auto object-contain mb-6" onerror="this.style.display='none'; document.getElementById('loader-fallback').style.display='flex';">
+            <div id="loader-fallback" class="hidden flex-col items-center">
                 <h1 class="text-3xl font-serif font-bold text-burgundy tracking-widest uppercase mb-2">Koseli Collections</h1>
             </div>
             <p class="text-[10px] md:text-xs text-charcoal tracking-[0.3em] uppercase">Discover Style</p>
@@ -90,20 +84,16 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <div class="flex items-center gap-4">
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 -ml-2 text-charcoal hover:text-burgundy">
-                        <i data-lucide="menu" class="w-6 h-6"></i>
-                    </button>
-                    
-                    <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
-                        <img src="/logo.png" alt="Koseli Collections Logo" class="h-12 md:h-16 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
-                        <div id="logo-fallback" class="hidden flex-col">
-                            <span class="font-serif font-bold text-2xl text-burgundy tracking-tight leading-none">Koseli Collections</span>
-                            <span class="text-[8px] text-charcoal/60 uppercase tracking-widest mt-1">Premium Retail</span>
-                        </div>
-                    </a>
-                </div>
+                <!-- Logo -->
+                <a href="#" onclick="resetFilters()" class="flex-shrink-0 flex items-center gap-3 cursor-pointer">
+                    <img src="/logo.png" alt="Koseli Collections Logo" class="h-12 md:h-16 w-auto object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+                    <div id="logo-fallback" class="hidden flex-col">
+                        <span class="font-serif font-bold text-2xl text-burgundy tracking-tight leading-none">Koseli Collections</span>
+                        <span class="text-[8px] text-charcoal/60 uppercase tracking-widest mt-1">Premium Retail</span>
+                    </div>
+                </a>
 
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase">
                     <a href="#" onclick="resetFilters()" class="text-charcoal hover:text-burgundy transition-colors">Home</a>
                     <a href="#shop" onclick="resetFilters()" class="text-charcoal hover:text-burgundy transition-colors">Shop</a>
@@ -112,18 +102,20 @@
                     <a href="#about" class="text-charcoal hover:text-burgundy transition-colors">About Us</a>
                 </nav>
 
-                <div class="hidden md:flex items-center gap-5">
-                    <button class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
+                <!-- Desktop Actions -->
+                <div class="hidden md:flex items-center gap-6">
+                    <button onclick="toggleSearch()" class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
+                    <button onclick="openAccountModal()" class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="user" class="w-5 h-5"></i></button>
                     <button class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="heart" class="w-5 h-5"></i></button>
-                    <button onclick="openOrderHistory()" class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="user" class="w-5 h-5"></i></button>
                     <button id="cartToggle" class="text-charcoal hover:text-burgundy transition-colors relative">
                         <i data-lucide="shopping-bag" class="w-5 h-5"></i>
                         <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-champagne text-charcoal text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                     </button>
                 </div>
 
+                <!-- Mobile Actions -->
                 <div class="flex md:hidden items-center gap-4">
-                    <button class="text-charcoal"><i data-lucide="search" class="w-5 h-5"></i></button>
+                    <button onclick="openSearch()" class="text-charcoal"><i data-lucide="search" class="w-5 h-5"></i></button>
                     <button onclick="openCart()" class="text-charcoal relative">
                         <i data-lucide="shopping-bag" class="w-6 h-6"></i>
                         <span id="mobileCartCount" class="absolute -top-1.5 -right-1.5 bg-champagne text-charcoal text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
@@ -133,25 +125,11 @@
         </div>
     </header>
 
-    <!-- Mobile Menu Drawer -->
-    <div id="mobileMenuOverlay" class="fixed inset-0 bg-charcoal/60 z-[100] hidden opacity-0 transition-opacity duration-300 md:hidden" onclick="toggleMobileMenu()"></div>
-    <div id="mobileMenuDrawer" class="fixed top-0 left-0 h-full w-[80%] max-w-sm bg-ivory z-[101] transform -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl md:hidden">
-        <div class="p-6 border-b border-rose/30 flex justify-between items-center">
-            <span class="font-serif font-bold text-burgundy text-xl">Menu</span>
-            <button onclick="toggleMobileMenu()" class="p-2 text-charcoal hover:text-burgundy"><i data-lucide="x" class="w-5 h-5"></i></button>
-        </div>
-        <div class="flex-1 overflow-y-auto p-6 space-y-6">
-            <div class="space-y-4 text-lg font-serif">
-                <a href="#" onclick="resetFilters(); toggleMobileMenu();" class="block text-charcoal hover:text-burgundy">Home</a>
-                <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block text-charcoal hover:text-burgundy">Shop</a>
-                <a href="#" onclick="openOrderHistory(); toggleMobileMenu();" class="block text-charcoal hover:text-burgundy">My Orders</a>
-                <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block text-charcoal hover:text-burgundy">Track Order</a>
-                <a href="https://wa.me/9779863263690" target="_blank" class="block text-burgundy font-bold">Contact on WhatsApp</a>
-            </div>
-            <div class="border-t border-rose/30 pt-6">
-                <p class="text-xs font-bold text-charcoal/50 uppercase tracking-widest mb-4">Categories</p>
-                <div id="mobileCategoryList" class="space-y-3"></div>
-            </div>
+    <!-- Search Bar Overlay (Hidden by default) -->
+    <div id="searchBar" class="hidden bg-white border-b border-rose/30 p-4 absolute top-20 left-0 w-full z-30 shadow-md">
+        <div class="max-w-3xl mx-auto flex gap-4">
+            <input type="text" id="searchInput" placeholder="Search for products, categories..." class="w-full border-b-2 border-burgundy py-2 px-4 focus:outline-none text-lg">
+            <button onclick="toggleSearch()" class="text-charcoal hover:text-burgundy"><i data-lucide="x" class="w-6 h-6"></i></button>
         </div>
     </div>
 
@@ -188,19 +166,18 @@
             </div>
         </section>
 
-        <!-- Featured Categories -->
+        <!-- Shop by Category -->
         <section class="py-20 bg-white" id="categories">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-serif font-bold text-burgundy mb-4">Curated Categories</h2>
                     <div class="w-16 h-[1px] bg-champagne mx-auto"></div>
                 </div>
-                <!-- Categories Grid populated by JS -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6" id="categoryGrid"></div>
             </div>
         </section>
 
-        <!-- Product Grid / Shop -->
+        <!-- Shop Page -->
         <section class="py-20 bg-ivory" id="shop">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
@@ -218,10 +195,8 @@
                     </div>
                 </div>
                 
-                <!-- Products Grid populated by JS -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12" id="productGrid"></div>
                 
-                <!-- Empty State -->
                 <div id="emptyState" class="hidden text-center py-20 bg-white border border-rose/30 mt-8">
                     <i data-lucide="search" class="w-10 h-10 text-charcoal/30 mx-auto mb-4"></i>
                     <h3 class="text-lg font-serif font-bold text-burgundy mb-2">No products found</h3>
@@ -250,42 +225,12 @@
             </div>
         </section>
 
-        <!-- Why Choose Us -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-burgundy mb-16">Why Shop With Us</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                    <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 rounded-full bg-ivory flex items-center justify-center mb-6 text-burgundy border border-rose/30">
-                            <i data-lucide="sparkles" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="font-serif font-bold text-xl mb-3 text-charcoal">Trendy Collections</h3>
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Curated styles that bring international trends directly to you.</p>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 rounded-full bg-ivory flex items-center justify-center mb-6 text-burgundy border border-rose/30">
-                            <i data-lucide="shield-check" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="font-serif font-bold text-xl mb-3 text-charcoal">Quality Focused</h3>
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Every item is selected with strict attention to detail and craftsmanship.</p>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <div class="w-16 h-16 rounded-full bg-ivory flex items-center justify-center mb-6 text-burgundy border border-rose/30">
-                            <i data-lucide="truck" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="font-serif font-bold text-xl mb-3 text-charcoal">Nepal Delivery</h3>
-                        <p class="text-charcoal/60 text-sm leading-relaxed">Shopping in Nepal with confidence, delivered to your doorstep.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Newsletter -->
         <section class="py-20 bg-ivory border-y border-rose/30">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-3xl md:text-4xl font-serif font-bold text-burgundy mb-4">Stay in Style.</h2>
                 <p class="text-charcoal/60 mb-8">Subscribe to receive updates on new arrivals, exclusive offers, and style inspiration.</p>
-                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onsubmit="event.preventDefault(); alert('Subscribed successfully! (Demo)');">
+                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto" onsubmit="event.preventDefault(); alert('Subscribed successfully!');">
                     <input type="email" placeholder="Your email address" required class="flex-1 bg-white border border-rose/50 px-4 py-3 text-sm focus:outline-none focus:border-burgundy text-charcoal placeholder-charcoal/40">
                     <button type="submit" class="bg-burgundy text-white font-semibold px-8 py-3 hover:bg-opacity-90 transition tracking-wide text-sm">Subscribe</button>
                 </form>
@@ -295,34 +240,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-charcoal text-white pt-20 pb-10" id="contact">
+    <footer class="bg-charcoal text-white pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            
             <div>
                 <a href="#" class="font-serif text-2xl font-bold text-white mb-4 block tracking-tight">Koseli Collections</a>
-                <p class="text-white/60 text-sm leading-relaxed mb-6">
-                    A modern Nepal-based shopping destination bringing carefully selected global trends closer to you.
-                </p>
+                <p class="text-white/60 text-sm leading-relaxed mb-6">A modern Nepal-based shopping destination bringing carefully selected global trends closer to you.</p>
                 <div class="flex gap-4">
-                    <a href="https://www.instagram.com/koselicollections/" target="_blank" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-charcoal transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                    </a>
-                    <a href="https://wa.me/9779863263690" target="_blank" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-charcoal transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-                    </a>
+                    <a href="https://www.instagram.com/koselicollections/" target="_blank" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-charcoal transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                    <a href="https://wa.me/9779863263690" target="_blank" class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-charcoal transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
                 </div>
             </div>
-
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Explore</h4>
                 <ul class="space-y-3 text-sm text-white/60">
                     <li><a href="#shop" onclick="resetFilters()" class="hover:text-white transition">Shop All</a></li>
-                    <li><a href="#" onclick="openOrderHistory()" class="hover:text-white transition">My Orders</a></li>
+                    <li><a href="#" onclick="openAccountModal('orders')" class="hover:text-white transition">My Orders</a></li>
                     <li><a href="#" onclick="openTrackingModal()" class="hover:text-white transition">Track Order</a></li>
                     <li><a href="#about" class="hover:text-white transition">About Us</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Support</h4>
                 <ul class="space-y-3 text-sm text-white/60">
@@ -332,28 +268,17 @@
                     <li><a href="#" class="hover:text-white transition">Delivery Information</a></li>
                 </ul>
             </div>
-
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Get in Touch</h4>
                 <ul class="space-y-4 text-sm text-white/60">
-                    <li class="flex items-start gap-3">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i>
-                        <span>Kathmandu, Nepal</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i data-lucide="mail" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i>
-                        <a href="mailto:kosalicollections@gmail.com" class="hover:text-white transition">kosalicollections@gmail.com</a>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i data-lucide="phone" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i>
-                        <span>+977 9863263690</span>
-                    </li>
+                    <li class="flex items-start gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i><span>Kathmandu, Nepal</span></li>
+                    <li class="flex items-start gap-3"><i data-lucide="mail" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i><a href="mailto:kosalicollections@gmail.com" class="hover:text-white transition">kosalicollections@gmail.com</a></li>
+                    <li class="flex items-start gap-3"><i data-lucide="phone" class="w-4 h-4 text-champagne flex-shrink-0 mt-0.5"></i><span>+977 9863263690</span></li>
                 </ul>
             </div>
         </div>
-
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
-            <p>&copy; 2025 Koseli Collections. All rights reserved.</p>
+            <p>&copy; <span id="year"></span> Koseli Collections. All rights reserved.</p>
             <div class="flex items-center gap-6">
                 <a href="admin.html" class="hover:text-white transition">Staff Login</a>
                 <p>Designed by <a href="https://prabhatbhattarai.info.np/#top" target="_blank" class="text-champagne hover:text-white transition">Prabhat Bhattarai</a></p>
@@ -361,7 +286,9 @@
         </div>
     </footer>
 
-    <!-- Shopping Cart Drawer -->
+    <!-- ================= MODALS & DRAWERS ================= -->
+
+    <!-- Cart Drawer -->
     <div class="fixed inset-0 bg-charcoal/60 z-[100] hidden" id="cartOverlay"></div>
     <div class="fixed top-0 right-0 h-full w-full max-w-md bg-ivory z-[101] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl" id="cartDrawer">
         <div class="flex items-center justify-between p-6 border-b border-rose/30">
@@ -377,46 +304,101 @@
                     <span id="cartTotal" class="text-2xl font-serif font-bold text-burgundy">Rs. 0</span>
                 </div>
             </div>
-            <button id="checkoutBtn" class="w-full bg-[#25D366] text-white py-4 font-semibold flex items-center justify-center gap-2 hover:bg-[#1da851] transition-colors text-sm shadow-lg" disabled>
-                <i data-lucide="message-circle" class="w-5 h-5"></i> Checkout via WhatsApp
+            <button id="checkoutBtn" class="w-full bg-burgundy text-white py-4 font-semibold flex items-center justify-center gap-2 hover:bg-opacity-90 transition-colors text-sm shadow-lg" disabled>
+                Proceed to Checkout
             </button>
         </div>
     </div>
 
     <!-- Checkout Modal -->
     <div class="fixed inset-0 bg-charcoal/70 z-[200] hidden items-center justify-center modal-mobile-sheet p-4" id="checkoutModal">
-        <div class="bg-ivory w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-mobile-content">
+        <div class="bg-ivory w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] modal-mobile-content">
             <div class="p-6 border-b border-rose/30 flex justify-between items-center bg-white">
-                <h2 class="text-xl font-serif font-bold text-burgundy" id="modalTitle">Delivery Details</h2>
+                <h2 class="text-xl font-serif font-bold text-burgundy" id="modalTitle">Checkout</h2>
                 <button id="modalClose" class="p-2 hover:bg-rose/20 rounded-full transition-colors text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="p-6 overflow-y-auto">
                 <form id="orderForm">
-                    <div class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <!-- Customer Info -->
+                        <div class="md:col-span-2">
+                            <h3 class="text-sm font-bold text-burgundy uppercase tracking-wider mb-4 border-b border-rose/30 pb-2">1. Customer Information</h3>
+                        </div>
                         <div>
                             <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Full Name</label>
                             <input type="text" id="fullName" required class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Phone Number</label>
-                            <input type="tel" id="phone" required minlength="10" maxlength="10" 
-                                   oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
-                                   class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm" 
-                                   placeholder="98XXXXXXXX">
+                            <input type="tel" id="phone" required minlength="10" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm" placeholder="98XXXXXXXX">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Email (Optional)</label>
+                            <input type="email" id="email" class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm">
+                        </div>
+
+                        <!-- Address Info -->
+                        <div class="md:col-span-2 mt-4">
+                            <h3 class="text-sm font-bold text-burgundy uppercase tracking-wider mb-4 border-b border-rose/30 pb-2">2. Delivery Address</h3>
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Delivery Address</label>
-                            <textarea id="address" required rows="3" class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm" placeholder="Street, Ward, Municipality, District"></textarea>
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Province</label>
+                            <select id="province" required class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm">
+                                <option value="Bagmati">Bagmati</option>
+                                <option value="Gandaki">Gandaki</option>
+                                <option value="Koshi">Koshi</option>
+                                <option value="Madhesh">Madhesh</option>
+                                <option value="Lumbini">Lumbini</option>
+                                <option value="Karnali">Karnali</option>
+                                <option value="Sudurpashchim">Sudurpashchim</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">District</label>
+                            <input type="text" id="district" required class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm" placeholder="e.g. Kathmandu">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">City / Municipality</label>
+                            <input type="text" id="municipality" required class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Ward No.</label>
+                            <input type="text" id="ward" required class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold mb-2 uppercase tracking-wider text-charcoal/70">Full Address</label>
+                            <textarea id="address" required rows="2" class="w-full border border-rose/50 bg-white py-3 px-4 focus:outline-none focus:border-burgundy text-sm" placeholder="Street name, landmark, etc."></textarea>
+                        </div>
+
+                        <!-- Payment Method -->
+                        <div class="md:col-span-2 mt-4">
+                            <h3 class="text-sm font-bold text-burgundy uppercase tracking-wider mb-4 border-b border-rose/30 pb-2">3. Payment Method</h3>
+                        </div>
+                        <div class="md:col-span-2 space-y-3">
+                            <label class="flex items-center gap-3 p-3 border border-rose/30 bg-white cursor-pointer hover:border-burgundy transition">
+                                <input type="radio" name="payment" value="COD" checked class="accent-burgundy">
+                                <span class="text-sm font-medium">Cash on Delivery (COD)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-rose/30 bg-white cursor-pointer hover:border-burgundy transition opacity-50 cursor-not-allowed">
+                                <input type="radio" name="payment" value="ESEWA" disabled class="accent-burgundy">
+                                <span class="text-sm font-medium">eSewa (Coming Soon)</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 border border-rose/30 bg-white cursor-pointer hover:border-burgundy transition opacity-50 cursor-not-allowed">
+                                <input type="radio" name="payment" value="KHALTI" disabled class="accent-burgundy">
+                                <span class="text-sm font-medium">Khalti (Coming Soon)</span>
+                            </label>
                         </div>
                     </div>
-                    <button type="submit" class="w-full mt-8 bg-burgundy text-white py-4 font-semibold hover:bg-opacity-90 transition text-sm uppercase tracking-wide">Place Order</button>
+                    
+                    <button type="submit" class="w-full mt-8 bg-burgundy text-white py-4 font-semibold hover:bg-opacity-90 transition text-sm uppercase tracking-wide">Place Order (Rs. <span id="checkoutTotal">0</span>)</button>
                 </form>
 
+                <!-- Success Screen -->
                 <div id="successStep" class="hidden text-center py-6">
                     <div class="w-16 h-16 bg-burgundy text-champagne rounded-full flex items-center justify-center mx-auto mb-4">
                         <i data-lucide="check" class="w-8 h-8"></i>
                     </div>
-                    <h3 class="text-2xl font-serif font-bold text-burgundy mb-2">Order Prepared!</h3>
+                    <h3 class="text-2xl font-serif font-bold text-burgundy mb-2">Order Placed Successfully!</h3>
                     <p class="text-charcoal/60 text-sm mb-6">Save this Order Code to track your order later:</p>
                     
                     <div class="flex items-center justify-center gap-2 mb-8">
@@ -439,14 +421,54 @@
         </div>
     </div>
 
+    <!-- Account Modal -->
+    <div class="fixed inset-0 bg-charcoal/70 z-[200] hidden items-center justify-center p-4 modal-mobile-sheet" id="accountModal">
+        <div class="bg-ivory w-full max-w-md shadow-2xl overflow-hidden flex flex-col modal-mobile-content">
+            <div class="p-6 border-b border-rose/30 flex justify-between items-center bg-white">
+                <h2 class="text-xl font-serif font-bold text-burgundy">My Account</h2>
+                <button onclick="closeAccountModal()" class="p-2 hover:bg-rose/20 rounded-full transition-colors text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <!-- Login/Register View -->
+            <div id="authView" class="p-6">
+                <div class="flex gap-4 mb-6 border-b border-rose/30">
+                    <button onclick="switchAuthTab('login')" id="loginTab" class="pb-2 text-sm font-bold text-burgundy border-b-2 border-burgundy">Login</button>
+                    <button onclick="switchAuthTab('register')" id="registerTab" class="pb-2 text-sm font-bold text-charcoal/40 hover:text-burgundy">Register</button>
+                </div>
+                
+                <form id="loginForm" onsubmit="event.preventDefault(); alert('Login successful (Demo)'); closeAccountModal();">
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Email Address" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <input type="password" placeholder="Password" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <button type="submit" class="w-full bg-burgundy text-white py-3 font-semibold text-sm hover:bg-opacity-90 transition">Sign In</button>
+                    </div>
+                </form>
+
+                <form id="registerForm" class="hidden" onsubmit="event.preventDefault(); alert('Registered successfully (Demo)'); closeAccountModal();">
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Full Name" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <input type="tel" placeholder="Phone Number" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <input type="email" placeholder="Email Address" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <input type="password" placeholder="Password" required class="w-full border border-rose/50 bg-white py-3 px-4 text-sm focus:outline-none focus:border-burgundy">
+                        <button type="submit" class="w-full bg-burgundy text-white py-3 font-semibold text-sm hover:bg-opacity-90 transition">Create Account</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Orders View -->
+            <div id="accountOrdersView" class="hidden p-6 overflow-y-auto flex-1">
+                <button onclick="openAccountModal('auth')" class="text-xs text-burgundy mb-4 flex items-center gap-1"><i data-lucide="arrow-left" class="w-3 h-3"></i> Back to Login</button>
+                <h3 class="text-lg font-serif font-bold text-burgundy mb-4">My Orders</h3>
+                <div id="accountOrdersList" class="space-y-4"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bill Image Modal -->
     <div id="bill-modal" class="fixed inset-0 bg-charcoal/80 z-[300] hidden items-center justify-center p-4 backdrop-blur-sm modal-mobile-sheet">
         <div class="bg-white shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col transform transition-all duration-300 scale-95 opacity-0 modal-mobile-content" id="bill-modal-content">
             <div class="flex items-center justify-between p-4 border-b border-rose/30 bg-ivory">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="receipt" class="w-5 h-5 text-burgundy"></i>
-                    <h3 class="font-serif font-bold text-lg text-burgundy">Order Receipt</h3>
-                </div>
+                <div class="flex items-center gap-2"><i data-lucide="receipt" class="w-5 h-5 text-burgundy"></i><h3 class="font-serif font-bold text-lg text-burgundy">Order Receipt</h3></div>
                 <button onclick="closeBillModal()" class="p-2 hover:bg-rose/20 rounded-full transition text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div class="flex-1 overflow-y-auto p-4 bg-white">
@@ -455,32 +477,23 @@
                         <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: bold; color: #702B3A; margin-bottom: 4px;">KOSELI COLLECTIONS</div>
                         <div style="font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 2px;">Discover Style. Experience Elegance.</div>
                     </div>
-                    
                     <div style="font-size: 12px; margin-bottom: 20px; line-height: 1.8;">
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Order:</span><strong id="bill-code">-</strong></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Customer:</span><strong id="bill-customer">-</strong></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Phone:</span><span id="bill-phone">-</span></div>
                         <div style="display: flex; justify-content: space-between;"><span style="color: #666;">Address:</span><span id="bill-address" style="text-align: right; max-width: 60%;">-</span></div>
                     </div>
-                    
                     <div style="border-top: 1px solid #D9B8B5; border-bottom: 1px solid #D9B8B5; padding: 15px 0; margin-bottom: 20px;">
                         <div style="font-size: 11px; font-weight: bold; margin-bottom: 12px; color: #702B3A; text-transform: uppercase; letter-spacing: 1px;">Items Ordered</div>
                         <div id="bill-items" style="font-size: 12px; line-height: 2;"></div>
                     </div>
-                    
-                    <div style="text-align: right; font-size: 18px; font-family: 'Playfair Display', serif; font-weight: bold; color: #702B3A; padding: 10px 0;">
-                        Total: Rs. <span id="bill-total">0</span>
-                    </div>
+                    <div style="text-align: right; font-size: 18px; font-family: 'Playfair Display', serif; font-weight: bold; color: #702B3A; padding: 10px 0;">Total: Rs. <span id="bill-total">0</span></div>
                 </div>
             </div>
             <div class="p-4 border-t border-rose/30 bg-ivory space-y-2">
                 <div class="grid grid-cols-2 gap-3">
-                    <button onclick="downloadBillImage()" class="bg-charcoal text-white py-3 font-medium hover:bg-opacity-90 transition flex items-center justify-center gap-2 text-sm">
-                        <i data-lucide="download" class="w-4 h-4"></i> Download
-                    </button>
-                    <button onclick="shareBillImage()" class="bg-burgundy text-white py-3 font-medium hover:bg-opacity-90 transition flex items-center justify-center gap-2 text-sm">
-                        <i data-lucide="share-2" class="w-4 h-4"></i> Share
-                    </button>
+                    <button onclick="downloadBillImage()" class="bg-charcoal text-white py-3 font-medium hover:bg-opacity-90 transition flex items-center justify-center gap-2 text-sm"><i data-lucide="download" class="w-4 h-4"></i> Download</button>
+                    <button onclick="shareBillImage()" class="bg-burgundy text-white py-3 font-medium hover:bg-opacity-90 transition flex items-center justify-center gap-2 text-sm"><i data-lucide="share-2" class="w-4 h-4"></i> Share</button>
                 </div>
             </div>
         </div>
@@ -499,37 +512,13 @@
                     <button onclick="checkTracking()" id="trackBtn" class="bg-burgundy text-white px-6 font-semibold hover:bg-opacity-90 transition text-sm">Track</button>
                 </div>
                 <div id="trackingResult" class="hidden mt-4 border-t border-rose/30 pt-6">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-semibold text-charcoal/60 uppercase">Order Code:</span>
-                        <span class="font-bold font-mono text-burgundy text-sm" id="trackOrderCode">-</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-semibold text-charcoal/60 uppercase">Customer:</span>
-                        <span class="font-medium text-sm" id="trackName">-</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-6">
-                        <span class="text-xs font-semibold text-charcoal/60 uppercase">Total:</span>
-                        <span class="font-bold text-burgundy text-sm" id="trackTotal">-</span>
-                    </div>
-                    <div class="bg-white border border-rose/30 text-charcoal text-sm font-bold p-4 text-center" id="trackStatus">
-                        Pending Confirmation
-                    </div>
+                    <div class="flex justify-between items-center mb-3"><span class="text-xs font-semibold text-charcoal/60 uppercase">Order Code:</span><span class="font-bold font-mono text-burgundy text-sm" id="trackOrderCode">-</span></div>
+                    <div class="flex justify-between items-center mb-3"><span class="text-xs font-semibold text-charcoal/60 uppercase">Customer:</span><span class="font-medium text-sm" id="trackName">-</span></div>
+                    <div class="flex justify-between items-center mb-6"><span class="text-xs font-semibold text-charcoal/60 uppercase">Total:</span><span class="font-bold text-burgundy text-sm" id="trackTotal">-</span></div>
+                    <div class="bg-white border border-rose/30 text-charcoal text-sm font-bold p-4 text-center" id="trackStatus">Pending Confirmation</div>
                 </div>
-                <div id="trackingError" class="hidden mt-4 text-center text-burgundy font-medium text-sm">
-                    Order code not found. Please check your code and try again.
-                </div>
+                <div id="trackingError" class="hidden mt-4 text-center text-burgundy font-medium text-sm">Order code not found. Please check your code and try again.</div>
             </div>
-        </div>
-    </div>
-
-    <!-- Order History Modal -->
-    <div class="fixed inset-0 bg-charcoal/70 z-[200] hidden items-center justify-center p-4 modal-mobile-sheet" id="historyModal">
-        <div class="bg-ivory w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[85vh] modal-mobile-content">
-            <div class="p-6 border-b border-rose/30 flex justify-between items-center bg-white">
-                <h2 class="text-xl font-serif font-bold text-burgundy">My Orders</h2>
-                <button onclick="closeOrderHistory()" class="p-2 hover:bg-rose/20 rounded-full transition-colors text-charcoal"><i data-lucide="x" class="w-5 h-5"></i></button>
-            </div>
-            <div class="p-6 overflow-y-auto flex-1" id="historyList"></div>
         </div>
     </div>
 
@@ -541,7 +530,6 @@
         let currentOrderData = null; 
         let billImageDataUrl = null;
 
-        // ⭐ THE CATEGORIES DATA (If this is missing, the section will be empty)
         const CATEGORIES = [
             { id: 'cat1', name: 'Electronics', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
             { id: 'cat2', name: 'Fashion', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400&auto=format&fit=crop' },
@@ -566,42 +554,93 @@
         let activeCategoryId = null; 
 
         function init() {
+            document.getElementById('year').textContent = new Date().getFullYear();
             renderCategories();
-            renderMobileCategories();
             renderProducts();
             updateCartUI();
             lucide.createIcons();
         }
 
+        // Preloader
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
                 preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 800); 
+                setTimeout(() => { preloader.style.display = 'none'; }, 800); 
             }
-        }, 2500); 
+        }, 2000); 
 
-        function toggleMobileMenu() {
-            const overlay = document.getElementById('mobileMenuOverlay');
-            const drawer = document.getElementById('mobileMenuDrawer');
-            if(drawer.classList.contains('-translate-x-full')) {
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                drawer.classList.remove('-translate-x-full');
-            } else {
-                overlay.classList.add('opacity-0');
-                drawer.classList.add('-translate-x-full');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
+        function toggleSearch() {
+            document.getElementById('searchBar').classList.toggle('hidden');
+            if(!document.getElementById('searchBar').classList.contains('hidden')) {
+                document.getElementById('searchInput').focus();
             }
         }
 
-        // ⭐ RENDERS THE CATEGORIES
+        function openSearch() {
+            document.getElementById('searchBar').classList.remove('hidden');
+            document.getElementById('searchInput').focus();
+        }
+
+        // Account Logic
+        function openAccountModal(view = 'auth') {
+            const modal = document.getElementById('accountModal');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            
+            if(view === 'orders') {
+                document.getElementById('authView').classList.add('hidden');
+                document.getElementById('accountOrdersView').classList.remove('hidden');
+                renderAccountOrders();
+            } else {
+                document.getElementById('authView').classList.remove('hidden');
+                document.getElementById('accountOrdersView').classList.add('hidden');
+            }
+        }
+
+        function closeAccountModal() {
+            document.getElementById('accountModal').classList.add('hidden');
+            document.getElementById('accountModal').classList.remove('flex');
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+
+            if(tab === 'login') {
+                loginForm.classList.remove('hidden'); registerForm.classList.add('hidden');
+                loginTab.classList.add('text-burgundy', 'border-burgundy'); loginTab.classList.remove('text-charcoal/40');
+                registerTab.classList.remove('text-burgundy', 'border-burgundy'); registerTab.classList.add('text-charcoal/40');
+            } else {
+                loginForm.classList.add('hidden'); registerForm.classList.remove('hidden');
+                registerTab.classList.add('text-burgundy', 'border-burgundy'); registerTab.classList.remove('text-charcoal/40');
+                loginTab.classList.remove('text-burgundy', 'border-burgundy'); loginTab.classList.add('text-charcoal/40');
+            }
+        }
+
+        function renderAccountOrders() {
+            const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
+            const list = document.getElementById('accountOrdersList');
+            if(savedOrders.length === 0) {
+                list.innerHTML = `<p class="text-charcoal/50 text-sm text-center py-8">No orders found. Start shopping!</p>`;
+                return;
+            }
+            list.innerHTML = savedOrders.reverse().map(order => `
+                <div class="border border-rose/30 p-4 bg-white">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold font-mono text-burgundy text-sm">${order.code}</span>
+                        <span class="text-[10px] font-bold px-2 py-1 uppercase tracking-wider bg-ivory text-charcoal border border-rose/30">${order.status}</span>
+                    </div>
+                    <p class="text-xs text-charcoal/50 mb-2">${order.date}</p>
+                    <p class="font-bold text-sm text-burgundy">Rs. ${Number(order.total).toLocaleString()}</p>
+                </div>
+            `).join('');
+        }
+
+        // Rendering
         function renderCategories() {
             const grid = document.getElementById('categoryGrid');
-            const menuList = document.getElementById('megaMenuList');
-            
             grid.innerHTML = CATEGORIES.map(cat => `
                 <div onclick="filterByCategory('${cat.id}')" class="group relative cursor-pointer overflow-hidden aspect-square bg-charcoal/10 border border-rose/20 ${activeCategoryId === cat.id ? 'ring-1 ring-burgundy' : ''}">
                     <img src="${cat.image}" alt="${cat.name}" onerror="this.src='https://placehold.co/400x400?text=${cat.name}'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -612,48 +651,25 @@
                     </div>
                 </div>
             `).join('');
-            
-            menuList.innerHTML = `<div onclick="resetFilters()" class="px-4 py-3 hover:text-burgundy cursor-pointer flex justify-between items-center border-b border-rose/20 font-bold">View All Products</div>` + 
-            CATEGORIES.map(cat => `<div onclick="filterByCategory('${cat.id}')" class="px-4 py-3 hover:text-burgundy cursor-pointer flex justify-between items-center border-b border-rose/20 last:border-0"><span class="text-sm">${cat.name}</span></div>`).join('');
-        }
-
-        function renderMobileCategories() {
-            const list = document.getElementById('mobileCategoryList');
-            list.innerHTML = CATEGORIES.map(cat => `
-                <div onclick="filterByCategory('${cat.id}'); toggleMobileMenu();" class="text-charcoal/70 hover:text-burgundy cursor-pointer flex justify-between items-center">
-                    <span class="text-sm">${cat.name}</span>
-                    <i data-lucide="chevron-right" class="w-4 h-4 text-charcoal/30"></i>
-                </div>
-            `).join('');
         }
 
         function filterByCategory(catId) {
             activeCategoryId = catId;
             const catName = CATEGORIES.find(c => c.id === catId)?.name || 'Products';
-            
             document.getElementById('sectionTitle').innerText = catName;
             document.getElementById('sectionSubtitle').innerText = `Explore our curated ${catName} collection.`;
-            
             renderCategories();
             renderProducts();
-            
             window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
         }
 
         function resetFilters() {
-            activeCategoryId = null; 
-            currentFilter = 'all'; 
-            currentSearch = '';
-            
-            document.getElementById('searchInput').value = ''; 
-            document.getElementById('mobileSearchInput').value = '';
+            activeCategoryId = null; currentFilter = 'all'; currentSearch = '';
+            document.getElementById('searchInput').value = '';
             document.getElementById('filterSelect').value = 'all';
             document.getElementById('sectionTitle').innerText = 'New Arrivals';
             document.getElementById('sectionSubtitle').innerText = 'The latest additions to our collection.';
-            
-            renderCategories(); 
-            renderProducts();
-            
+            renderCategories(); renderProducts();
             window.scrollTo({ top: document.getElementById('shop').offsetTop - 100, behavior: 'smooth' });
         }
 
@@ -671,14 +687,10 @@
             if (activeCategoryId) { 
                 filtered = filtered.filter(p => p.category === activeCategoryId); 
                 clearBtn.classList.remove('hidden'); 
-            } else { 
-                clearBtn.classList.add('hidden'); 
-            }
+            } else { clearBtn.classList.add('hidden'); }
 
             if (filtered.length === 0) { 
-                grid.innerHTML = ''; 
-                emptyState.classList.remove('hidden'); 
-                return; 
+                grid.innerHTML = ''; emptyState.classList.remove('hidden'); return; 
             }
             emptyState.classList.add('hidden');
 
@@ -693,13 +705,8 @@
                 
                 return `
                 <div class="group flex flex-col relative">
-                    ${badgeHtml}
-                    ${discountHtml}
-                    
-                    <button class="absolute top-3 right-3 z-20 text-charcoal/40 hover:text-burgundy transition ${discountHtml ? 'hidden' : ''}">
-                        <i data-lucide="heart" class="w-5 h-5"></i>
-                    </button>
-
+                    ${badgeHtml}${discountHtml}
+                    <button class="absolute top-3 right-3 z-20 text-charcoal/40 hover:text-burgundy transition ${discountHtml ? 'hidden' : ''}"><i data-lucide="heart" class="w-5 h-5"></i></button>
                     <div class="aspect-[3/4] bg-white overflow-hidden relative mb-4">
                         <img src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/600x800?text=${p.name}'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                         ${!isOutOfStock ? `
@@ -707,10 +714,8 @@
                             <button onclick="addToCart('${p.id}')" class="w-full bg-white text-charcoal font-semibold py-3 text-sm hover:bg-burgundy hover:text-white transition-colors flex items-center justify-center gap-2">
                                 <i data-lucide="shopping-bag" class="w-4 h-4"></i> Add to Cart
                             </button>
-                        </div>
-                        ` : ''}
+                        </div>` : ''}
                     </div>
-                    
                     <div class="text-center">
                         <div class="text-[10px] text-charcoal/40 uppercase tracking-widest mb-1">${p.sku}</div>
                         <h3 class="font-serif font-bold text-base text-charcoal mb-1 truncate">${p.name}</h3>
@@ -725,6 +730,7 @@
             lucide.createIcons();
         }
 
+        // Cart Logic
         function addToCart(productId) {
             const product = PRODUCTS.find(p => p.id === productId);
             const existing = cart.find(item => item.id === productId);
@@ -743,21 +749,12 @@
             const clearBtn = document.getElementById('clearCartBtn');
 
             if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center py-16 text-charcoal/50">
-                    <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
-                    <p class="font-serif text-lg text-burgundy mb-1">Your bag is empty</p>
-                    <p class="text-xs uppercase tracking-widest">Discover our latest collections</p>
-                </div>`;
-                totalEl.innerText = 'Rs. 0'; 
-                btn.disabled = true; 
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-                clearBtn.classList.add('hidden'); 
+                container.innerHTML = `<div class="text-center py-16 text-charcoal/50"><i data-lucide="shopping-bag" class="w-12 h-12 mx-auto mb-4 opacity-30"></i><p class="font-serif text-lg text-burgundy mb-1">Your bag is empty</p><p class="text-xs uppercase tracking-widest">Discover our latest collections</p></div>`;
+                totalEl.innerText = 'Rs. 0'; btn.disabled = true; btn.classList.add('opacity-50', 'cursor-not-allowed'); clearBtn.classList.add('hidden'); 
             } else {
                 container.innerHTML = cart.map(item => `
                     <div class="flex gap-4 mb-6 border-b border-rose/30 pb-6">
-                        <div class="w-20 aspect-[3/4] bg-white overflow-hidden flex-shrink-0">
-                            <img src="${item.image}" class="w-full h-full object-cover">
-                        </div>
+                        <div class="w-20 aspect-[3/4] bg-white overflow-hidden flex-shrink-0"><img src="${item.image}" class="w-full h-full object-cover"></div>
                         <div class="flex-1 flex flex-col justify-between">
                             <div>
                                 <div class="font-serif font-bold text-charcoal text-sm line-clamp-1 mb-1">${item.name}</div>
@@ -775,10 +772,8 @@
                     </div>
                 `).join('');
                 const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-                totalEl.innerText = `Rs. ${total.toLocaleString()}`; 
-                btn.disabled = false; 
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-                clearBtn.classList.remove('hidden'); 
+                totalEl.innerText = `Rs. ${total.toLocaleString()}`; btn.disabled = false; btn.classList.remove('opacity-50', 'cursor-not-allowed'); clearBtn.classList.remove('hidden'); 
+                document.getElementById('checkoutTotal').innerText = total.toLocaleString();
             }
             lucide.createIcons();
         }
@@ -786,9 +781,7 @@
         function updateQty(id, delta) {
             const item = cart.find(i => i.id === id);
             if (!item) return;
-            if (delta === -99) {
-                cart = cart.filter(i => i.id !== id);
-            } else {
+            if (delta === -99) { cart = cart.filter(i => i.id !== id); } else {
                 item.qty += delta;
                 if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
             }
@@ -797,11 +790,7 @@
 
         function clearCart() {
             if (cart.length === 0) return;
-            if (confirm("Are you sure you want to remove all items from your bag?")) {
-                cart = [];
-                saveCart();
-                updateCartUI();
-            }
+            if (confirm("Are you sure you want to remove all items from your bag?")) { cart = []; saveCart(); updateCartUI(); }
         }
 
         function saveCart() { localStorage.setItem('koseli_cart', JSON.stringify(cart)); }
@@ -843,65 +832,50 @@
             const code = document.getElementById('displayOrderCode').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const icon = document.getElementById('copyIcon');
-                icon.setAttribute('data-lucide', 'check');
-                icon.classList.remove('text-charcoal');
-                icon.classList.add('text-green-700');
-                lucide.createIcons();
-                setTimeout(() => {
-                    icon.setAttribute('data-lucide', 'copy');
-                    icon.classList.remove('text-green-700');
-                    icon.classList.add('text-charcoal');
-                    lucide.createIcons();
-                }, 2000);
-            }).catch(err => {
-                alert("Failed to copy: " + err);
-            });
+                icon.setAttribute('data-lucide', 'check'); icon.classList.remove('text-charcoal'); icon.classList.add('text-green-700'); lucide.createIcons();
+                setTimeout(() => { icon.setAttribute('data-lucide', 'copy'); icon.classList.remove('text-green-700'); icon.classList.add('text-charcoal'); lucide.createIcons(); }, 2000);
+            }).catch(err => alert("Failed to copy: " + err));
         }
 
         document.getElementById('orderForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const phoneInput = document.getElementById('phone');
-            const phoneValue = phoneInput.value.trim();
-            const cleanPhone = phoneValue.replace(/\D/g, '');
-
-            if (cleanPhone.length !== 10) {
-                alert("Please enter a valid 10-digit phone number. You entered " + cleanPhone.length + " digits.");
-                phoneInput.focus();
-                return; 
-            }
+            const cleanPhone = phoneInput.value.trim().replace(/\D/g, '');
+            if (cleanPhone.length !== 10) { alert("Please enter a valid 10-digit phone number. You entered " + cleanPhone.length + " digits."); phoneInput.focus(); return; }
 
             const orderCode = generateOrderCode();
             const name = document.getElementById('fullName').value;
-            const phone = cleanPhone; 
-            const address = document.getElementById('address').value;
+            const email = document.getElementById('email').value;
+            const province = document.getElementById('province').value;
+            const district = document.getElementById('district').value;
+            const municipality = document.getElementById('municipality').value;
+            const ward = document.getElementById('ward').value;
+            const street = document.getElementById('address').value;
+            const fullAddress = `${street}, Ward ${ward}, ${municipality}, ${district}, ${province}`;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             
             currentOrderData = {
-                code: orderCode, date: new Date().toLocaleString(), name: name, phone: phone, address: address, items: cart, total: total, status: 'Pending Confirmation'
+                code: orderCode, date: new Date().toLocaleString(), name: name, phone: cleanPhone, address: fullAddress, items: cart, total: total, status: 'Pending Confirmation', paymentMethod: paymentMethod
             };
 
             let savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
             savedOrders.push(currentOrderData);
             localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
 
+            // Send to Google Sheets
             fetch(GAS_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({
                     action: "saveOrder",
-                    code: currentOrderData.code,
-                    name: currentOrderData.name,
-                    phone: currentOrderData.phone,
-                    address: currentOrderData.address,
+                    code: currentOrderData.code, name: currentOrderData.name, phone: currentOrderData.phone, address: currentOrderData.address,
                     items: currentOrderData.items.map(i => ({ name: i.name, qty: i.qty })),
-                    total: currentOrderData.total,
-                    status: "Pending Confirmation"
+                    total: currentOrderData.total, status: "Pending Confirmation"
                 })
-            })
-            .then(res => res.json())
-            .then(data => { if (!data.success) console.error("Failed to save order to cloud:", data.error); })
-            .catch(err => console.error("Network error saving order:", err));
+            }).catch(err => console.error("Network error saving order:", err));
 
             document.getElementById('orderForm').classList.add('hidden');
             document.getElementById('successStep').classList.remove('hidden');
@@ -909,108 +883,29 @@
             document.getElementById('displayOrderCode').innerText = orderCode;
             
             const itemsText = cart.map(item => `• ${item.name} (x${item.qty}) - Rs. ${(item.price * item.qty).toLocaleString()}`).join('\n');
-            const message = `Hello Koseli Collections! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease send me the payment QR code to complete this order.`;
-            
+            const message = `Hello Koseli Collections! I want to place an order.\n\n*ORDER CODE: ${orderCode}*\n\n*ORDER DETAILS*\n${itemsText}\n\n*CUSTOMER DETAILS*\nName: ${name}\nPhone: ${cleanPhone}\nAddress: ${fullAddress}\n\n*ORDER SUMMARY*\nTotal: Rs. ${total.toLocaleString()}\n\nPlease confirm my order.`;
             document.getElementById('whatsappLink').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            
             billImageDataUrl = null; 
             cart = []; saveCart(); updateCartUI();
         });
 
-        function openOrderHistory() {
-            const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
-            const listContainer = document.getElementById('historyList');
-            
-            if (savedOrders.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="text-center py-16 text-charcoal/50">
-                        <i data-lucide="package" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
-                        <p class="font-serif text-lg text-burgundy mb-1">No order history</p>
-                        <p class="text-xs uppercase tracking-widest">Your past orders will appear here.</p>
-                    </div>
-                `;
-            } else {
-                const sortedOrders = [...savedOrders].reverse();
-                
-                listContainer.innerHTML = sortedOrders.map(order => {
-                    const itemsHtml = order.items.map(i => `
-                        <div class="flex justify-between text-sm mb-1 text-charcoal">
-                            <span>${i.name}</span>
-                            <span class="text-charcoal/60">x${i.qty}</span>
-                        </div>
-                    `).join('');
-
-                    let badgeColor = 'bg-ivory text-charcoal border border-rose/30';
-                    if (order.status === 'Delivered') badgeColor = 'bg-green-50 text-green-800 border-green-200';
-                    if (order.status === 'Shipped') badgeColor = 'bg-blue-50 text-blue-800 border-blue-200';
-                    if (order.status === 'Cancelled') badgeColor = 'bg-red-50 text-red-800 border-red-200';
-
-                    return `
-                    <div class="border border-rose/30 p-5 mb-4 bg-white shadow-sm">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <span class="font-bold font-mono text-burgundy text-sm tracking-wider">${order.code}</span>
-                                <p class="text-[10px] text-charcoal/50 mt-1 uppercase tracking-wider">${order.date}</p>
-                            </div>
-                            <span class="text-[9px] font-bold px-2 py-1 uppercase tracking-wider ${badgeColor}">${order.status}</span>
-                        </div>
-                        
-                        <div class="bg-ivory/50 p-4 mb-4">
-                            <div class="text-[9px] font-bold text-charcoal/40 uppercase tracking-widest mb-2">Items</div>
-                            <div class="space-y-1">
-                                ${itemsHtml}
-                            </div>
-                        </div>
-                        
-                        <div class="flex justify-between items-center border-t border-rose/30 pt-3">
-                            <span class="text-[10px] font-bold text-charcoal/50 uppercase tracking-widest">Total</span>
-                            <span class="font-serif font-bold text-burgundy">Rs. ${Number(order.total).toLocaleString()}</span>
-                        </div>
-
-                        <button onclick="trackFromHistory('${order.code}')" class="mt-4 w-full border border-charcoal/20 text-charcoal py-2 text-[10px] font-bold uppercase tracking-widest hover:bg-charcoal hover:text-white transition">
-                            Track Order
-                        </button>
-                    </div>
-                    `;
-                }).join('');
-            }
-            
-            historyModal.classList.remove('hidden'); historyModal.classList.add('flex');
-            lucide.createIcons();
-        }
-
-        function closeOrderHistory() {
-            historyModal.classList.add('hidden'); historyModal.classList.remove('flex');
-        }
-
-        function trackFromHistory(code) {
-            closeOrderHistory();
-            openTrackingModal();
-            document.getElementById('trackingInput').value = code;
-            checkTracking();
-        }
-
         function generateBillModal() {
             if (!currentOrderData) return;
-            
             document.getElementById('bill-code').innerText = currentOrderData.code;
             document.getElementById('bill-customer').innerText = currentOrderData.name;
             document.getElementById('bill-phone').innerText = currentOrderData.phone;
             document.getElementById('bill-address').innerText = currentOrderData.address;
-            
             let itemsHtml = '';
-            currentOrderData.items.forEach(item => {
-                itemsHtml += `<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>${item.name} × ${item.qty}</span><span style="font-weight: 600;">Rs. ${item.price * item.qty}</span></div>`;
-            });
+            currentOrderData.items.forEach(item => { itemsHtml += `<div style="display: flex; justify-content: space-between; margin-bottom: 6px;"><span>${item.name} × ${item.qty}</span><span style="font-weight: 600;">Rs. ${item.price * item.qty}</span></div>`; });
             document.getElementById('bill-items').innerHTML = itemsHtml;
             document.getElementById('bill-total').innerText = currentOrderData.total;
-
             billModal.classList.remove('hidden'); billModal.classList.add('flex');
             setTimeout(() => { billModalContent.classList.remove('scale-95', 'opacity-0'); billModalContent.classList.add('scale-100', 'opacity-100'); }, 10);
         }
 
         function closeBillModal() {
-            billModalContent.classList.add('scale-95', 'opacity-0');
-            billModalContent.classList.remove('scale-100', 'opacity-100');
+            billModalContent.classList.add('scale-95', 'opacity-0'); billModalContent.classList.remove('scale-100', 'opacity-100');
             setTimeout(() => { billModal.classList.add('hidden'); billModal.classList.remove('flex'); }, 300);
         }
 
@@ -1018,42 +913,23 @@
             if (billImageDataUrl) return billImageDataUrl;
             const element = document.getElementById('bill-capture-area');
             const canvas = await html2canvas(element, { scale: 3, backgroundColor: '#ffffff', useCORS: true, logging: false });
-            billImageDataUrl = canvas.toDataURL('image/png');
-            return billImageDataUrl;
+            billImageDataUrl = canvas.toDataURL('image/png'); return billImageDataUrl;
         }
 
         async function downloadBillImage() {
             try {
-                const btn = event.target.closest('button');
-                const orig = btn.innerHTML;
-                btn.innerHTML = '...'; btn.disabled = true;
-                const imageUrl = await getBillImage();
-                const link = document.createElement('a');
-                link.download = `Koseli-Bill-${currentOrderData.code}.png`;
-                link.href = imageUrl;
-                link.click();
+                const btn = event.target.closest('button'); const orig = btn.innerHTML; btn.innerHTML = '...'; btn.disabled = true;
+                const imageUrl = await getBillImage(); const link = document.createElement('a'); link.download = `Koseli-Bill-${currentOrderData.code}.png`; link.href = imageUrl; link.click();
                 btn.innerHTML = orig; btn.disabled = false;
             } catch (e) { alert('Error generating image.'); }
         }
 
         async function shareBillImage() {
             try {
-                const btn = event.target.closest('button');
-                const orig = btn.innerHTML;
-                btn.innerHTML = '...'; btn.disabled = true;
-                const imageUrl = await getBillImage();
-                const blob = await (await fetch(imageUrl)).blob();
-                const file = new File([blob], `Koseli-Bill-${currentOrderData.code}.png`, { type: 'image/png' });
-                
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: `Koseli Bill`, text: `My order bill. Order: ${currentOrderData.code}` });
-                } else {
-                    const link = document.createElement('a');
-                    link.download = `Koseli-Bill-${currentOrderData.code}.png`;
-                    link.href = imageUrl;
-                    link.click();
-                    alert('Sharing not supported. Image downloaded instead.');
-                }
+                const btn = event.target.closest('button'); const orig = btn.innerHTML; btn.innerHTML = '...'; btn.disabled = true;
+                const imageUrl = await getBillImage(); const blob = await (await fetch(imageUrl)).blob(); const file = new File([blob], `Koseli-Bill-${currentOrderData.code}.png`, { type: 'image/png' });
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: `Koseli Bill`, text: `My order bill. Order: ${currentOrderData.code}` }); } 
+                else { const link = document.createElement('a'); link.download = `Koseli-Bill-${currentOrderData.code}.png`; link.href = imageUrl; link.click(); alert('Sharing not supported. Image downloaded instead.'); }
                 btn.innerHTML = orig; btn.disabled = false;
             } catch (e) { if(e.name !== 'AbortError') alert('Error sharing.'); }
         }
@@ -1065,80 +941,31 @@
             const code = document.getElementById('trackingInput').value.trim().toUpperCase();
             if(!code) return;
 
-            const resultBox = document.getElementById('trackingResult');
-            const errorBox = document.getElementById('trackingError');
-            const trackBtn = document.getElementById('trackBtn');
-
-            resultBox.classList.remove('hidden');
-            errorBox.classList.add('hidden');
-            document.getElementById('trackOrderCode').innerText = "Searching...";
-            document.getElementById('trackName').innerText = "...";
-            document.getElementById('trackTotal').innerText = "...";
-            document.getElementById('trackStatus').innerText = "Fetching latest status...";
-            trackBtn.innerHTML = "Wait...";
-            trackBtn.disabled = true;
+            const resultBox = document.getElementById('trackingResult'); const errorBox = document.getElementById('trackingError'); const trackBtn = document.getElementById('trackBtn');
+            resultBox.classList.remove('hidden'); errorBox.classList.add('hidden');
+            document.getElementById('trackOrderCode').innerText = "Searching..."; document.getElementById('trackName').innerText = "..."; document.getElementById('trackTotal').innerText = "..."; document.getElementById('trackStatus').innerText = "Fetching latest status...";
+            trackBtn.innerHTML = "Wait..."; trackBtn.disabled = true;
 
             try {
-                const res = await fetch(`${GAS_URL}?action=trackOrder&code=${code}`);
-                const data = await res.json();
-
+                const res = await fetch(`${GAS_URL}?action=trackOrder&code=${code}`); const data = await res.json();
                 if (data.success && data.order) {
-                    document.getElementById('trackOrderCode').innerText = data.order["Order Code"];
-                    document.getElementById('trackName').innerText = data.order["Customer Name"];
-                    document.getElementById('trackTotal').innerText = `Rs. ${Number(data.order["Total"]).toLocaleString()}`;
-                    
-                    const liveStatus = data.order["Status"] || "Pending Confirmation";
-                    const statusEl = document.getElementById('trackStatus');
-                    statusEl.innerText = liveStatus;
-                    
-                    let badgeColor = 'bg-ivory text-charcoal border border-rose/30';
-                    if (liveStatus === 'Delivered') badgeColor = 'bg-green-50 text-green-800 border-green-200';
-                    if (liveStatus === 'Shipped') badgeColor = 'bg-blue-50 text-blue-800 border-blue-200';
-                    if (liveStatus === 'Processing') badgeColor = 'bg-yellow-50 text-yellow-800 border-yellow-200';
-                    if (liveStatus === 'Cancelled') badgeColor = 'bg-red-50 text-red-800 border-red-200';
-                    
+                    document.getElementById('trackOrderCode').innerText = data.order["Order Code"]; document.getElementById('trackName').innerText = data.order["Customer Name"]; document.getElementById('trackTotal').innerText = `Rs. ${Number(data.order["Total"]).toLocaleString()}`;
+                    const liveStatus = data.order["Status"] || "Pending Confirmation"; const statusEl = document.getElementById('trackStatus'); statusEl.innerText = liveStatus;
+                    let badgeColor = 'bg-white border border-rose/30 text-charcoal'; if (liveStatus === 'Delivered') badgeColor = 'bg-green-50 text-green-800 border-green-200';
                     statusEl.className = `text-sm font-bold p-4 text-center ${badgeColor}`;
-
-                    let savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
-                    const index = savedOrders.findIndex(o => o.code === code);
-                    if (index > -1) {
-                        savedOrders[index].status = liveStatus;
-                        localStorage.setItem('koseli_orders', JSON.stringify(savedOrders));
-                    }
                 } else {
-                    const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
-                    const localOrder = savedOrders.find(o => o.code === code);
-                    
-                    if (localOrder) {
-                         document.getElementById('trackOrderCode').innerText = localOrder.code;
-                         document.getElementById('trackName').innerText = localOrder.name;
-                         document.getElementById('trackTotal').innerText = `Rs. ${localOrder.total.toLocaleString()}`;
-                         document.getElementById('trackStatus').innerText = localOrder.status + " (Offline Mode)";
-                    } else {
-                        resultBox.classList.add('hidden');
-                        errorBox.classList.remove('hidden');
-                    }
+                    const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]'); const localOrder = savedOrders.find(o => o.code === code);
+                    if (localOrder) { document.getElementById('trackOrderCode').innerText = localOrder.code; document.getElementById('trackName').innerText = localOrder.name; document.getElementById('trackTotal').innerText = `Rs. ${localOrder.total.toLocaleString()}`; document.getElementById('trackStatus').innerText = localOrder.status + " (Offline Mode)"; } 
+                    else { resultBox.classList.add('hidden'); errorBox.classList.remove('hidden'); }
                 }
             } catch (error) {
-                const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]');
-                const localOrder = savedOrders.find(o => o.code === code);
-                if (localOrder) {
-                     document.getElementById('trackOrderCode').innerText = localOrder.code;
-                     document.getElementById('trackName').innerText = localOrder.name;
-                     document.getElementById('trackTotal').innerText = `Rs. ${localOrder.total.toLocaleString()}`;
-                     document.getElementById('trackStatus').innerText = localOrder.status + " (Offline Mode)";
-                } else {
-                    resultBox.classList.add('hidden');
-                    errorBox.classList.remove('hidden');
-                }
-            } finally {
-                trackBtn.innerHTML = "Track";
-                trackBtn.disabled = false;
-            }
+                const savedOrders = JSON.parse(localStorage.getItem('koseli_orders') || '[]'); const localOrder = savedOrders.find(o => o.code === code);
+                if (localOrder) { document.getElementById('trackOrderCode').innerText = localOrder.code; document.getElementById('trackName').innerText = localOrder.name; document.getElementById('trackTotal').innerText = `Rs. ${localOrder.total.toLocaleString()}`; document.getElementById('trackStatus').innerText = localOrder.status + " (Offline Mode)"; } 
+                else { resultBox.classList.add('hidden'); errorBox.classList.remove('hidden'); }
+            } finally { trackBtn.innerHTML = "Track"; trackBtn.disabled = false; }
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
-        document.getElementById('mobileSearchInput').addEventListener('input', (e) => { currentSearch = e.target.value; renderProducts(); });
         document.getElementById('filterSelect').addEventListener('change', (e) => { currentFilter = e.target.value; renderProducts(); });
 
         init();
