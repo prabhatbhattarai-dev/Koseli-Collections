@@ -46,13 +46,11 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Mobile App-Like Bottom Sheet Modals */
         @media (max-width: 640px) {
             .modal-mobile-sheet { align-items: flex-end !important; padding: 0 !important; }
             .modal-mobile-content { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; max-height: 92vh !important; width: 100% !important; max-width: 100% !important; }
         }
 
-        /* Premium Loading Screen */
         #preloader { transition: opacity 0.8s ease, visibility 0.8s ease; }
         @keyframes logoReveal {
             0% { opacity: 0; transform: scale(0.9) translateY(10px); }
@@ -92,7 +90,6 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- Mobile Menu & Logo -->
                 <div class="flex items-center gap-4">
                     <button onclick="toggleMobileMenu()" class="md:hidden p-2 -ml-2 text-charcoal hover:text-burgundy">
                         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -107,7 +104,6 @@
                     </a>
                 </div>
 
-                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide uppercase">
                     <a href="#" onclick="resetFilters()" class="text-charcoal hover:text-burgundy transition-colors">Home</a>
                     <a href="#shop" onclick="resetFilters()" class="text-charcoal hover:text-burgundy transition-colors">Shop</a>
@@ -116,7 +112,6 @@
                     <a href="#about" class="text-charcoal hover:text-burgundy transition-colors">About Us</a>
                 </nav>
 
-                <!-- Desktop Actions -->
                 <div class="hidden md:flex items-center gap-5">
                     <button class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="search" class="w-5 h-5"></i></button>
                     <button class="text-charcoal hover:text-burgundy transition-colors"><i data-lucide="heart" class="w-5 h-5"></i></button>
@@ -127,7 +122,6 @@
                     </button>
                 </div>
 
-                <!-- Mobile Cart -->
                 <div class="flex md:hidden items-center gap-4">
                     <button class="text-charcoal"><i data-lucide="search" class="w-5 h-5"></i></button>
                     <button onclick="openCart()" class="text-charcoal relative">
@@ -201,6 +195,7 @@
                     <h2 class="text-3xl md:text-4xl font-serif font-bold text-burgundy mb-4">Curated Categories</h2>
                     <div class="w-16 h-[1px] bg-champagne mx-auto"></div>
                 </div>
+                <!-- Categories Grid populated by JS -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6" id="categoryGrid"></div>
             </div>
         </section>
@@ -223,6 +218,7 @@
                     </div>
                 </div>
                 
+                <!-- Products Grid populated by JS -->
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12" id="productGrid"></div>
                 
                 <!-- Empty State -->
@@ -302,7 +298,6 @@
     <footer class="bg-charcoal text-white pt-20 pb-10" id="contact">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             
-            <!-- Brand -->
             <div>
                 <a href="#" class="font-serif text-2xl font-bold text-white mb-4 block tracking-tight">Koseli Collections</a>
                 <p class="text-white/60 text-sm leading-relaxed mb-6">
@@ -318,7 +313,6 @@
                 </div>
             </div>
 
-            <!-- Navigation -->
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Explore</h4>
                 <ul class="space-y-3 text-sm text-white/60">
@@ -329,7 +323,6 @@
                 </ul>
             </div>
 
-            <!-- Support -->
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Support</h4>
                 <ul class="space-y-3 text-sm text-white/60">
@@ -340,7 +333,6 @@
                 </ul>
             </div>
 
-            <!-- Contact -->
             <div>
                 <h4 class="font-serif font-bold text-lg text-champagne mb-6">Get in Touch</h4>
                 <ul class="space-y-4 text-sm text-white/60">
@@ -360,7 +352,6 @@
             </div>
         </div>
 
-        <!-- Footer Bottom -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/40">
             <p>&copy; 2025 Koseli Collections. All rights reserved.</p>
             <div class="flex items-center gap-6">
@@ -550,7 +541,7 @@
         let currentOrderData = null; 
         let billImageDataUrl = null;
 
-        // Updated Categories with luxury imagery
+        // ⭐ THE CATEGORIES DATA (If this is missing, the section will be empty)
         const CATEGORIES = [
             { id: 'cat1', name: 'Electronics', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=400&auto=format&fit=crop' },
             { id: 'cat2', name: 'Fashion', status: 'AVAILABLE', image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=400&auto=format&fit=crop' },
@@ -560,7 +551,6 @@
             { id: 'cat6', name: 'Accessories', status: 'COMING_SOON', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=400&auto=format&fit=crop' }
         ];
 
-        // Updated Products with luxury imagery
         const PRODUCTS = [
             { id: 'p1', name: 'Premium Bluetooth Speaker', sku: 'ELE-SPK-01', category: 'cat1', price: 4500, oldPrice: 5500, image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
             { id: 'p2', name: 'Classic Leather Wallet', sku: 'FAS-WLT-02', category: 'cat2', price: 1800, oldPrice: 2200, image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=600&auto=format&fit=crop', status: 'AVAILABLE' },
@@ -583,7 +573,6 @@
             lucide.createIcons();
         }
 
-        // Preloader
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
@@ -608,13 +597,14 @@
             }
         }
 
+        // ⭐ RENDERS THE CATEGORIES
         function renderCategories() {
             const grid = document.getElementById('categoryGrid');
             const menuList = document.getElementById('megaMenuList');
             
             grid.innerHTML = CATEGORIES.map(cat => `
-                <div onclick="filterByCategory('${cat.id}')" class="group relative cursor-pointer overflow-hidden aspect-square bg-white border border-rose/20 ${activeCategoryId === cat.id ? 'ring-1 ring-burgundy' : ''}">
-                    <img src="${cat.image}" alt="${cat.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div onclick="filterByCategory('${cat.id}')" class="group relative cursor-pointer overflow-hidden aspect-square bg-charcoal/10 border border-rose/20 ${activeCategoryId === cat.id ? 'ring-1 ring-burgundy' : ''}">
+                    <img src="${cat.image}" alt="${cat.name}" onerror="this.src='https://placehold.co/400x400?text=${cat.name}'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute inset-0 bg-charcoal/20 group-hover:bg-charcoal/40 transition-colors duration-300"></div>
                     ${cat.status === 'COMING_SOON' ? `<div class="absolute top-3 right-3 bg-ivory text-burgundy text-[9px] font-bold px-2 py-1 uppercase tracking-widest">Coming Soon</div>` : ''}
                     <div class="absolute bottom-4 left-0 w-full text-center">
@@ -706,14 +696,12 @@
                     ${badgeHtml}
                     ${discountHtml}
                     
-                    <!-- Wishlist Button (Visual) -->
                     <button class="absolute top-3 right-3 z-20 text-charcoal/40 hover:text-burgundy transition ${discountHtml ? 'hidden' : ''}">
                         <i data-lucide="heart" class="w-5 h-5"></i>
                     </button>
 
                     <div class="aspect-[3/4] bg-white overflow-hidden relative mb-4">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                        <!-- Add to Cart Overlay on Hover -->
+                        <img src="${p.image}" alt="${p.name}" onerror="this.src='https://placehold.co/600x800?text=${p.name}'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                         ${!isOutOfStock ? `
                         <div class="absolute bottom-0 left-0 w-full p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-gradient-to-t from-black/50 to-transparent">
                             <button onclick="addToCart('${p.id}')" class="w-full bg-white text-charcoal font-semibold py-3 text-sm hover:bg-burgundy hover:text-white transition-colors flex items-center justify-center gap-2">
