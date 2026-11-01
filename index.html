@@ -72,7 +72,7 @@
         .animate-load-progress { animation: loadProgress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
     </style>
 </head>
-<body class="text-charcoal antialiased flex flex-col min-h-screen">
+<body class="text-charcoal antialiased flex flex-col min-h-screen relative">
 
     <!-- PREMIUM ANIMATED LOADING SCREEN -->
     <div id="preloader" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center">
@@ -189,7 +189,7 @@
                 <a href="#shop" onclick="resetFilters(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Shop All</a>
                 <a href="#" onclick="openOrderHistory(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">My Orders</a>
                 <a href="#" onclick="openTrackingModal(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium hover:bg-gray-50 text-navy">Track Order</a>
-                <a href="https://wa.me/9779863263690" target="_blank" class="block px-3 py-2.5 rounded-md text-base font-medium text-[#25D366]">Contact on WhatsApp</a>
+                <a href="#" onclick="openSocialModal(); toggleMobileMenu();" class="block px-3 py-2.5 rounded-md text-base font-medium text-[#25D366]">Contact & Social</a>
             </div>
             <div class="border-t border-gray-200 pt-4">
                 <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Categories</p>
@@ -320,11 +320,10 @@
         </div>
     </main>
 
-    <!-- ⭐ NEW PREMIUM FOOTER (DEBUGGED SVG ICONS) -->
+    <!-- ⭐ NEW PREMIUM FOOTER -->
     <footer class="bg-navy text-white mt-16 pt-16 pb-8" id="contact">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <!-- Top Footer Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-16">
                 
                 <!-- Column 1: Brand Info -->
@@ -338,20 +337,20 @@
                     <p class="text-gray-400 text-sm leading-relaxed mb-6">
                         A Nepal-based online retail shopping store offering carefully selected products at competitive prices.
                     </p>
-                    <!-- Social Links (Hardcoded SVGs) -->
+                    <!-- Social Links (Triggers Modal) -->
                     <div class="flex gap-4">
-                        <a href="https://www.instagram.com/koselicollections/" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-all duration-300" title="Follow us on Instagram">
+                        <button onclick="openSocialModal()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-all duration-300" title="Follow us on Instagram">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                                 <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                             </svg>
-                        </a>
-                        <a href="https://wa.me/9779863263690" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-all duration-300" title="Chat on WhatsApp">
+                        </button>
+                        <button onclick="openSocialModal()" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-navy transition-all duration-300" title="Chat on WhatsApp">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                                 <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </div>
 
@@ -414,6 +413,59 @@
             </div>
         </div>
     </footer>
+
+    <!-- ⭐ FLOATING ACTION BUTTON (FAB) FOR SOCIALS -->
+    <button onclick="openSocialModal()" class="fixed bottom-6 right-6 z-[90] bg-navy text-gold p-4 rounded-full shadow-2xl hover:bg-gold hover:text-navy transition-all duration-300 group">
+        <i data-lucide="share-2" class="w-6 h-6 group-hover:scale-110 transition-transform"></i>
+    </button>
+
+    <!-- ⭐ SOCIAL CONNECT MODAL -->
+    <div id="socialModal" class="fixed inset-0 bg-black/70 z-[500] hidden items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col" id="socialModalContent">
+            
+            <!-- Header -->
+            <div class="bg-navy p-6 text-center relative">
+                <button onclick="closeSocialModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg">
+                    <i data-lucide="message-circle" class="w-8 h-8 text-navy"></i>
+                </div>
+                <h2 class="text-xl font-serif font-bold text-white">Connect With Us</h2>
+                <p class="text-gray-300 text-xs mt-1">We'd love to hear from you!</p>
+            </div>
+
+            <!-- Body -->
+            <div class="p-6 space-y-4 bg-gray-50">
+                <!-- Instagram Card -->
+                <a href="https://www.instagram.com/koselicollections/" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white shadow-md hover:shadow-lg transition-transform hover:-translate-y-1">
+                    <div class="bg-white/20 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                            <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">Follow on Instagram</p>
+                        <p class="text-xs text-white/80">@koselicollections</p>
+                    </div>
+                </a>
+
+                <!-- WhatsApp Card -->
+                <a href="https://wa.me/9779863263690" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-[#25D366] text-white shadow-md hover:shadow-lg transition-transform hover:-translate-y-1">
+                    <div class="bg-white/20 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm">Chat on WhatsApp</p>
+                        <p class="text-xs text-white/80">+977 9863263690</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Shopping Cart Drawer (Slide from Right) -->
     <div class="fixed inset-0 bg-black/60 z-[100] hidden" id="cartOverlay"></div>
@@ -634,6 +686,36 @@
                 }, 800); 
             }
         }, 3500); 
+
+        // Social Modal Logic
+        function openSocialModal() {
+            const modal = document.getElementById('socialModal');
+            const content = document.getElementById('socialModalContent');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeSocialModal() {
+            const modal = document.getElementById('socialModal');
+            const content = document.getElementById('socialModalContent');
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 300);
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('socialModal').addEventListener('click', function(e) {
+            if (e.target === this) closeSocialModal();
+        });
 
         function toggleMobileMenu() {
             const overlay = document.getElementById('mobileMenuOverlay');
